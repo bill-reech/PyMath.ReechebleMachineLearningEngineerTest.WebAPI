@@ -1,0 +1,35 @@
+# syntax=docker/dockerfile:1
+
+FROM python:3.11-slim AS BaseBuild
+
+ENV ACCEPT_EULA=Y \
+    PYTHONFAULTHANDLER=1 \
+    PYTHONUNBUFFERED=1 \
+    PYTHONHASHSEED=random \
+    PYTHONOPTIMIZE=1 \
+    PIP_NO_CACHE_DIR=on \
+    PIP_DISABLE_PIP_VERSION_CHECK=on \
+    PIP_DEFAULT_TIMEOUT=100 \
+    POETRY_VERSION=1.4
+
+RUN apt-get update && apt-get install -y --no-install-recommends dos2unix --reinstall build-essential -y
+
+RUN pip install "poetry==$POETRY_VERSION"
+
+WORKDIR /app
+
+COPY pyproject.toml poetry.toml ./
+
+RUN poetry install --no-interaction --no-ansi --without dev && apt-get remove -y gcc && apt-get -y autoremove
+
+ADD reecheble_finance ./reecheble_finance
+
+RUN chmod +x ./entry_point.sh
+
+RUN ["dos2unix", "entry_point.sh"]
+
+FROM BaseBuild
+
+COPY ./global_configuration.json ./global_configuration.json
+
+CMD ["./entry_point.sh"]

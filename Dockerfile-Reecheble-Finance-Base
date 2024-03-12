@@ -1,0 +1,31 @@
+# syntax=docker/dockerfile:1
+
+FROM python:3.11-slim
+
+ENV ACCEPT_EULA=Y \
+    PYTHONFAULTHANDLER=1 \
+    PYTHONUNBUFFERED=1 \
+    PYTHONHASHSEED=random \
+    PYTHONOPTIMIZE=1 \
+    PIP_NO_CACHE_DIR=on \
+    PIP_DISABLE_PIP_VERSION_CHECK=on \
+    PIP_DEFAULT_TIMEOUT=100 \
+    POETRY_VERSION=1.4
+
+RUN apt-get update && apt-get install -y --no-install-recommends dos2unix --reinstall build-essential -y
+
+RUN pip install "poetry==$POETRY_VERSION"
+
+WORKDIR /app
+
+COPY pyproject.toml poetry.toml ./
+
+RUN poetry install --no-interaction --no-ansi --without dev && apt-get remove -y gcc && apt-get -y autoremove
+
+ADD zorn ./zorn
+
+COPY entry_point.sh main.py alembic.ini ./
+
+RUN chmod +x ./entry_point.sh
+
+RUN ["dos2unix", "entry_point.sh"]
