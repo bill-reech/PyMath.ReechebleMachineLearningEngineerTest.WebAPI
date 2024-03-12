@@ -5,7 +5,7 @@ from hypothesis.strategies import floats, integers, builds, just
 
 from reecheble_finance.domain.exceptions.domain_exceptions import InvalidLoanRequestDomainException
 from reecheble_finance.domain.models.account import Account
-from reecheble_finance.domain.loan_request.loan_request import LoanRequest
+from reecheble_finance.domain.models.loan_request import LoanRequest
 from reecheble_finance.domain.models.user import User
 
 
