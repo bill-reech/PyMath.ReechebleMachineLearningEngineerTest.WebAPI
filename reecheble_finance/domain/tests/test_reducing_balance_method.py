@@ -113,3 +113,37 @@ def test_given_valid_loan_repayment_request_current_balance_reduces_by_principal
 
     # Assert
     assert account_model.outstanding_balance == initial_balance - loan_request.principal_paid
+
+
+@given(interest_rate=floats(min_value=0.05, max_value=0.5),
+       payment_period=integers(min_value=12, max_value=60),
+       loan_amount=floats(min_value=5000, max_value=100000),
+       account_model=user_account_strategy)
+def test_given_valid_loan_repayment_the_payment_schedule_start_interest_paid_amount_is_zero(
+        interest_rate,
+        payment_period,
+        loan_amount,
+        account_model):
+    loan_request = LoanRequest(
+        account=account_model,
+        interest_rate=interest_rate,
+        payment_period_in_months=payment_period)
+    loan_request.request_loan(request_amount=loan_amount)
+    assert loan_request.interest_paid == 0.00
+
+
+@given(interest_rate=floats(min_value=0.05, max_value=0.5),
+       payment_period=integers(min_value=12, max_value=60),
+       loan_amount=floats(min_value=5000, max_value=100000),
+       account_model=user_account_strategy)
+def test_given_valid_loan_repayment_the_payment_schedule_start_principal_paid_amount_is_zero(
+        interest_rate,
+        payment_period,
+        loan_amount,
+        account_model):
+    loan_request = LoanRequest(
+        account=account_model,
+        interest_rate=interest_rate,
+        payment_period_in_months=payment_period)
+    loan_request.request_loan(request_amount=loan_amount)
+    assert loan_request.principal_paid == 0.00
