@@ -109,7 +109,7 @@ def test_given_valid_loan_repayment_request_current_balance_reduces_by_principal
         payment_period_in_months=payment_period)
     loan_request.request_loan(request_amount=loan_amount)
     initial_balance = account_model.outstanding_balance
-    loan_request.make_payment(balance=initial_balance)
+    loan_request.make_payment()
 
     # Assert
     assert account_model.outstanding_balance == initial_balance - loan_request.principal_paid

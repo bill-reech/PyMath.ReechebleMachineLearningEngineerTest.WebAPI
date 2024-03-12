@@ -26,11 +26,19 @@ class LoanRequest(BaseDomainParserMixin):
 
     def request_loan(self, request_amount: int) -> None:
         """
+        Method: request_loan
+
+        Description:
         Request a loan by specifying the loan amount.
 
-        :param request_amount: The amount of money requested for the loan.
-        :type request_amount: int
-        :raises InvalidLoanRequestDomainException: If the account has an outstanding balance.
+        Parameters:
+            request_amount (int): The loan amount being requested.
+
+        Raises:
+            InvalidLoanRequestDomainException: If the account has an outstanding balance.
+
+        Returns:
+            None
         """
         if self.account.outstanding_balance > 0.00:
             raise InvalidLoanRequestDomainException(message="Account has an outstanding balance")
@@ -45,18 +53,23 @@ class LoanRequest(BaseDomainParserMixin):
 
     @staticmethod
     def get_equated_monthly_installment(
-            loan_amount: int,
+            loan_amount: float,
             monthly_interest_rate: float,
             number_of_installments: int) -> float:
         """
+        Method: get_equated_monthly_installment
+
+        Description:
         Get the Equated Monthly Installment for a given loan amount borrowed at a specific interest rate
         over a specified time in months.
 
-        :param loan_amount:
-        :param monthly_interest_rate:
-        :param number_of_installments:
-        :return:
-        :rtype: float
+        Parameters:
+            loan_amount (float): The amount of money requested for the loan.
+            monthly_interest_rate (float): Interest rate charged on the loan amount borrowed.
+            number_of_installments (int): Number of installments stated on the loan agreement to amortise the loan.
+
+        Returns:
+            float: The equated monthly installment for a given loan amount borrowed.
         """
         numerator = (loan_amount * monthly_interest_rate * math.pow(1 + monthly_interest_rate, number_of_installments))
         denominator = math.pow(1 + monthly_interest_rate, number_of_installments) - 1
@@ -65,20 +78,30 @@ class LoanRequest(BaseDomainParserMixin):
 
     def get_interest_on_balance(self, balance: float) -> float:
         """
-        :param balance: The balance amount for which interest needs to be calculated.
-        :return: The calculated interest on the given balance amount.
-        :rtype: float
+        Method: get_interest_on_balance
+
+        Description:
+        Calculate the interest on the specified balance based on the interest rate.
+
+        Parameters:
+            balance (float): The balance for which the interest needs to be calculated.
+
+        Returns:
+            float: The calculated interest for the given balance.
         """
 
         return balance * self.interest_rate / 12
 
-    def make_payment(self, balance: float) -> None:
+    def make_payment(self) -> None:
         """
-        Makes a payment towards the outstanding balance of the account.
+        Method: make_payment
 
-        :param balance: The amount to be paid.
-        :return: None
+        Description:
+        Make a payment towards the outstanding balance of the account.
+
+        Returns:
+            None: The calculated interest for the given balance.
         """
-        self.interest_paid = self.get_interest_on_balance(balance)
+        self.interest_paid = self.get_interest_on_balance(self.account.outstanding_balance)
         self.principal_paid = self.equated_monthly_instalment - self.principal_paid
         self.account.outstanding_balance -= self.principal_paid
