@@ -26,9 +26,11 @@ class LoanRequest(BaseDomainParserMixin):
 
     def request_loan(self, request_amount: int) -> None:
         """
+        Request a loan by specifying the loan amount.
 
-        :param request_amount: Loan amount being requested
-        :throws InvalidLoanRequestDomainException:
+        :param request_amount: The amount of money requested for the loan.
+        :type request_amount: int
+        :raises InvalidLoanRequestDomainException: If the account has an outstanding balance.
         """
         if self.account.outstanding_balance > 0.00:
             raise InvalidLoanRequestDomainException(message="Account has an outstanding balance")
@@ -61,18 +63,22 @@ class LoanRequest(BaseDomainParserMixin):
 
         return numerator / denominator
 
-    def get_interest_on_balance(self, balance: int) -> float:
+    def get_interest_on_balance(self, balance: float) -> float:
         """
-
-        :param balance:
-        :return:
+        :param balance: The balance amount for which interest needs to be calculated.
+        :return: The calculated interest on the given balance amount.
         :rtype: float
         """
+
         return balance * self.interest_rate / 12
 
-    def make_payment(self, amount: int, balance: int) -> None:
-        self.interest_paid = self.get_interest_on_balance(balance)
+    def make_payment(self, balance: float) -> None:
+        """
+        Makes a payment towards the outstanding balance of the account.
 
-        if amount < self.interest_paid:
-            ...
+        :param balance: The amount to be paid.
+        :return: None
+        """
+        self.interest_paid = self.get_interest_on_balance(balance)
         self.principal_paid = self.equated_monthly_instalment - self.principal_paid
+        self.account.outstanding_balance -= self.principal_paid

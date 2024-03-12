@@ -73,3 +73,24 @@ def test_given_valid_loan_request_emi_property_set(interest_rate, payment_period
 
     # Assert
     assert loan_request.equated_monthly_instalment == emi
+
+
+@given(interest_rate=floats(min_value=0.05, max_value=0.5),
+       payment_period=integers(min_value=12, max_value=60),
+       loan_amount=floats(min_value=5000, max_value=100000))
+def test_given_valid_loan_repayment_request_current_balance_reduces_by_principal_paid(interest_rate, payment_period, loan_amount):
+    # Arrange
+    user_model = User(first_name="Sanele", last_name="Klass")
+    account_model = Account(user=user_model)
+
+    # Act
+    loan_request = LoanRequest(
+        account=account_model,
+        interest_rate=interest_rate,
+        payment_period_in_months=payment_period)
+    loan_request.request_loan(request_amount=loan_amount)
+    initial_balance = account_model.outstanding_balance
+    loan_request.make_payment(balance=initial_balance)
+
+    # Assert
+    assert account_model.outstanding_balance == initial_balance - loan_request.principal_paid
