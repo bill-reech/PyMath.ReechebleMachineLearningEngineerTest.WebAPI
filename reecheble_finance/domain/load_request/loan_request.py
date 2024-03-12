@@ -81,13 +81,13 @@ class LoanRequest(BaseDomainParserMixin):
         Method: get_interest_on_balance
 
         Description:
-        Calculate the interest on the specified balance based on the interest rate.
+        Calculate the interest on the specified balance based on the given interest rate.
 
         Parameters:
-            balance (float): The balance for which the interest needs to be calculated.
+            balance (float): The balance for which the interest amount needs to be calculated.
 
         Returns:
-            float: The calculated interest for the given balance.
+            float: The calculated interest for the supplied balance given the interest rate.
         """
 
         return balance * self.interest_rate / 12
@@ -100,7 +100,7 @@ class LoanRequest(BaseDomainParserMixin):
         Make a payment towards the outstanding balance of the account.
 
         Returns:
-            None: The calculated interest for the given balance.
+            None:
         """
         self.interest_paid = self.get_interest_on_balance(self.account.outstanding_balance)
         self.principal_paid = self.equated_monthly_instalment - self.principal_paid
