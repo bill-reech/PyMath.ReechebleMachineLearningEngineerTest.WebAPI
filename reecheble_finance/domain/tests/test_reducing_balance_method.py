@@ -1,6 +1,7 @@
 import pytest
+from faker import Faker
 from hypothesis import given
-from hypothesis.strategies import floats, integers
+from hypothesis.strategies import floats, integers, builds, just
 
 from reecheble_finance.domain.exceptions.domain_exceptions import InvalidLoanRequestDomainException
 from reecheble_finance.domain.models.account import Account
@@ -8,19 +9,41 @@ from reecheble_finance.domain.models.loan_request import LoanRequest
 from reecheble_finance.domain.models.user import User
 
 
+fake = Faker()
+
+
+def fake_first_name():
+    return fake.first_name()
+
+
+def fake_last_name():
+    return fake.last_name()
+
+
+# Define the strategy for generating random user and account models.
+user_account_strategy = builds(
+    Account,
+    user=builds(
+        User,
+        first_name=just(fake_first_name()),
+        last_name=just(fake_last_name())
+    )
+)
+
+
 @given(account_balance=floats(min_value=0.01, max_value=5000),
        interest_rate=floats(min_value=0.05, max_value=0.5),
        payment_period=integers(min_value=3, max_value=60),
-       loan_amount=floats(min_value=5000, max_value=100000))
+       loan_amount=floats(min_value=5000, max_value=100000),
+       account_model=user_account_strategy)
 def test_given_valid_loan_request_can_not_take_loan_with_outstanding_balance(
         account_balance,
         interest_rate,
         payment_period,
-        loan_amount):
+        loan_amount,
+        account_model):
 
     # Arrange
-    user_model = User(first_name="John", last_name="Doe")
-    account_model = Account(user=user_model)
     account_model.outstanding_balance = account_balance
 
     # Assert & Act
@@ -34,13 +57,9 @@ def test_given_valid_loan_request_can_not_take_loan_with_outstanding_balance(
 
 @given(interest_rate=floats(min_value=0.05, max_value=0.5),
        payment_period=integers(min_value=3, max_value=60),
-       loan_amount=floats(min_value=5000, max_value=100000))
-def test_given_valid_loan_request_adds_a_new_loan_to_account(interest_rate, payment_period, loan_amount):
-
-    # Arrange
-    user_model = User(first_name="Zanele", last_name="Mokoena")
-    account_model = Account(user=user_model)
-
+       loan_amount=floats(min_value=5000, max_value=100000),
+       account_model=user_account_strategy)
+def test_given_valid_loan_request_adds_a_new_loan_to_account(interest_rate, payment_period, loan_amount, account_model):
     # Act
     LoanRequest(
         account=account_model,
@@ -54,11 +73,9 @@ def test_given_valid_loan_request_adds_a_new_loan_to_account(interest_rate, paym
 
 @given(interest_rate=floats(min_value=0.05, max_value=0.5),
        payment_period=integers(min_value=12, max_value=60),
-       loan_amount=floats(min_value=5000, max_value=100000))
-def test_given_valid_loan_request_emi_property_set(interest_rate, payment_period, loan_amount):
-    # Arrange
-    user_model = User(first_name="Kobus", last_name="Ndlovu")
-    account_model = Account(user=user_model)
+       loan_amount=floats(min_value=5000, max_value=100000),
+       account_model=user_account_strategy)
+def test_given_valid_loan_request_emi_property_set(interest_rate, payment_period, loan_amount, account_model):
 
     # Act
     loan_request = LoanRequest(
@@ -77,11 +94,13 @@ def test_given_valid_loan_request_emi_property_set(interest_rate, payment_period
 
 @given(interest_rate=floats(min_value=0.05, max_value=0.5),
        payment_period=integers(min_value=12, max_value=60),
-       loan_amount=floats(min_value=5000, max_value=100000))
-def test_given_valid_loan_repayment_request_current_balance_reduces_by_principal_paid(interest_rate, payment_period, loan_amount):
-    # Arrange
-    user_model = User(first_name="Sanele", last_name="Klass")
-    account_model = Account(user=user_model)
+       loan_amount=floats(min_value=5000, max_value=100000),
+       account_model=user_account_strategy)
+def test_given_valid_loan_repayment_request_current_balance_reduces_by_principal_paid(
+        interest_rate,
+        payment_period,
+        loan_amount,
+        account_model):
 
     # Act
     loan_request = LoanRequest(
