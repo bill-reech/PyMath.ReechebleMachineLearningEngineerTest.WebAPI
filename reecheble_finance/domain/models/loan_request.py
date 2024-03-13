@@ -1,9 +1,8 @@
 import math
-from typing import Optional
+from typing import Optional, List
 from uuid import UUID
 
-from pydantic import PositiveInt, PositiveFloat
-
+from pydantic import PositiveInt, confloat
 
 from reecheble_finance.domain.exceptions.domain_exceptions import InvalidLoanRequestDomainException
 from reecheble_finance.domain.abstract_domain.abstract_domain_parser_mixin import BaseDomainParserMixin
@@ -13,6 +12,8 @@ __all__ = [
     "LoanRequest"
 ]
 
+from reecheble_finance.domain.models.repayment_history import RepaymentHistory
+
 
 class LoanRequest(BaseDomainParserMixin):
     id: Optional[UUID]
@@ -20,9 +21,10 @@ class LoanRequest(BaseDomainParserMixin):
     request_amount: PositiveInt = 0
     interest_rate: float
     payment_period_in_months: PositiveInt
-    equated_monthly_instalment: PositiveFloat = 0.00
-    principal_paid: PositiveFloat = 0.00
-    interest_paid: PositiveFloat = 0.00
+    equated_monthly_instalment: confloat(ge=0.00) = 0.00
+    principal_paid: confloat(ge=0.00) = 0.00
+    interest_paid: confloat(ge=0.00) = 0.00
+    repayment_history: List[RepaymentHistory] = []
 
     def request_loan(self, request_amount: int) -> None:
         """
@@ -50,6 +52,8 @@ class LoanRequest(BaseDomainParserMixin):
             loan_amount=request_amount,
             monthly_interest_rate=self.interest_rate,
             number_of_installments=self.payment_period_in_months)
+
+        self.repayment_history.append(RepaymentHistory(month=0, loan_balance=self.account.outstanding_balance))
 
     @staticmethod
     def get_equated_monthly_installment(
@@ -105,3 +109,10 @@ class LoanRequest(BaseDomainParserMixin):
         self.interest_paid = self.get_interest_on_balance(self.account.outstanding_balance)
         self.principal_paid = self.equated_monthly_instalment - self.principal_paid
         self.account.outstanding_balance -= self.principal_paid
+        self.repayment_history.append(
+            RepaymentHistory(month=len(self.repayment_history),
+                             equated_monthly_instalment=self.equated_monthly_instalment,
+                             principal_paid=self.principal_paid,
+                             interest_paid=self.interest_paid,
+                             loan_balance=self.account.outstanding_balance)
+        )

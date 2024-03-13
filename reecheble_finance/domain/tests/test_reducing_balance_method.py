@@ -147,3 +147,38 @@ def test_given_valid_loan_repayment_the_payment_schedule_start_principal_paid_am
         payment_period_in_months=payment_period)
     loan_request.request_loan(request_amount=loan_amount)
     assert loan_request.principal_paid == 0.00
+
+
+@given(interest_rate=floats(min_value=0.05, max_value=0.5),
+       payment_period=integers(min_value=12, max_value=60),
+       loan_amount=floats(min_value=5000, max_value=100000),
+       account_model=user_account_strategy)
+def test_given_two_consecutive_valid_loan_repayments_loan_balance_reduces_by_sum_of_the_two_principal_payments(
+        interest_rate,
+        payment_period,
+        loan_amount,
+        account_model):
+
+    # Arrange
+    loan_request = LoanRequest(
+        account=account_model,
+        interest_rate=interest_rate,
+        payment_period_in_months=payment_period)
+
+    # Act
+    loan_request.request_loan(request_amount=loan_amount)
+
+    # payment 1
+    loan_request.make_payment()
+
+    # payment 2
+    loan_request.make_payment()
+
+    last_principal_paid = loan_request.repayment_history[-1].principal_paid
+    second_last_principal_paid = loan_request.repayment_history[-2].principal_paid
+    loan_reference_balance = loan_request.repayment_history[-3].loan_balance
+    balance_from_paid_principal = loan_reference_balance - sum([last_principal_paid, second_last_principal_paid])
+
+    # Assert
+    assert loan_request.account.outstanding_balance == balance_from_paid_principal
+
