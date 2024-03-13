@@ -153,7 +153,7 @@ def test_given_valid_loan_repayment_the_payment_schedule_start_principal_paid_am
        payment_period=integers(min_value=12, max_value=60),
        loan_amount=floats(min_value=5000, max_value=100000),
        account_model=user_account_strategy)
-def test_given_two_consecutive_valid_loan_repayments_loan_balance_reduces_by_sum_of_the_two_principal_payments(
+def test_given_two_consecutive_valid_loan_repayments_loan_balance_reduces_by_sum_of_the_two_consecutive_principals(
         interest_rate,
         payment_period,
         loan_amount,
