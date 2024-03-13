@@ -181,4 +181,3 @@ def test_given_two_consecutive_valid_loan_repayments_loan_balance_reduces_by_sum
 
     # Assert
     assert loan_request.account.outstanding_balance == balance_from_paid_principal
-
