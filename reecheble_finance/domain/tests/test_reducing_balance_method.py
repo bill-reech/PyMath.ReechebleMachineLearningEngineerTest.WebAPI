@@ -8,7 +8,6 @@ from reecheble_finance.domain.models.account import Account
 from reecheble_finance.domain.models.loan_request import LoanRequest
 from reecheble_finance.domain.models.user import User
 
-
 fake = Faker()
 
 
@@ -149,7 +148,7 @@ def test_given_valid_loan_repayment_the_payment_schedule_start_principal_paid_am
     assert loan_request.principal_paid == 0.00
 
 
-@given(interest_rate=floats(min_value=0.05, max_value=0.5),
+@given(interest_rate=floats(min_value=0.05, max_value=0.68),
        payment_period=integers(min_value=12, max_value=60),
        loan_amount=floats(min_value=5000, max_value=100000),
        account_model=user_account_strategy)
