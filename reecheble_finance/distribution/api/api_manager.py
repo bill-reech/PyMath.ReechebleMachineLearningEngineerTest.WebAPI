@@ -1,13 +1,13 @@
 """
-zoRn Distribution Swagger Documentation - http://0.0.0.0:8000/docs
+Reecheble Finance Swagger Documentation - http://0.0.0.0:8000/docs
 """
 
 import uvicorn
 from fastapi import FastAPI
 from fastapi_versioning import VersionedFastAPI
 
+from reecheble_finance.distribution.api.routers import loan_controller
 from reecheble_finance.domain.utilities.logger import LogManager
-from reecheble_finance.distribution.api.routers import zorn_event_management_api
 
 __all__ = [
     "App",
@@ -18,17 +18,17 @@ logger = LogManager().logger
 
 
 class App:
-    _title = "zoRn Distribution: Microservice API Host Service"
-    name = "Microservice API Host"
+    _title = "Reecheble Finance: Web-API Host Service"
+    name = "Web-API Host"
     application = None
 
     def __init__(self):
         logger.info("Loading API Endpoints...")
         hosting_application = FastAPI(
             title=self._title,
-            description="zoRn Distribution Microservice"
+            description="Reecheble Finance Loans Microservice"
         )
-        hosting_application.include_router(zorn_event_management_api.router)
+        hosting_application.include_router(loan_controller.router)
         self.application = VersionedFastAPI(
             hosting_application,
             version_format='{major}',

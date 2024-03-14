@@ -1,5 +1,6 @@
 from reecheble_finance.distribution.api.schemas import PathDependency
-from reecheble_finance.infrastructure.data_access.database.databases_tools.contexts.context_types import SqlAlchemyContext
+from reecheble_finance.infrastructure.data_access.database.databases_tools.contexts.context_types import \
+    PyMongoDbContext
 
 __all__ = [
     "router_path_dependency"
@@ -7,4 +8,4 @@ __all__ = [
 
 
 def router_path_dependency():
-    yield PathDependency(context=SqlAlchemyContext)
+    yield PathDependency(context=PyMongoDbContext)
