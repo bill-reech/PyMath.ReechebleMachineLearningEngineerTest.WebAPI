@@ -1,5 +1,16 @@
+from typing import Optional
 from uuid import UUID
 
+from pydantic import confloat
 
-class AddLoanApplicationResponseDTO:
-    id: UUID
+from reecheble_finance.domain.abstract_domain.abstract_domain_parser_mixin import BaseDomainParserMixin
+
+__all__ = [
+    "AddLoanApplicationResponseDTO"
+]
+
+
+class AddLoanApplicationResponseDTO(BaseDomainParserMixin):
+    id: Optional[UUID]
+    loan_amount: confloat(ge=0)
+    loan_granted: bool
