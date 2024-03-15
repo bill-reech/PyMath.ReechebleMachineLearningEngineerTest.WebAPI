@@ -4,7 +4,7 @@ from hypothesis import given
 from hypothesis.strategies import floats, integers, builds, just
 
 from reecheble_finance.domain.exceptions.domain_exceptions import InvalidLoanRequestDomainException
-from reecheble_finance.domain.models.account import Account
+from reecheble_finance.domain.models.loan_account import LoanAccount
 from reecheble_finance.domain.models.loan_request import LoanRequest
 from reecheble_finance.domain.models.user import User
 
@@ -21,7 +21,7 @@ def fake_last_name():
 
 # Define the strategy for generating random user and account models.
 user_account_strategy = builds(
-    Account,
+    LoanAccount,
     user=builds(
         User,
         first_name=just(fake_first_name()),
