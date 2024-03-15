@@ -4,9 +4,9 @@ from uuid import UUID
 
 from pydantic import PositiveInt, confloat
 
-from reecheble_finance.domain.exceptions.domain_exceptions import InvalidLoanRequestDomainException
 from reecheble_finance.domain.abstract_domain.abstract_domain_parser_mixin import BaseDomainParserMixin
-from reecheble_finance.domain.models.account import Account
+from reecheble_finance.domain.exceptions.domain_exceptions import InvalidLoanRequestDomainException
+from reecheble_finance.domain.models.loan_account import LoanAccount
 
 __all__ = [
     "LoanRequest"
@@ -17,7 +17,7 @@ from reecheble_finance.domain.models.repayment_history import RepaymentHistory
 
 class LoanRequest(BaseDomainParserMixin):
     id: Optional[UUID]
-    account: Account
+    account: LoanAccount
     request_amount: PositiveInt = 0
     interest_rate: float
     payment_period_in_months: PositiveInt
