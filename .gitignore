@@ -138,6 +138,9 @@ dmypy.json
 #virtual environment
 /python_local/
 
+# poetry packages cache
+poetry.lock
+
 # ide settings
 /.idea
 
