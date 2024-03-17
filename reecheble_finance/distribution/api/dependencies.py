@@ -1,6 +1,6 @@
 from reecheble_finance.distribution.api.schemas import PathDependency
-from reecheble_finance.infrastructure.data_access.database.databases_tools.contexts.context_types import \
-    PyMongoDbContext
+from reecheble_finance.infrastructure.data_access.database.databases_tools.contexts.context_types import (
+    PyMongoDbContext)
 
 __all__ = [
     "router_path_dependency"
