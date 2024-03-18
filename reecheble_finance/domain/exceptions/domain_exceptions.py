@@ -1,10 +1,10 @@
 from __future__ import annotations
 
 __all__ = [
-    "InvalidLoanRequestDomainException"
+    "LoanRequestDomainException"
 ]
 
 
-class InvalidLoanRequestDomainException(Exception):
+class LoanRequestDomainException(Exception):
     def __init__(self, message: str) -> None:
         self.message = message

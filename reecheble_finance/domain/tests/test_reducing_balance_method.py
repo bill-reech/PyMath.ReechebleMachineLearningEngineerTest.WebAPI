@@ -6,7 +6,7 @@ from faker import Faker
 from hypothesis import given
 from hypothesis.strategies import floats, integers, builds, just
 
-from reecheble_finance.domain.exceptions.domain_exceptions import InvalidLoanRequestDomainException
+from reecheble_finance.domain.exceptions.domain_exceptions import LoanRequestDomainException
 from reecheble_finance.domain.models.loan_account import LoanAccount
 from reecheble_finance.domain.models.loan_request import LoanRequest
 from reecheble_finance.domain.models.user import User
@@ -49,7 +49,7 @@ def test_given_valid_loan_request_then_user_can_not_take_loan_with_outstanding_b
     account_model.outstanding_balance = account_balance
 
     # Assert & Act
-    with (pytest.raises(InvalidLoanRequestDomainException)):
+    with (pytest.raises(LoanRequestDomainException)):
         LoanRequest(
             account=account_model,
             interest_rate=interest_rate,

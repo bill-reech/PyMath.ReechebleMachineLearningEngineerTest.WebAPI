@@ -7,7 +7,7 @@ from dateutil.relativedelta import relativedelta
 from pydantic import PositiveInt, confloat
 
 from reecheble_finance.domain.models.loan_account import LoanAccount
-from reecheble_finance.domain.exceptions.domain_exceptions import InvalidLoanRequestDomainException
+from reecheble_finance.domain.exceptions.domain_exceptions import LoanRequestDomainException
 from reecheble_finance.domain.abstract_domain.abstract_domain_parser_mixin import BaseDomainParserMixin
 
 __all__ = [
@@ -47,7 +47,7 @@ class LoanRequest(BaseDomainParserMixin):
             None
         """
         if self.account.outstanding_balance > 0.00:
-            raise InvalidLoanRequestDomainException(message="Account has an outstanding balance")
+            raise LoanRequestDomainException(message="Account has an outstanding balance")
 
         if self.account.outstanding_balance is None or self.account.outstanding_balance == 0:
             self.account.outstanding_balance = request_amount
