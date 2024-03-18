@@ -1,12 +1,14 @@
 import math
-from typing import Optional, List
 from uuid import UUID
+from datetime import date
+from typing import Optional, List
 
+from dateutil.relativedelta import relativedelta
 from pydantic import PositiveInt, confloat
 
-from reecheble_finance.domain.abstract_domain.abstract_domain_parser_mixin import BaseDomainParserMixin
-from reecheble_finance.domain.exceptions.domain_exceptions import InvalidLoanRequestDomainException
 from reecheble_finance.domain.models.loan_account import LoanAccount
+from reecheble_finance.domain.exceptions.domain_exceptions import InvalidLoanRequestDomainException
+from reecheble_finance.domain.abstract_domain.abstract_domain_parser_mixin import BaseDomainParserMixin
 
 __all__ = [
     "LoanRequest"
@@ -21,6 +23,8 @@ class LoanRequest(BaseDomainParserMixin):
     request_amount: PositiveInt = 0
     interest_rate: float
     payment_period_in_months: PositiveInt
+    origination_date: date = date.today()
+    due_date: date = None
     equated_monthly_instalment: confloat(ge=0.00) = 0.00
     principal_paid: confloat(ge=0.00) = 0.00
     interest_paid: confloat(ge=0.00) = 0.00
@@ -52,6 +56,7 @@ class LoanRequest(BaseDomainParserMixin):
             loan_amount=request_amount,
             monthly_interest_rate=self.interest_rate,
             number_of_installments=self.payment_period_in_months)
+        self.due_date = self.origination_date + relativedelta(months=+self.payment_period_in_months)
 
         self.repayment_history.append(RepaymentHistory(month=0, loan_balance=self.account.outstanding_balance))
 
@@ -94,6 +99,8 @@ class LoanRequest(BaseDomainParserMixin):
             float: The calculated interest for the supplied balance given the interest rate.
         """
 
+        if LoanRequest.get_today() > self.due_date:
+            return 0.00  # Do not charge interest on overdue loans
         return balance * self.interest_rate / 12
 
     def make_payment(self) -> None:
@@ -116,3 +123,8 @@ class LoanRequest(BaseDomainParserMixin):
                              interest_paid=self.interest_paid,
                              loan_balance=self.account.outstanding_balance)
         )
+
+    # TODO: This should move to some common dates service that can be easily tested.
+    @staticmethod
+    def get_today():
+        return date.today()
