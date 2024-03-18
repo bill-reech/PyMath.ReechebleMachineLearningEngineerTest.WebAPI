@@ -2,8 +2,8 @@ import math
 from uuid import UUID
 from datetime import date
 from typing import Optional, List
-
 from dateutil.relativedelta import relativedelta
+
 from pydantic import PositiveInt, confloat
 
 from reecheble_finance.domain.models.loan_account import LoanAccount
