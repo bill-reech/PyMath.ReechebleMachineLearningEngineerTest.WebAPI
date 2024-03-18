@@ -6,10 +6,10 @@ from faker import Faker
 from hypothesis import given
 from hypothesis.strategies import floats, integers, builds, just
 
-from reecheble_finance.domain.exceptions.domain_exceptions import LoanRequestDomainException
+from reecheble_finance.domain.models.user import User
 from reecheble_finance.domain.models.loan_account import LoanAccount
 from reecheble_finance.domain.models.loan_request import LoanRequest
-from reecheble_finance.domain.models.user import User
+from reecheble_finance.domain.exceptions.domain_exceptions import LoanRequestDomainException
 
 fake = Faker()
 
