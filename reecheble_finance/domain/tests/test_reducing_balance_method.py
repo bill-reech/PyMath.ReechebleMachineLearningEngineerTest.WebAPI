@@ -1,3 +1,6 @@
+from unittest.mock import patch
+from dateutil.relativedelta import relativedelta
+
 import pytest
 from faker import Faker
 from hypothesis import given
@@ -35,7 +38,7 @@ user_account_strategy = builds(
        payment_period=integers(min_value=3, max_value=60),
        loan_amount=floats(min_value=5000, max_value=100000),
        account_model=user_account_strategy)
-def test_given_valid_loan_request_can_not_take_loan_with_outstanding_balance(
+def test_given_valid_loan_request_then_user_can_not_take_loan_with_outstanding_balance_on_previous_loan(
         account_balance,
         interest_rate,
         payment_period,
@@ -58,7 +61,11 @@ def test_given_valid_loan_request_can_not_take_loan_with_outstanding_balance(
        payment_period=integers(min_value=3, max_value=60),
        loan_amount=floats(min_value=5000, max_value=100000),
        account_model=user_account_strategy)
-def test_given_valid_loan_request_adds_a_new_loan_to_account(interest_rate, payment_period, loan_amount, account_model):
+def test_given_valid_loan_request_then_a_new_loan_is_added_to_user_account(
+        interest_rate,
+        payment_period,
+        loan_amount,
+        account_model):
     # Act
     LoanRequest(
         account=account_model,
@@ -74,7 +81,11 @@ def test_given_valid_loan_request_adds_a_new_loan_to_account(interest_rate, paym
        payment_period=integers(min_value=12, max_value=60),
        loan_amount=floats(min_value=5000, max_value=100000),
        account_model=user_account_strategy)
-def test_given_valid_loan_request_emi_property_set(interest_rate, payment_period, loan_amount, account_model):
+def test_given_valid_loan_request_then_emi_should_be_set_for_the_loan(
+        interest_rate,
+        payment_period,
+        loan_amount,
+        account_model):
 
     # Act
     loan_request = LoanRequest(
@@ -95,7 +106,7 @@ def test_given_valid_loan_request_emi_property_set(interest_rate, payment_period
        payment_period=integers(min_value=12, max_value=60),
        loan_amount=floats(min_value=5000, max_value=100000),
        account_model=user_account_strategy)
-def test_given_valid_loan_repayment_request_current_balance_reduces_by_principal_paid(
+def test_given_valid_loan_repayment_request_then_the_current_balance_reduces_by_principal_amount_paid(
         interest_rate,
         payment_period,
         loan_amount,
@@ -118,7 +129,7 @@ def test_given_valid_loan_repayment_request_current_balance_reduces_by_principal
        payment_period=integers(min_value=12, max_value=60),
        loan_amount=floats(min_value=5000, max_value=100000),
        account_model=user_account_strategy)
-def test_given_valid_loan_repayment_the_payment_schedule_start_interest_paid_amount_is_zero(
+def test_given_valid_loan_repayment_the_the_payment_schedule_start_interest_amount_paid_is_zero(
         interest_rate,
         payment_period,
         loan_amount,
@@ -135,7 +146,7 @@ def test_given_valid_loan_repayment_the_payment_schedule_start_interest_paid_amo
        payment_period=integers(min_value=12, max_value=60),
        loan_amount=floats(min_value=5000, max_value=100000),
        account_model=user_account_strategy)
-def test_given_valid_loan_repayment_the_payment_schedule_start_principal_paid_amount_is_zero(
+def test_given_valid_loan_repayment_then_the_payment_schedule_start_principal_amount_paid_is_zero(
         interest_rate,
         payment_period,
         loan_amount,
@@ -152,7 +163,7 @@ def test_given_valid_loan_repayment_the_payment_schedule_start_principal_paid_am
        payment_period=integers(min_value=12, max_value=60),
        loan_amount=floats(min_value=5000, max_value=100000),
        account_model=user_account_strategy)
-def test_given_two_consecutive_valid_loan_repayments_loan_balance_reduces_by_sum_of_the_two_consecutive_principals(
+def test_given_two_consecutive_valid_loan_repayments_then_loan_balance_reduces_by_sum_of_the_two_consecutive_principals(
         interest_rate,
         payment_period,
         loan_amount,
@@ -180,3 +191,34 @@ def test_given_two_consecutive_valid_loan_repayments_loan_balance_reduces_by_sum
 
     # Assert
     assert loan_request.account.outstanding_balance == balance_from_paid_principal
+
+
+@given(interest_rate=floats(min_value=0.05, max_value=0.68),
+       payment_period=integers(min_value=12, max_value=60),
+       overdue_period=integers(min_value=1, max_value=50),
+       loan_amount=floats(min_value=5000, max_value=100000),
+       account_model=user_account_strategy)
+def test_given_loan_duration_has_lapsed_then_no_interest_is_applied_on_outstanding_balance(
+        interest_rate,
+        payment_period,
+        overdue_period,
+        loan_amount,
+        account_model):
+
+    # Arrange
+    loan_request = LoanRequest(
+        account=account_model,
+        interest_rate=interest_rate,
+        payment_period_in_months=payment_period)
+    loan_request.request_loan(loan_amount)
+    loan_due_date = loan_request.origination_date + relativedelta(months=+payment_period)
+
+    with patch(".".join([LoanRequest.__module__, "date"])) as mock_date:
+        mock_date.today.return_value = loan_due_date + relativedelta(months=overdue_period)
+
+        # Act
+        interest_amount_after_loan_due_date = loan_request.get_interest_on_balance(
+            balance=loan_request.account.outstanding_balance)
+
+        # Assert
+        assert interest_amount_after_loan_due_date == 0.00
