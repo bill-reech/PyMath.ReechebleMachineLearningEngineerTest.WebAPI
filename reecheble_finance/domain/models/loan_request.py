@@ -99,7 +99,7 @@ class LoanRequest(BaseDomainParserMixin):
             float: The calculated interest for the supplied balance given the interest rate.
         """
 
-        if LoanRequest.get_today() > self.due_date:
+        if LoanRequest.set_loan_origination_date() > self.due_date:
             return 0.00  # Do not charge interest on overdue loans
         return balance * self.interest_rate / 12
 
@@ -124,7 +124,6 @@ class LoanRequest(BaseDomainParserMixin):
                              loan_balance=self.account.outstanding_balance)
         )
 
-    # TODO: This should move to some common dates service that can be easily tested.
     @staticmethod
-    def get_today():
+    def set_loan_origination_date():
         return date.today()
