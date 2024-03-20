@@ -8,4 +8,4 @@ __all__ = [
 ]
 
 
-mongo_database_context: Callable[[], MongoClient] = lambda: MongoClient('mongodb://localhost:27017/')
+mongo_database_context: Callable[[], MongoClient] = lambda: MongoClient('localhost', 27017)
