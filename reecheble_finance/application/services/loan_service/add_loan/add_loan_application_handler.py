@@ -7,7 +7,7 @@ from typing import Type
 from reecheble_finance.application.sdk.dtos.add_loan_application.add_loan_application_response_dto import (
     AddLoanApplicationResponseDTO)
 from reecheble_finance.application.services.abstract_service import AbstractApplicationService
-from reecheble_finance.application.services.loan_service import AddLoanApplicationCommand
+from reecheble_finance.application.services.loan_service.add_loan.add_loan_application_command import AddLoanApplicationCommand
 from reecheble_finance.domain.models.loan_request import LoanRequest
 from reecheble_finance.infrastructure.data_access.repositories.loan_repository.abstract_loan_repository import \
     AbstractLoanRepository
