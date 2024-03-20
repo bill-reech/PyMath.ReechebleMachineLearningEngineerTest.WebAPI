@@ -1,3 +1,7 @@
+import json
+
+from pymongo import MongoClient
+
 from reecheble_finance.application.sdk.dtos.add_loan_application.add_loan_application_response_dto import (
     AddLoanApplicationResponseDTO
 )
@@ -7,6 +11,12 @@ from reecheble_finance.infrastructure.data_access.repositories.loan_repository.a
 
 
 class LoanRepository(AbstractLoanRepository):
+
+    def __init__(self, context: MongoClient) -> None:
+        super().__init__(context=context)
+        self.database = context['ReechebleFinance']
+        self.collection = self.database['ReechebleLoan']
+
     def list(self):
         pass
 
@@ -26,4 +36,5 @@ class LoanRepository(AbstractLoanRepository):
         pass
 
     def add(self, *, request) -> AddLoanApplicationResponseDTO:
-        pass
+        self.collection.insert_one(json.loads(request.json()))
+        return request
