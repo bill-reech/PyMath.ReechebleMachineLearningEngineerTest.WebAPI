@@ -8,4 +8,4 @@ __all__ = [
 
 
 class LoanAccountDTO(BaseDomainParserMixin):
-    outstanding_balance: PositiveFloat = 0.00
+    ...
