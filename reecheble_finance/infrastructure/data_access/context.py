@@ -20,10 +20,6 @@ class ServiceContext(ABC):
     def get_context(self):
         try:
             yield self.context
-            self.commit()
-        except BaseException as err:
-            self.rollback()
-            raise err
         finally:
             self.close()
 
