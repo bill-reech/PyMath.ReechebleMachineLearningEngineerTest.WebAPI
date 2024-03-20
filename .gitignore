@@ -147,3 +147,4 @@ poetry.lock
 # project files
 /global_configuration.json
 /docs/source/reference/*
+/data
