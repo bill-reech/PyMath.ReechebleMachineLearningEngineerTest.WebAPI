@@ -56,4 +56,3 @@ class AppManager:
         logger.info(f"Loading - {app_name} ...")
         app = app_service()
         self.app = app
-
