@@ -7,14 +7,13 @@ from dateutil.relativedelta import relativedelta
 from pydantic import PositiveInt, confloat
 
 from reecheble_finance.domain.models.loan_account import LoanAccount
+from reecheble_finance.domain.models.repayment_history import RepaymentHistory
 from reecheble_finance.domain.exceptions.domain_exceptions import LoanRequestDomainException
 from reecheble_finance.domain.abstract_domain.abstract_domain_parser_mixin import BaseDomainParserMixin
 
 __all__ = [
     "LoanRequest"
 ]
-
-from reecheble_finance.domain.models.repayment_history import RepaymentHistory
 
 
 class LoanRequest(BaseDomainParserMixin):
