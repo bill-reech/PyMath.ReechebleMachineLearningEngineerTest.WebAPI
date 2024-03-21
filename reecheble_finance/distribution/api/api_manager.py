@@ -6,7 +6,7 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi_versioning import VersionedFastAPI
 
-from reecheble_finance.distribution.api.routers import loan_controller
+from reecheble_finance.distribution.api.routers import loan_controller, loan_account_controller
 from reecheble_finance.domain.utilities.logger import LogManager
 
 __all__ = [
@@ -28,7 +28,10 @@ class App:
             title=self._title,
             description="Reecheble Finance Loans Microservice"
         )
+        # Add application routers
         hosting_application.include_router(loan_controller.router)
+        hosting_application.include_router(loan_account_controller.router)
+
         self.application = VersionedFastAPI(
             hosting_application,
             version_format='{major}',
