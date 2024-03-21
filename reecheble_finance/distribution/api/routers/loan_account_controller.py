@@ -15,14 +15,14 @@ from reecheble_finance.infrastructure.data_access.database.databases_tools.conte
 from reecheble_finance.shared.result.result import Result
 
 router = APIRouter(
-    prefix="/loan",
-    tags=["loan"],
+    prefix="/account",
+    tags=["account"],
     responses={404: {"description": "Not found"}}
 )
 
 
 @router.post(
-    "/loan_account",
+    "/add_account",
     name="Add a loan account to Reecheble",
     status_code=200,
     response_model=Result[AddLoanAccountResponseDTO],
