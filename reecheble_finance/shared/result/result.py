@@ -3,7 +3,11 @@ from typing import TypeVar, Generic
 from reecheble_finance.domain.abstract_domain.abstract_domain_parser_mixin import BaseDomainParserMixin
 from reecheble_finance.domain.enums.response_status.response_status import ResponseStatusEnum
 
-__all__ = ["Result", "SuccessResult"]
+__all__ = [
+    "Result",
+    "SuccessResult",
+    "FailureResult"
+]
 
 DataT = TypeVar("DataT")
 
@@ -16,3 +20,7 @@ class Result(BaseDomainParserMixin, Generic[DataT]):
 
 class SuccessResult(Result):
     ...
+
+
+class FailureResult(Result):
+    data: None = None

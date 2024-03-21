@@ -9,6 +9,6 @@ __all__ = [
 
 @unique
 class ResponseStatusEnum(MultiAttributeValueEnumBase):
-    succeed = 1, "success"
+    success = 1, "success"
     fail = 2, "fail"
     pending = 3, "pending"
