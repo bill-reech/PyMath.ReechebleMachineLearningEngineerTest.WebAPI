@@ -26,7 +26,8 @@ class LoanAccountRepository(AbstractLoanAccountRepository):
 
     def update(self, **kwargs) -> LoanAccount:
         update_loan_account: LoanAccount = kwargs.get("loan_account")
-        self.collection.replace_one({"id": str(kwargs.get("id"))}, json.loads(update_loan_account.json()), upsert=True)
+        self.collection.replace_one({"id": str(update_loan_account.id)}, json.loads(update_loan_account.json()),
+                                    upsert=True)
         return LoanAccount(**update_loan_account.dict())
 
     def delete(self, id_):
