@@ -4,13 +4,14 @@ A loan application command handler module.
 import sys
 import uuid
 
-from reecheble_finance import ResponseStatusEnum
 from reecheble_finance.application.sdk.dtos.add_loan_application.add_loan_application_response_dto import (
     AddLoanApplicationResponseDTO)
 from reecheble_finance.application.services.abstract_service import AbstractApplicationService
 from reecheble_finance.application.services.loan_service.add_loan.add_loan_application_command import (
     AddLoanApplicationCommand)
 from reecheble_finance.domain.abstract_repository.abstract_repository import RepositoryContextSession
+from reecheble_finance.domain.enums.response_status.response_status import ResponseStatusEnum
+from reecheble_finance.domain.exceptions.domain_exceptions import LoanRequestDomainException
 from reecheble_finance.domain.models.loan_account import LoanAccount
 from reecheble_finance.domain.models.loan_request import LoanRequest
 from reecheble_finance.infrastructure.data_access.repositories.loan_account_repository.abstract_loan_account_repository import (
@@ -54,12 +55,18 @@ class AddLoanApplicationCommandHandler(AbstractApplicationService):
                 request_amount=command.data.request_amount
             )
             loan_request.request_loan()
-            self.loan_account_repository.update(id=loan_account.id, loan_account=loan_account)
+            self.loan_account_repository.update(loan_account=loan_account)
             loan: LoanRequest = self.loan_repository.add(request=loan_request)
 
             return SuccessResult(
                 data=AddLoanApplicationResponseDTO(id=loan.id, loan_amount=loan.request_amount, loan_granted=True),
                 status=ResponseStatusEnum.success)
+
+        except LoanRequestDomainException as ex:
+            print(f"Error: {ex}", file=sys.stderr)
+            return FailureResult(data=None,
+                                 message="Come on, you still have a loan with an outstanding balance.",
+                                 status=ResponseStatusEnum.fail)
 
         except Exception as ex:
             print(f"Error: {ex}", file=sys.stderr)
