@@ -43,4 +43,4 @@ async def add_loan_application(
         return await AddLoanApplicationCommandHandler(
             context=context,
             repository=LoanRepository
-        ).handle(command=AddLoanApplicationCommand(details=request))
+        ).handle(command=AddLoanApplicationCommand(data=request))
