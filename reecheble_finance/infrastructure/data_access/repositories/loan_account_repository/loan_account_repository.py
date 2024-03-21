@@ -24,8 +24,10 @@ class LoanAccountRepository(AbstractLoanAccountRepository):
     def get_many(self, **filters):
         pass
 
-    def update(self, **kwargs):
-        pass
+    def update(self, **kwargs) -> LoanAccount:
+        update_loan_account: LoanAccount = kwargs.get("loan_account")
+        self.collection.replace_one({"id": str(kwargs.get("id"))}, json.loads(update_loan_account.json()), upsert=True)
+        return LoanAccount(**update_loan_account.dict())
 
     def delete(self, id_):
         pass

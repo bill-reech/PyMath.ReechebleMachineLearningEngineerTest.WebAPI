@@ -1,8 +1,10 @@
 """
 A loan application command handler module.
 """
+import sys
 import uuid
 
+from reecheble_finance import ResponseStatusEnum
 from reecheble_finance.application.sdk.dtos.add_loan_application.add_loan_application_response_dto import (
     AddLoanApplicationResponseDTO)
 from reecheble_finance.application.services.abstract_service import AbstractApplicationService
@@ -18,6 +20,7 @@ from reecheble_finance.infrastructure.data_access.repositories.loan_account_repo
 from reecheble_finance.infrastructure.data_access.repositories.loan_repository.abstract_loan_repository import (
     AbstractLoanRepository)
 from reecheble_finance.infrastructure.data_access.repositories.loan_repository.loan_repository import LoanRepository
+from reecheble_finance.shared.result.result import Result, FailureResult, SuccessResult
 
 
 class AddLoanApplicationCommandHandler(AbstractApplicationService):
@@ -27,22 +30,39 @@ class AddLoanApplicationCommandHandler(AbstractApplicationService):
         self.loan_repository: AbstractLoanRepository = LoanRepository(context=self.context)
         self.loan_account_repository: AbstractLoanAccountRepository = LoanAccountRepository(context=self.context)
 
-    async def handle(self, command: AddLoanApplicationCommand) -> AddLoanApplicationResponseDTO:
+    async def handle(self, command: AddLoanApplicationCommand) -> Result[AddLoanApplicationResponseDTO]:
         """
         Asynchronous loan application request handler.
 
         :param command: Loan application command
         """
 
-        loan_account: LoanAccount = self.loan_account_repository.get(id=command.data.account_id)
-        #  if loan_ account is none then the account does not exist, and we should result a not found result.
-        loan_request = LoanRequest(
-            id=uuid.uuid4(),
-            account=loan_account,
-            interest_rate=command.data.interest_rate,
-            payment_period_in_months=command.data.payment_period_in_months,
-            request_amount=command.data.request_amount
-        )
-        loan_request.request_loan()
-        loan: LoanRequest = self.loan_repository.add(request=loan_request)
-        return AddLoanApplicationResponseDTO(id=loan.id, loan_amount=loan.request_amount, loan_granted=True)
+        try:
+            loan_account: LoanAccount = self.loan_account_repository.get(id=command.data.account_id)
+
+            if loan_account is None:
+                print(f"Loan account with id: {command.data.account_id} not found", file=sys.stderr)
+                return FailureResult(data=None,
+                                     message="That was definitely not expected",
+                                     status=ResponseStatusEnum.fail)
+
+            loan_request = LoanRequest(
+                id=uuid.uuid4(),
+                account=loan_account,
+                interest_rate=command.data.interest_rate,
+                payment_period_in_months=command.data.payment_period_in_months,
+                request_amount=command.data.request_amount
+            )
+            loan_request.request_loan()
+            self.loan_account_repository.update(id=loan_account.id, loan_account=loan_account)
+            loan: LoanRequest = self.loan_repository.add(request=loan_request)
+
+            return SuccessResult(
+                data=AddLoanApplicationResponseDTO(id=loan.id, loan_amount=loan.request_amount, loan_granted=True),
+                status=ResponseStatusEnum.success)
+
+        except Exception as ex:
+            print(f"Error: {ex}", file=sys.stderr)
+            return FailureResult(data=None,
+                                 message="That was definitely not expected",
+                                 status=ResponseStatusEnum.fail)

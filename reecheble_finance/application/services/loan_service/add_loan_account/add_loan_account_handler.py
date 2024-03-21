@@ -1,6 +1,8 @@
 """
 A loan account creation command handler module.
 """
+
+import sys
 import uuid
 
 from reecheble_finance.application.sdk.dtos.add_loan_account.add_loan_account_response_dto import (
@@ -14,7 +16,7 @@ from reecheble_finance.infrastructure.data_access.repositories.loan_account_repo
     AbstractLoanAccountRepository)
 from reecheble_finance.infrastructure.data_access.repositories.loan_account_repository.loan_account_repository import (
     LoanAccountRepository)
-from reecheble_finance.shared.result.result import SuccessResult, Result
+from reecheble_finance.shared.result.result import SuccessResult, Result, FailureResult
 
 
 class AddLoanAccountCommandHandler(AbstractApplicationService):
@@ -30,12 +32,19 @@ class AddLoanAccountCommandHandler(AbstractApplicationService):
         :param command: Loan account creation command
         """
 
-        loan_account = LoanAccount(
-            id=uuid.uuid4(),
-            outstanding_balance=0.00,
-            first_name=command.data.first_name,
-            last_name=command.data.last_name,
-            email_address=command.data.email_address
-        )
-        loan_account = self.repository.add(request=loan_account)
-        return SuccessResult(data=AddLoanAccountResponseDTO(**loan_account.dict()), status=ResponseStatusEnum.succeed)
+        try:
+            loan_account = LoanAccount(id=uuid.uuid4(),
+                                       outstanding_balance=0.00,
+                                       first_name=command.data.first_name,
+                                       last_name=command.data.last_name,
+                                       email_address=command.data.email_address)
+            loan_account = self.repository.add(request=loan_account)
+
+            return SuccessResult(data=AddLoanAccountResponseDTO(**loan_account.dict()),
+                                 status=ResponseStatusEnum.success)
+
+        except Exception as ex:
+            print(f"Error: {ex}", file=sys.stderr)
+            return FailureResult(data=None,
+                                 message="That's definitely not the expected result",
+                                 status=ResponseStatusEnum.fail)
