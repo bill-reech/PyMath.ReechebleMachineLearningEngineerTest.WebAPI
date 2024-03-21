@@ -2,6 +2,7 @@ import json
 
 from pymongo import MongoClient
 
+from reecheble_finance import LoanRequest
 from reecheble_finance.application.sdk.dtos.add_loan_application.add_loan_application_response_dto import (
     AddLoanApplicationResponseDTO
 )
@@ -35,7 +36,6 @@ class LoanRepository(AbstractLoanRepository):
     def sync(self) -> None:
         pass
 
-    def add(self, *, request) -> AddLoanApplicationResponseDTO:
-        # TODO: There has to be a better way to do serialization for MongoDB. Dates are the ones causing problems here.
+    def add(self, *, request: LoanRequest) -> AddLoanApplicationResponseDTO:
         self.collection.insert_one(json.loads(request.json()))
-        return request
+        return AddLoanApplicationResponseDTO(id=request.id, loan_amount=request.request_amount, loan_granted=True)

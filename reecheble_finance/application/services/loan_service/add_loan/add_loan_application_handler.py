@@ -1,6 +1,8 @@
 """
 A loan application command handler module.
 """
+import uuid
+
 from reecheble_finance.application.sdk.dtos.add_loan_application.add_loan_application_response_dto import (
     AddLoanApplicationResponseDTO)
 from reecheble_finance.application.services.abstract_service import AbstractApplicationService
@@ -27,10 +29,11 @@ class AddLoanApplicationCommandHandler(AbstractApplicationService):
         """
 
         loan_request = LoanRequest(
+            id=uuid.uuid4(),
             account=command.data.account,
             interest_rate=command.data.interest_rate,
             payment_period_in_months=command.data.payment_period_in_months,
             request_amount=command.data.request_amount
         )
-        loan = self.repository.add(request=loan_request)
-        return AddLoanApplicationResponseDTO(id=loan.id, loan_amount=loan_request.request_amount, loan_granted=True)
+
+        return self.repository.add(request=loan_request)
