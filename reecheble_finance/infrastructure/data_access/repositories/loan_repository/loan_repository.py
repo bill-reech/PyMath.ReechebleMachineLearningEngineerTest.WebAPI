@@ -36,5 +36,6 @@ class LoanRepository(AbstractLoanRepository):
         pass
 
     def add(self, *, request) -> AddLoanApplicationResponseDTO:
+        # TODO: There has to be a better way to do serialization for MongoDB. Dates are the ones causing problems here.
         self.collection.insert_one(json.loads(request.json()))
         return request

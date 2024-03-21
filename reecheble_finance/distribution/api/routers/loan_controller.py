@@ -32,7 +32,7 @@ router = APIRouter(
     "/loan_application",
     name="Apply for a loan at Reecheble",
     status_code=200,
-    response_model=UUID,
+    response_model=AddLoanApplicationResponseDTO,
     description="Post a request to add a loan application.",
 )
 @version(0, 0)
