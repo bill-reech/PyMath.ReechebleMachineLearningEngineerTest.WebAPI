@@ -17,7 +17,6 @@ from reecheble_finance.distribution.api.dependencies import router_path_dependen
 from reecheble_finance.infrastructure.data_access.database.databases_tools.contexts.context_types import (
     PyMongoDbContext
 )
-from reecheble_finance.infrastructure.data_access.repositories.loan_repository import LoanRepository
 
 router = APIRouter(
     prefix="/loan",
@@ -38,6 +37,5 @@ async def add_loan_application(
         request: AddLoanApplicationRequestDTO,
         path_dependency: PyMongoDbContext = Depends(router_path_dependency)) -> AddLoanApplicationResponseDTO:
     with path_dependency.context().get_context() as context:
-        return await AddLoanApplicationCommandHandler(
-            context=context,
-            repository=LoanRepository).handle(command=AddLoanApplicationCommand(data=request))
+        add_loan_application_handler = AddLoanApplicationCommandHandler(context=context)
+        return await add_loan_application_handler.handle(command=AddLoanApplicationCommand(data=request))
