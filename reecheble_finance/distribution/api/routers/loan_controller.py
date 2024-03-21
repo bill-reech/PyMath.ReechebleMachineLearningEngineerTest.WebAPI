@@ -1,5 +1,3 @@
-from uuid import UUID
-
 from fastapi import Depends, APIRouter
 from fastapi_versioning import version
 
@@ -42,5 +40,4 @@ async def add_loan_application(
     with path_dependency.context().get_context() as context:
         return await AddLoanApplicationCommandHandler(
             context=context,
-            repository=LoanRepository
-        ).handle(command=AddLoanApplicationCommand(data=request))
+            repository=LoanRepository).handle(command=AddLoanApplicationCommand(data=request))
