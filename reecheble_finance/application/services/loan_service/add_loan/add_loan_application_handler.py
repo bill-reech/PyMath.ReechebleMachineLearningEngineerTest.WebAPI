@@ -28,10 +28,10 @@ class AddLoanApplicationCommandHandler(AbstractApplicationService):
         """
 
         loan_request = LoanRequest(
-            account=command.details.account,
-            interest_rate=command.details.interest_rate,
-            payment_period_in_months=command.details.payment_period_in_months,
-            request_amount=command.details.request_amount
+            account=command.data.account,
+            interest_rate=command.data.interest_rate,
+            payment_period_in_months=command.data.payment_period_in_months,
+            request_amount=command.data.request_amount
         )
         loan = self.repository.add(request=loan_request)
         return AddLoanApplicationResponseDTO(id=loan.id, loan_amount=loan_request.request_amount, loan_granted=True)

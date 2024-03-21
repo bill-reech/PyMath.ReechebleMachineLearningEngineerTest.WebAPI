@@ -16,7 +16,7 @@ class AddLoanApplicationCommand(BaseCommand):
     """
     Reecheble Finance loan application command.
 
-    :param details: Reecheble Finance loan application command details
+    :param data: Reecheble Finance loan application command details
     """
 
-    details: AddLoanApplicationRequestDTO
+    data: AddLoanApplicationRequestDTO
