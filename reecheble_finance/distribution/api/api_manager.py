@@ -29,8 +29,8 @@ class App:
             description="Reecheble Finance Loans Microservice"
         )
         # Add application routers
-        hosting_application.include_router(loan_controller.router)
         hosting_application.include_router(loan_account_controller.router)
+        hosting_application.include_router(loan_controller.router)
 
         self.application = VersionedFastAPI(
             hosting_application,
