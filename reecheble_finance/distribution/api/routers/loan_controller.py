@@ -22,7 +22,7 @@ router = APIRouter(
 
 
 @router.post(
-    "/loan_application",
+    "/add_loan",
     name="Apply for a loan at Reecheble",
     status_code=200,
     response_model=Result[AddLoanApplicationResponseDTO],
