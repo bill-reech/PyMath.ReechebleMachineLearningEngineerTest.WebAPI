@@ -1,7 +1,6 @@
 from typing import Type
 
-from pydantic import BaseModel
-
+from reecheble_finance.domain.abstract_domain.abstract_domain_parser_mixin import BaseDomainParserMixin
 from reecheble_finance.infrastructure.data_access.context import ServiceContext
 
 __all__ = [
@@ -9,5 +8,5 @@ __all__ = [
 ]
 
 
-class PathDependency(BaseModel):
+class PathDependency(BaseDomainParserMixin):
     context: Type[ServiceContext]
