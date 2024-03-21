@@ -6,4 +6,3 @@ Domain models. The parent module for all the domain models of the application.
 
 from .loan_account import *
 from .loan_request import *
-from .user import *

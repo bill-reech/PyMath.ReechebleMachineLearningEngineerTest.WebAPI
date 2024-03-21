@@ -1,6 +1,7 @@
+from uuid import UUID
+
 from pydantic import PositiveInt, confloat
 
-from reecheble_finance.application.sdk.dtos.loan_account_dto import LoanAccountDTO
 from reecheble_finance.domain.abstract_domain.abstract_domain_parser_mixin import BaseDomainParserMixin
 
 __all__ = [
@@ -9,7 +10,7 @@ __all__ = [
 
 
 class AddLoanApplicationRequestDTO(BaseDomainParserMixin):
-    account: LoanAccountDTO
+    account_id: UUID
     request_amount: PositiveInt = 0
     interest_rate: float
     payment_period_in_months: PositiveInt

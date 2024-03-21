@@ -1,15 +1,15 @@
+import uuid
 from unittest.mock import patch
-from dateutil.relativedelta import relativedelta
 
 import pytest
+from dateutil.relativedelta import relativedelta
 from faker import Faker
 from hypothesis import given
 from hypothesis.strategies import floats, integers, builds, just
 
-from reecheble_finance.domain.models.user import User
+from reecheble_finance.domain.exceptions.domain_exceptions import LoanRequestDomainException
 from reecheble_finance.domain.models.loan_account import LoanAccount
 from reecheble_finance.domain.models.loan_request import LoanRequest
-from reecheble_finance.domain.exceptions.domain_exceptions import LoanRequestDomainException
 
 fake = Faker()
 
@@ -22,14 +22,21 @@ def fake_last_name():
     return fake.last_name()
 
 
+def fake_email_address():
+    return fake.email()
+
+
+def fake_guid():
+    return uuid.uuid4()
+
+
 # Define the strategy for generating random user and account models.
 user_account_strategy = builds(
     LoanAccount,
-    user=builds(
-        User,
-        first_name=just(fake_first_name()),
-        last_name=just(fake_last_name())
-    )
+    id=just(fake_guid()),
+    first_name=just(fake_first_name()),
+    last_name=just(fake_last_name()),
+    email_address=just(fake_email_address())
 )
 
 
@@ -51,10 +58,11 @@ def test_given_valid_loan_request_then_user_can_not_take_loan_with_outstanding_b
     # Assert & Act
     with (pytest.raises(LoanRequestDomainException)):
         LoanRequest(
+            id=uuid.uuid4(),
             account=account_model,
             interest_rate=interest_rate,
-            payment_period_in_months=payment_period
-        ).request_loan(loan_amount)
+            payment_period_in_months=payment_period,
+            request_amount=loan_amount).request_loan()
 
 
 @given(interest_rate=floats(min_value=0.05, max_value=0.5),
@@ -68,10 +76,12 @@ def test_given_valid_loan_request_then_a_new_loan_is_added_to_user_account(
         account_model):
     # Act
     LoanRequest(
+        id=uuid.uuid4(),
         account=account_model,
         interest_rate=interest_rate,
-        payment_period_in_months=payment_period
-    ).request_loan(request_amount=loan_amount)
+        payment_period_in_months=payment_period,
+        request_amount=loan_amount
+    ).request_loan()
 
     # Assert
     assert account_model.outstanding_balance == loan_amount
@@ -89,10 +99,12 @@ def test_given_valid_loan_request_then_emi_should_be_set_for_the_loan(
 
     # Act
     loan_request = LoanRequest(
+        id=uuid.uuid4(),
         account=account_model,
         interest_rate=interest_rate,
-        payment_period_in_months=payment_period)
-    loan_request.request_loan(request_amount=loan_amount)
+        payment_period_in_months=payment_period,
+        request_amount=loan_amount)
+    loan_request.request_loan()
     emi = LoanRequest.get_equated_monthly_installment(
         loan_amount=loan_amount,
         monthly_interest_rate=interest_rate,
@@ -114,10 +126,12 @@ def test_given_valid_loan_repayment_request_then_the_current_balance_reduces_by_
 
     # Act
     loan_request = LoanRequest(
+        id=uuid.uuid4(),
         account=account_model,
         interest_rate=interest_rate,
-        payment_period_in_months=payment_period)
-    loan_request.request_loan(request_amount=loan_amount)
+        payment_period_in_months=payment_period,
+        request_amount=loan_amount)
+    loan_request.request_loan()
     initial_balance = account_model.outstanding_balance
     loan_request.make_payment()
 
@@ -135,10 +149,12 @@ def test_given_valid_loan_repayment_the_the_payment_schedule_start_interest_amou
         loan_amount,
         account_model):
     loan_request = LoanRequest(
+        id=uuid.uuid4(),
         account=account_model,
         interest_rate=interest_rate,
-        payment_period_in_months=payment_period)
-    loan_request.request_loan(request_amount=loan_amount)
+        payment_period_in_months=payment_period,
+        request_amount=loan_amount)
+    loan_request.request_loan()
     assert loan_request.interest_paid == 0.00
 
 
@@ -152,10 +168,12 @@ def test_given_valid_loan_repayment_then_the_payment_schedule_start_principal_am
         loan_amount,
         account_model):
     loan_request = LoanRequest(
+        id=uuid.uuid4(),
         account=account_model,
         interest_rate=interest_rate,
-        payment_period_in_months=payment_period)
-    loan_request.request_loan(request_amount=loan_amount)
+        payment_period_in_months=payment_period,
+        request_amount=loan_amount)
+    loan_request.request_loan()
     assert loan_request.principal_paid == 0.00
 
 
@@ -171,12 +189,14 @@ def test_given_two_consecutive_valid_loan_repayments_then_loan_balance_reduces_b
 
     # Arrange
     loan_request = LoanRequest(
+        id=uuid.uuid4(),
         account=account_model,
         interest_rate=interest_rate,
-        payment_period_in_months=payment_period)
+        payment_period_in_months=payment_period,
+        request_amount=loan_amount)
 
     # Act
-    loan_request.request_loan(request_amount=loan_amount)
+    loan_request.request_loan()
 
     # payment 1
     loan_request.make_payment()
@@ -207,10 +227,12 @@ def test_given_loan_duration_has_lapsed_then_no_interest_is_applied_on_outstandi
 
     # Arrange
     loan_request = LoanRequest(
+        id=uuid.uuid4(),
         account=account_model,
         interest_rate=interest_rate,
-        payment_period_in_months=payment_period)
-    loan_request.request_loan(loan_amount)
+        payment_period_in_months=payment_period,
+        request_amount=loan_amount)
+    loan_request.request_loan()
     loan_due_date = loan_request.origination_date + relativedelta(months=+payment_period)
 
     with patch(".".join([LoanRequest.__module__, "date"])) as mock_date:
