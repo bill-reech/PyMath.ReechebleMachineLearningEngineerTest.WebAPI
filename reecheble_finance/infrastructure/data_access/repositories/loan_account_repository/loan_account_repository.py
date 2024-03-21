@@ -2,8 +2,6 @@ import json
 
 from pymongo import MongoClient
 
-from reecheble_finance.application.sdk.dtos.add_loan_account.add_loan_account_response_dto import (
-    AddLoanAccountResponseDTO)
 from reecheble_finance.domain.models.loan_account import LoanAccount
 from reecheble_finance.infrastructure.data_access.repositories.loan_account_repository.abstract_loan_account_repository import (
     AbstractLoanAccountRepository)
@@ -19,8 +17,9 @@ class LoanAccountRepository(AbstractLoanAccountRepository):
     def list(self):
         pass
 
-    def get(self, **filters):
-        pass
+    def get(self, **filters) -> LoanAccount:
+        loan_account = self.collection.find_one({"id": str(filters.get("id"))})
+        return LoanAccount(**loan_account)
 
     def get_many(self, **filters):
         pass
@@ -34,10 +33,6 @@ class LoanAccountRepository(AbstractLoanAccountRepository):
     def sync(self) -> None:
         pass
 
-    def add(self, *, request: LoanAccount) -> AddLoanAccountResponseDTO:
+    def add(self, *, request: LoanAccount) -> LoanAccount:
         self.collection.insert_one(json.loads(request.json()))
-        return AddLoanAccountResponseDTO(
-            id=request.id,
-            first_name=request.first_name,
-            last_name=request.last_name,
-            email_address=request.email_address)
+        return self.get(id=request.id)

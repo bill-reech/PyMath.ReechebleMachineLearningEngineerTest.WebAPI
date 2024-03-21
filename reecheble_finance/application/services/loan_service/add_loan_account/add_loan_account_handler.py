@@ -35,5 +35,4 @@ class AddLoanAccountCommandHandler(AbstractApplicationService):
             last_name=command.data.last_name,
             email_address=command.data.email_address
         )
-
-        return self.repository.add(request=loan_request)
+        return AddLoanAccountResponseDTO(**self.repository.add(request=loan_request))

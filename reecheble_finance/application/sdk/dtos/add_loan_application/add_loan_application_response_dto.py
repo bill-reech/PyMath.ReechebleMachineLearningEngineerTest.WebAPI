@@ -1,4 +1,3 @@
-from typing import Optional
 from uuid import UUID
 
 from pydantic import confloat
@@ -11,6 +10,6 @@ __all__ = [
 
 
 class AddLoanApplicationResponseDTO(BaseDomainParserMixin):
-    id: Optional[UUID]
+    id: UUID
     loan_amount: confloat(ge=0)
     loan_granted: bool

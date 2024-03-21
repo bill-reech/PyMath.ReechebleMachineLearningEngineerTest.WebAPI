@@ -3,9 +3,6 @@ import json
 from pymongo import MongoClient
 
 from reecheble_finance import LoanRequest
-from reecheble_finance.application.sdk.dtos.add_loan_application.add_loan_application_response_dto import (
-    AddLoanApplicationResponseDTO
-)
 from reecheble_finance.infrastructure.data_access.repositories.loan_repository.abstract_loan_repository import (
     AbstractLoanRepository
 )
@@ -21,8 +18,9 @@ class LoanRepository(AbstractLoanRepository):
     def list(self):
         pass
 
-    def get(self, **filters):
-        pass
+    def get(self, **filters) -> LoanRequest:
+        loan_request = self.collection.find_one({"id": str(filters.get("id"))})
+        return LoanRequest(**loan_request)
 
     def get_many(self, **filters):
         pass
@@ -36,6 +34,6 @@ class LoanRepository(AbstractLoanRepository):
     def sync(self) -> None:
         pass
 
-    def add(self, *, request: LoanRequest) -> AddLoanApplicationResponseDTO:
+    def add(self, *, request: LoanRequest) -> LoanRequest:
         self.collection.insert_one(json.loads(request.json()))
-        return AddLoanApplicationResponseDTO(id=request.id, loan_amount=request.request_amount, loan_granted=True)
+        return self.get(id=request.id)
