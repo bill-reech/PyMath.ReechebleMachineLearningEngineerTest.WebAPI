@@ -30,6 +30,13 @@ class PayLoanInstallmentCommandHandler(AbstractApplicationService):
 
         try:
             loan_request: LoanRequest = self.loan_repository.get(id=command.data.loan_id)
+
+            if loan_request.account.outstanding_balance == 0:
+                return SuccessResult(data=PayLoanInstallmentResponseDTO(
+                    loan_id=loan_request.id,
+                    loan_outstanding_balance=0),
+                    status=ResponseStatusEnum.success,
+                    message="This loan has been paid out. You can apply for a new loan on this account.")
             loan_request.make_payment()
             loan_account: LoanAccount = self.loan_account_repository.update(loan_account=loan_request.account)
             # update loan_request
@@ -37,9 +44,7 @@ class PayLoanInstallmentCommandHandler(AbstractApplicationService):
 
             return SuccessResult(data=PayLoanInstallmentResponseDTO(
                 loan_id=loan_request.id,
-                loan_outstanding_balance=loan_account.outstanding_balance,
-                paid_interest=loan_request.interest_paid,
-                paid_principal=loan_request.principal_paid),
+                loan_outstanding_balance=loan_account.outstanding_balance),
                 status=ResponseStatusEnum.success)
 
         except Exception as ex:

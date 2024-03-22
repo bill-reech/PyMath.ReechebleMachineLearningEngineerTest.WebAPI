@@ -13,3 +13,4 @@ class AddLoanApplicationResponseDTO(BaseDomainParserMixin):
     id: UUID
     loan_amount: confloat(ge=0)
     loan_granted: bool
+    equated_monthly_installment: confloat(ge=0)

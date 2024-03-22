@@ -25,9 +25,9 @@ class LoanRequest(BaseDomainParserMixin):
     payment_period_in_months: PositiveInt
     origination_date: date = date.today()
     due_date: date = None
-    equated_monthly_instalment: confloat(ge=0.00) = 0.00
-    principal_paid: confloat(ge=0.00) = 0.00
-    interest_paid: confloat(ge=0.00) = 0.00
+    equated_monthly_installment: confloat(ge=0.00) = 0.00
+    latest_principal_paid: confloat(ge=0.00) = 0.00
+    latest_interest_paid: confloat(ge=0.00) = 0.00
     repayment_history: List[RepaymentHistory] = []
 
     def request_loan(self) -> None:
@@ -49,7 +49,7 @@ class LoanRequest(BaseDomainParserMixin):
         if self.account.outstanding_balance is None or self.account.outstanding_balance == 0:
             self.account.outstanding_balance = self.request_amount
 
-        self.equated_monthly_instalment = self.get_equated_monthly_installment(
+        self.equated_monthly_installment = self.get_equated_monthly_installment(
             loan_amount=self.request_amount,
             monthly_interest_rate=self.interest_rate,
             number_of_installments=self.payment_period_in_months)
@@ -112,18 +112,18 @@ class LoanRequest(BaseDomainParserMixin):
         Returns:
             None:
         """
-        self.interest_paid = self.get_interest_on_balance(self.account.outstanding_balance)
-        self.principal_paid = self.equated_monthly_instalment - self.interest_paid
-        if self.account.outstanding_balance < self.equated_monthly_instalment:
+        self.latest_interest_paid = self.get_interest_on_balance(self.account.outstanding_balance)
+        self.latest_principal_paid = self.equated_monthly_installment - self.latest_interest_paid
+        if self.account.outstanding_balance < self.equated_monthly_installment:
             self.account.outstanding_balance = 0.00
         else:
-            self.account.outstanding_balance -= self.principal_paid
+            self.account.outstanding_balance -= self.latest_principal_paid
         self.repayment_history.append(
             RepaymentHistory(id=uuid.uuid4(),
                              month=len(self.repayment_history),
-                             equated_monthly_instalment=self.equated_monthly_instalment,
-                             principal_paid=self.principal_paid,
-                             interest_paid=self.interest_paid,
+                             equated_monthly_instalment=self.equated_monthly_installment,
+                             principal_paid=self.latest_principal_paid,
+                             interest_paid=self.latest_interest_paid,
                              loan_balance=self.account.outstanding_balance)
         )
 

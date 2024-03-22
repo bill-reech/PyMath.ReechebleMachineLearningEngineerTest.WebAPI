@@ -59,7 +59,11 @@ class AddLoanApplicationCommandHandler(AbstractApplicationService):
             loan: LoanRequest = self.loan_repository.add(request=loan_request)
 
             return SuccessResult(
-                data=AddLoanApplicationResponseDTO(id=loan.id, loan_amount=loan.request_amount, loan_granted=True),
+                data=AddLoanApplicationResponseDTO(
+                    id=loan.id,
+                    loan_amount=loan.request_amount,
+                    loan_granted=True,
+                    equated_monthly_installment=loan.equated_monthly_installment),
                 status=ResponseStatusEnum.success)
 
         except LoanRequestDomainException as ex:
