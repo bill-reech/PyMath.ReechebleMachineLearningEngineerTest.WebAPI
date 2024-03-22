@@ -66,6 +66,7 @@ The swagger document can be found at [API Host Service](http://0.0.0.0:8000/late
 | Library                                                              | Description                 | External Content                                                                                                                                     |
 |----------------------------------------------------------------------|-----------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
 | [pytest](https://docs.pytest.org/en/7.1.x/index.html)                | Testing framework           | [Introduction](https://docs.pytest.org/en/7.1.x/getting-started.html) > [Deep Dive](https://docs.pytest.org/en/7.1.x/reference/reference.html)       |
+| [unittest](https://docs.python.org/3/library/unittest.html)          | UnitTest creation framework | [Introduction](https://docs.python.org/3/library/unittest.html) > [Deep Dive](https://docs.python.org/3/library/unittest.html)                       |
 | [hypothesis](https://hypothesis.readthedocs.io/en/latest/index.html) | UnitTest creation framework | [Introduction](https://hypothesis.readthedocs.io/en/latest/quickstart.html) > [Deep Dive](https://hypothesis.readthedocs.io/en/latest/settings.html) |
 
 ### Database
