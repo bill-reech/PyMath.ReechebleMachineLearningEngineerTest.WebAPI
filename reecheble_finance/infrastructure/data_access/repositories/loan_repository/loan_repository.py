@@ -2,7 +2,7 @@ import json
 
 from pymongo import MongoClient
 
-from reecheble_finance import LoanRequest
+from reecheble_finance.domain.models.loan_request import LoanRequest
 from reecheble_finance.infrastructure.data_access.repositories.loan_repository.abstract_loan_repository import (
     AbstractLoanRepository
 )

@@ -1,3 +1,6 @@
+from typing import List
+from uuid import UUID
+
 from fastapi import Depends, APIRouter
 from fastapi_versioning import version
 
@@ -5,6 +8,10 @@ from reecheble_finance.application.sdk.dtos.add_loan_application.add_loan_applic
     AddLoanApplicationRequestDTO)
 from reecheble_finance.application.sdk.dtos.add_loan_application.add_loan_application_response_dto import (
     AddLoanApplicationResponseDTO)
+from reecheble_finance.application.sdk.dtos.get_loan_history_snapshot.get_loan_installment_history_snapshot_request import (
+    GetLoanInstallmentHistorySnapshotRequestDTO)
+from reecheble_finance.application.sdk.dtos.get_loan_history_snapshot.get_loan_installment_history_snapshot_response import (
+    GetLoanInstallmentHistorySnapshotResponseDTO)
 from reecheble_finance.application.sdk.dtos.pay_loan_installment.pay_loan_installment_request_dto import (
     PayLoanInstallmentRequestDTO)
 from reecheble_finance.application.sdk.dtos.pay_loan_installment.pay_loan_installment_response_dto import (
@@ -13,6 +20,10 @@ from reecheble_finance.application.services.loan_service.add_loan.add_loan_appli
     AddLoanApplicationCommand)
 from reecheble_finance.application.services.loan_service.add_loan.add_loan_application_handler import (
     AddLoanApplicationCommandHandler)
+from reecheble_finance.application.services.loan_service.get_loan_installment_history.get_loan_installment_history_query import (
+    GetLoanInstallmentHistoryQuery)
+from reecheble_finance.application.services.loan_service.get_loan_installment_history.get_loan_installment_history_query_handler import (
+    GetLoanInstallmentHistoryQueryHandler)
 from reecheble_finance.application.services.loan_service.pay_loan_installment.pay_loan_installment_command import (
     PayLoanInstallmentCommand)
 from reecheble_finance.application.services.loan_service.pay_loan_installment.pay_loan_installment_handler import (
@@ -61,3 +72,21 @@ async def pay_loan_installment(
     with path_dependency.context().get_context() as context:
         pay_loan_installment_handler = PayLoanInstallmentCommandHandler(context=context)
         return await pay_loan_installment_handler.handle(command=PayLoanInstallmentCommand(data=request))
+
+
+@router.get(
+    "/get_loan/{loan_id}",
+    name="Get the loan installment history on specific loan at Reecheble",
+    status_code=200,
+    response_model=Result[List[GetLoanInstallmentHistorySnapshotResponseDTO]],
+    description="Get the loan installment history to date for a loan.",
+)
+@version(0, 1)
+async def get_loan_installment_history(
+        loan_id: UUID,
+        path_dependency: PyMongoDbContext = Depends(router_path_dependency)) -> Result[List[
+    GetLoanInstallmentHistorySnapshotResponseDTO]]:
+    with path_dependency.context().get_context() as context:
+        get_loan_installment_history_handler = GetLoanInstallmentHistoryQueryHandler(context=context)
+        return await get_loan_installment_history_handler.handle(
+            query=GetLoanInstallmentHistoryQuery(data=GetLoanInstallmentHistorySnapshotRequestDTO(id=loan_id)))
