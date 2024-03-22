@@ -21,7 +21,7 @@ class LoanRequest(BaseDomainParserMixin):
     id: UUID
     account: LoanAccount
     request_amount: confloat(ge=0)
-    interest_rate: float
+    interest_rate: confloat(ge=0, le=100)
     payment_period_in_months: PositiveInt
     origination_date: date = date.today()
     due_date: date = None
@@ -78,8 +78,9 @@ class LoanRequest(BaseDomainParserMixin):
         Returns:
             float: The equated monthly installment for a given loan amount borrowed.
         """
-        numerator = (loan_amount * monthly_interest_rate * math.pow(1 + monthly_interest_rate, number_of_installments))
-        denominator = math.pow(1 + monthly_interest_rate, number_of_installments) - 1
+        numerator = (loan_amount * (monthly_interest_rate * 0.01 / 12) * math.pow(
+            1 + (monthly_interest_rate * 0.01 / 12), number_of_installments))
+        denominator = math.pow(1 + (monthly_interest_rate * 0.01 / 12), number_of_installments) - 1
 
         return numerator / denominator
 
@@ -99,7 +100,7 @@ class LoanRequest(BaseDomainParserMixin):
 
         if LoanRequest.set_loan_origination_date() > self.due_date:
             return 0.00  # Do not charge interest on overdue loans
-        return balance * self.interest_rate / 12
+        return balance * (self.interest_rate * 0.01) / self.payment_period_in_months
 
     def make_payment(self) -> None:
         """
@@ -112,8 +113,11 @@ class LoanRequest(BaseDomainParserMixin):
             None:
         """
         self.interest_paid = self.get_interest_on_balance(self.account.outstanding_balance)
-        self.principal_paid = self.equated_monthly_instalment - self.principal_paid
-        self.account.outstanding_balance -= self.principal_paid
+        self.principal_paid = self.equated_monthly_instalment - self.interest_paid
+        if self.account.outstanding_balance < self.equated_monthly_instalment:
+            self.account.outstanding_balance = 0.00
+        else:
+            self.account.outstanding_balance -= self.principal_paid
         self.repayment_history.append(
             RepaymentHistory(id=uuid.uuid4(),
                              month=len(self.repayment_history),
