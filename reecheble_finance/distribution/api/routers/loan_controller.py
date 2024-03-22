@@ -76,7 +76,7 @@ async def pay_loan_installment(
 
 @router.get(
     "/get_loan/{loan_id}",
-    name="Get the loan installment history on specific loan at Reecheble",
+    name="Get the loan installment history on a specific loan at Reecheble",
     status_code=200,
     response_model=Result[List[GetLoanInstallmentHistorySnapshotResponseDTO]],
     description="Get the loan installment history to date for a loan.",
