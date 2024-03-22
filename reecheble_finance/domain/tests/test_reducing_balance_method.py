@@ -84,7 +84,7 @@ def test_given_valid_loan_request_then_a_new_loan_is_added_to_user_account(
     ).request_loan()
 
     # Assert
-    assert account_model.outstanding_balance == loan_amount
+    assert account_model.outstanding_balance == round(loan_amount, 2)
 
 
 @given(interest_rate=floats(min_value=0.05, max_value=0.5),

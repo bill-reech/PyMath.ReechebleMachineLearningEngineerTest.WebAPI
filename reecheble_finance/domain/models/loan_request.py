@@ -47,12 +47,13 @@ class LoanRequest(BaseDomainParserMixin):
             raise LoanRequestDomainException(message="Account has an outstanding balance")
 
         if self.account.outstanding_balance is None or self.account.outstanding_balance == 0:
-            self.account.outstanding_balance = self.request_amount
+            self.account.outstanding_balance = round(self.request_amount, 2)
 
         self.equated_monthly_installment = self.get_equated_monthly_installment(
             loan_amount=self.request_amount,
             monthly_interest_rate=self.interest_rate,
             number_of_installments=self.payment_period_in_months)
+        self.equated_monthly_installment = round(self.equated_monthly_installment, 2)
         self.due_date = self.origination_date + relativedelta(months=+self.payment_period_in_months)
 
         self.repayment_history.append(
@@ -82,7 +83,7 @@ class LoanRequest(BaseDomainParserMixin):
             1 + (monthly_interest_rate * 0.01 / 12), number_of_installments))
         denominator = math.pow(1 + (monthly_interest_rate * 0.01 / 12), number_of_installments) - 1
 
-        return numerator / denominator
+        return round(numerator / denominator, 2)
 
     def get_interest_on_balance(self, balance: float) -> float:
         """
