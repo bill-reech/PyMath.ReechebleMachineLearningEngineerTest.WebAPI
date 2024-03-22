@@ -5,7 +5,7 @@ The module contains models and entities used to model the Reecheble Finance doma
 .. note::
    The module should have no dependencies to any low level details.
 
-.. currentmodule:: zorn
+.. currentmodule:: reecheble_finance
 
 .. autosummary::
    :recursive:

@@ -13,3 +13,4 @@ making up the Reecheble Data Engineer Test microservice.
    Domain <reference_index/domain>
    Application <reference_index/application>
    Infrastructure <reference_index/infrastructure>
+   Shared <reference_index/shared>

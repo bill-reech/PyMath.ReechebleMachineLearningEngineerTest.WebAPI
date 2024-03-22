@@ -8,6 +8,4 @@ Infrastructure
    :nosignatures:
    :toctree: ../reference
 
-   ~infrastructure.data_access
-   ~infrastructure.infrastructure
-   ~infrastructure.integration
+   ~shared.result
