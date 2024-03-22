@@ -48,11 +48,11 @@ This section outlines the setup for a docker container.
 
 ### Overall
 
-| Library      | Description               | External Content                                                                                                             |
-|--------------|---------------------------|------------------------------------------------------------------------------------------------------------------------------|
-| [pymongo]()  | MongoDB Driver            | [Introduction](https://pymongo.readthedocs.io/en/stable/) > [Deep Dive](https://pymongo.readthedocs.io/en/stable/)           |
-| [pydantic]() | Parser                    | [Introduction](https://docs.pydantic.dev/latest/) > [Deep Dive](https://docs.pydantic.dev/latest/)                           |
-| [asyncio]()  | Asyncronous processessing | [Introduction](https://docs.python.org/3/library/asyncio.html) > [Deep Dive](https://docs.python.org/3/library/asyncio.html) |
+| Library      | Description             | External Content                                                                                                             |
+|--------------|-------------------------|------------------------------------------------------------------------------------------------------------------------------|
+| [pymongo]()  | MongoDB Driver          | [Introduction](https://pymongo.readthedocs.io/en/stable/) > [Deep Dive](https://pymongo.readthedocs.io/en/stable/)           |
+| [pydantic]() | Parser                  | [Introduction](https://docs.pydantic.dev/latest/) > [Deep Dive](https://docs.pydantic.dev/latest/)                           |
+| [asyncio]()  | Asynchronous processing | [Introduction](https://docs.python.org/3/library/asyncio.html) > [Deep Dive](https://docs.python.org/3/library/asyncio.html) |
 
 ### API Server
 The swagger document can be found at [API Host Service](http://0.0.0.0:8000/latest/docs)
