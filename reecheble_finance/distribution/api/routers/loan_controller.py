@@ -26,9 +26,10 @@ router = APIRouter(
     name="Apply for a loan at Reecheble",
     status_code=200,
     response_model=Result[AddLoanApplicationResponseDTO],
-    description="Post a request to add a loan application.",
+    description="Post a request to add a loan application. "
+                "A loan account must be created first before putting a loan application.",
 )
-@version(0, 0)
+@version(0, 1)
 async def add_loan_application(
         request: AddLoanApplicationRequestDTO,
         path_dependency: PyMongoDbContext = Depends(router_path_dependency)) -> Result[AddLoanApplicationResponseDTO]:
