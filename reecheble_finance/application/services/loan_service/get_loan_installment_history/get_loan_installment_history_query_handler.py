@@ -1,3 +1,7 @@
+"""
+A loan installment history query handler module.
+"""
+
 import sys
 from typing import List
 
@@ -23,6 +27,12 @@ class GetLoanInstallmentHistoryQueryHandler(AbstractApplicationService):
 
     async def handle(self, query: GetLoanInstallmentHistoryQuery) -> Result[
         List[GetLoanInstallmentHistorySnapshotResponseDTO]]:
+        """
+        Asynchronous loan installment history query request handler.
+
+        :param query: Loan installment history query.
+        """
+
         try:
             loan_request: LoanRequest = self.loan_repository.get(id=query.data.id)
             return SuccessResult(
