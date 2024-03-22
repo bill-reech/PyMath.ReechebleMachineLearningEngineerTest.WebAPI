@@ -30,6 +30,6 @@ RUN ["dos2unix", "entry_point.sh"]
 
 FROM BaseBuild
 
-COPY ./global_configuration.json ./global_configuration.json
+COPY global_configuration_template.json ./global_configuration.json
 
 CMD ["./entry_point.sh"]

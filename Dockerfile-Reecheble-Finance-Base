@@ -22,9 +22,9 @@ COPY pyproject.toml poetry.toml ./
 
 RUN poetry install --no-interaction --no-ansi --without dev && apt-get remove -y gcc && apt-get -y autoremove
 
-ADD zorn ./zorn
+ADD reecheble_finance ./reecheble_finance
 
-COPY entry_point.sh main.py alembic.ini ./
+COPY entry_point.sh main.py ./
 
 RUN chmod +x ./entry_point.sh
 
