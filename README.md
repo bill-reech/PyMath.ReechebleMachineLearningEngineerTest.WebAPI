@@ -79,10 +79,11 @@ The swagger document can be found at [API Host Service](http://0.0.0.0:8000/late
 - [X] Dependency setup using poetry
 - [X] Rolling file logging with console output
 - [X] Swagger Documented APIs (FastAPI)
-- [x] Docker containerization
 - [x] Unit Testing
 
 ### Feature Backlog
+
+- [ ] Docker containerization
 - [ ] Kubernetes cluster integration
 - [ ] Event messaging integration
 - [ ] API Stress Testing
