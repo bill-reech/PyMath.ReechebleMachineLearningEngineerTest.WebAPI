@@ -82,6 +82,7 @@ The swagger document can be found at [API Host Service](http://0.0.0.0:8000/late
 - [X] Rolling file logging with console output
 - [X] Swagger Documented APIs (FastAPI)
 - [x] Unit Testing
+- [x] Sphinx Documentation
 
 ### Feature Backlog
 
