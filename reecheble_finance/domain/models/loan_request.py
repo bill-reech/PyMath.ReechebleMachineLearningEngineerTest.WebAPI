@@ -115,10 +115,14 @@ class LoanRequest(BaseDomainParserMixin):
         """
         self.latest_interest_paid = self.get_interest_on_balance(self.account.outstanding_balance)
         self.latest_principal_paid = self.equated_monthly_installment - self.latest_interest_paid
+
+        self.latest_principal_paid = round(self.latest_principal_paid, 2)
+        self.latest_interest_paid = round(self.latest_interest_paid, 2)
         if self.account.outstanding_balance < self.equated_monthly_installment:
             self.account.outstanding_balance = 0.00
         else:
             self.account.outstanding_balance -= self.latest_principal_paid
+            self.account.outstanding_balance = round(self.account.outstanding_balance, 2)
         self.repayment_history.append(
             RepaymentHistory(id=uuid.uuid4(),
                              month=len(self.repayment_history),
