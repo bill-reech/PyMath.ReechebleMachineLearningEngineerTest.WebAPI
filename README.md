@@ -26,26 +26,32 @@ This section outlines the development setup of the Reecheble Finance **Web-API**
    ```
    poetry install
    ```
-4. Activate `pre-commit` hooks.
+4. Activate `pre-commit` hooks. (*An optional step for devs who like structured commit messages*)
    ```
    poetry run pre-commit install --hook-type commit-msg --hook-type pre-push
    ```
-5. Start the server by running the `main.py` file located in the project directory.
+5. Pull and startup the `latest` mongodb docker image. (You can use Mongo Atlas instead of running a local instance)
+   ```
+   docker run --name mongodb -d -p 27017:27017 -v $(pwd)/data:/data/db mongo:latest
+   ```
+6. Install Mongo Compass to view your mongo documents locally (*Optional*)
+7. Start the server by running the `main.py` file located in the project directory.
 
-6. Visit [API Host Service](http://0.0.0.0:8000/latest/docs) to view documentation.
+8. Visit [API Host Service](http://0.0.0.0:8000/latest/docs) to view documentation.
 
-## Docker Setup Guide
+## Docker Setup Guide [In Development]
 
 This section outlines the setup for a docker container.
 
 ## Stack Overview
 
 ### Overall
-| Library        | Description               | External Content                 |
-|----------------|---------------------------|----------------------------------|
-| [sqlalchemy]() | ORM                       | [Introduction]() > [Deep Dive]() |
-| [pydantic]()   | Parser                    | [Introduction]() > [Deep Dive]() |
-| [asyncio]()    | Asyncronous processessing | [Introduction]() > [Deep Dive]() |
+
+| Library      | Description               | External Content                                                          |
+|--------------|---------------------------|---------------------------------------------------------------------------|
+| [pymongo]()  | MongoDB Driver            | [Introduction](https://pymongo.readthedocs.io/en/stable/) > [Deep Dive]() |
+| [pydantic]() | Parser                    | [Introduction](https://docs.pydantic.dev/latest/) > [Deep Dive]()         |
+| [asyncio]()  | Asyncronous processessing | [Introduction]() > [Deep Dive]()                                          |
 
 ### API Server
 The swagger document can be found at [API Host Service](http://0.0.0.0:8000/latest/docs)
