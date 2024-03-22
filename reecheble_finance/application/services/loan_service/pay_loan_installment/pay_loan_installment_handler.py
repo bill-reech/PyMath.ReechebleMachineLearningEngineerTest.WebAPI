@@ -43,7 +43,10 @@ class PayLoanInstallmentCommandHandler(AbstractApplicationService):
             if loan_request.account.outstanding_balance == 0:
                 return SuccessResult(data=PayLoanInstallmentResponseDTO(
                     loan_id=loan_request.id,
-                    loan_outstanding_balance=0),
+                    loan_outstanding_balance=0.00,
+                    interest_paid=0.00,
+                    principal_paid=0.00,
+                    amount_paid=0.00),
                     status=ResponseStatusEnum.success,
                     message="This loan has been paid out. You can apply for a new loan on this account.")
             loan_request.make_payment()
@@ -53,7 +56,10 @@ class PayLoanInstallmentCommandHandler(AbstractApplicationService):
 
             return SuccessResult(data=PayLoanInstallmentResponseDTO(
                 loan_id=loan_request.id,
-                loan_outstanding_balance=loan_account.outstanding_balance),
+                loan_outstanding_balance=loan_account.outstanding_balance,
+                interest_paid=loan_request.latest_interest_paid,
+                principal_paid=loan_request.latest_principal_paid,
+                amount_paid=round(loan_request.latest_interest_paid + loan_request.latest_principal_paid, 2)),
                 status=ResponseStatusEnum.success)
 
         except Exception as ex:
