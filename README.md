@@ -34,7 +34,8 @@ This section outlines the development setup of the Reecheble Finance **Web-API**
    ```
    docker run --name mongodb -d -p 27017:27017 -v $(pwd)/data:/data/db mongo:latest
    ```
-6. Install Mongo Compass to view your mongo documents locally (*Optional*)
+6. Install [Mongo Compass](https://www.mongodb.com/docs/compass/current/install/) to view your mongo documents locally (
+   *Optional*)
 7. Start the server by running the `main.py` file located in the project directory.
 
 8. Visit [API Host Service](http://0.0.0.0:8000/latest/docs) to view documentation.
