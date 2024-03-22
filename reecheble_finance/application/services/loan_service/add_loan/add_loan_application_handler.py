@@ -63,7 +63,11 @@ class AddLoanApplicationCommandHandler(AbstractApplicationService):
                     id=loan.id,
                     loan_amount=loan.request_amount,
                     loan_granted=True,
-                    equated_monthly_installment=loan.equated_monthly_installment),
+                    equated_monthly_installment=loan.equated_monthly_installment,
+                    loan_outstanding_balance=loan.account.outstanding_balance,
+                    interest_paid=loan.latest_interest_paid,
+                    principal_paid=loan.latest_principal_paid,
+                    amount_paid=round(loan.latest_interest_paid + loan.latest_principal_paid, 2)),
                 status=ResponseStatusEnum.success)
 
         except LoanRequestDomainException as ex:
