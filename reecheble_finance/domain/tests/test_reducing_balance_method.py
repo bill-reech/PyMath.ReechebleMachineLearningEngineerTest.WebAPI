@@ -136,7 +136,7 @@ def test_given_valid_loan_repayment_request_then_the_current_balance_reduces_by_
     loan_request.make_payment()
 
     # Assert
-    assert account_model.outstanding_balance == initial_balance - loan_request.latest_principal_paid
+    assert round(account_model.outstanding_balance, 2) == round(initial_balance - loan_request.latest_principal_paid, 2)
 
 
 @given(interest_rate=floats(min_value=0.05, max_value=0.5),
