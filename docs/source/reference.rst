@@ -2,7 +2,7 @@ Reference Manual
 ----------------
 
 This reference manual details modules, functions, and variables
-making up the zoRn Event Marketplace distribution microservice.
+making up the Reecheble Data Engineer Test microservice.
 
 .. note:: This is a good note.
 

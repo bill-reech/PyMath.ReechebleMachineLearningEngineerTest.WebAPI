@@ -1,3 +1,7 @@
+"""
+A pay loan installment command handler module.
+"""
+
 import sys
 
 from reecheble_finance.application.sdk.dtos.pay_loan_installment.pay_loan_installment_response_dto import (
@@ -27,6 +31,11 @@ class PayLoanInstallmentCommandHandler(AbstractApplicationService):
         self.loan_account_repository: AbstractLoanAccountRepository = LoanAccountRepository(context=self.context)
 
     async def handle(self, command: PayLoanInstallmentCommand) -> Result[PayLoanInstallmentResponseDTO]:
+        """
+        Asynchronous pay loan installment command handler.
+
+        :param command: Pay loan installment command.
+        """
 
         try:
             loan_request: LoanRequest = self.loan_repository.get(id=command.data.loan_id)

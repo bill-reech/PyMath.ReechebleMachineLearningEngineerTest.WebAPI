@@ -16,9 +16,9 @@ sys.path.insert(0, os.path.abspath('../..'))
 
 # -- Project information -----------------------------------------------------
 
-project = 'zoRn Event Marketplace Distribution Microservice'
-copyright = '2023, pyMathProjects'
-author = 'SeaOtter'
+project = 'Reecheble Data Engineering Test Microservice'
+copyright = '2024, PyMathProjects'
+author = 'Mduduzi Mlilo'
 
 # The short X.Y version
 version = '0.1.0'
