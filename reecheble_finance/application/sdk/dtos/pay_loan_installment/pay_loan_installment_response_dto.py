@@ -12,3 +12,6 @@ __all__ = [
 class PayLoanInstallmentResponseDTO(BaseDomainParserMixin):
     loan_id: UUID
     loan_outstanding_balance: confloat(ge=0)
+    interest_paid: confloat(ge=0)
+    principal_paid: confloat(ge=0)
+    amount_paid: confloat(ge=0)
