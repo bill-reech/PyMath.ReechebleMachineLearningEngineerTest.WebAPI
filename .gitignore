@@ -145,6 +145,6 @@ poetry.lock
 /.idea
 
 # project files
-/global_configuration.json
+/global_configuration_template.json
 /docs/source/reference/*
 /data
