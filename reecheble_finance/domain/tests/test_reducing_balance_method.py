@@ -111,7 +111,7 @@ def test_given_valid_loan_request_then_emi_should_be_set_for_the_loan(
         number_of_installments=payment_period)
 
     # Assert
-    assert loan_request.equated_monthly_instalment == emi
+    assert loan_request.equated_monthly_installment == emi
 
 
 @given(interest_rate=floats(min_value=0.05, max_value=0.5),
@@ -136,7 +136,7 @@ def test_given_valid_loan_repayment_request_then_the_current_balance_reduces_by_
     loan_request.make_payment()
 
     # Assert
-    assert account_model.outstanding_balance == initial_balance - loan_request.principal_paid
+    assert account_model.outstanding_balance == initial_balance - loan_request.latest_principal_paid
 
 
 @given(interest_rate=floats(min_value=0.05, max_value=0.5),
@@ -155,7 +155,7 @@ def test_given_valid_loan_repayment_the_the_payment_schedule_start_interest_amou
         payment_period_in_months=payment_period,
         request_amount=loan_amount)
     loan_request.request_loan()
-    assert loan_request.interest_paid == 0.00
+    assert loan_request.latest_interest_paid == 0.00
 
 
 @given(interest_rate=floats(min_value=0.05, max_value=0.5),
@@ -174,7 +174,7 @@ def test_given_valid_loan_repayment_then_the_payment_schedule_start_principal_am
         payment_period_in_months=payment_period,
         request_amount=loan_amount)
     loan_request.request_loan()
-    assert loan_request.principal_paid == 0.00
+    assert loan_request.latest_principal_paid == 0.00
 
 
 @given(interest_rate=floats(min_value=0.05, max_value=0.68),

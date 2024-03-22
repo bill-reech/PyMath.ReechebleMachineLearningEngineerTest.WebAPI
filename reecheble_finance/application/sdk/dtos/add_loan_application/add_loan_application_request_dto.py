@@ -12,5 +12,5 @@ __all__ = [
 class AddLoanApplicationRequestDTO(BaseDomainParserMixin):
     account_id: UUID
     request_amount: PositiveFloat = 0
-    interest_rate: confloat(ge=0, le=100) = 0.10
+    interest_rate: confloat(ge=0, le=100) = 10
     payment_period_in_months: PositiveInt = 18
