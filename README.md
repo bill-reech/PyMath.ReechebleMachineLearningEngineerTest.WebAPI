@@ -48,19 +48,19 @@ This section outlines the setup for a docker container.
 
 ### Overall
 
-| Library      | Description               | External Content                                                          |
-|--------------|---------------------------|---------------------------------------------------------------------------|
-| [pymongo]()  | MongoDB Driver            | [Introduction](https://pymongo.readthedocs.io/en/stable/) > [Deep Dive]() |
-| [pydantic]() | Parser                    | [Introduction](https://docs.pydantic.dev/latest/) > [Deep Dive]()         |
-| [asyncio]()  | Asyncronous processessing | [Introduction]() > [Deep Dive]()                                          |
+| Library      | Description               | External Content                                                                                                             |
+|--------------|---------------------------|------------------------------------------------------------------------------------------------------------------------------|
+| [pymongo]()  | MongoDB Driver            | [Introduction](https://pymongo.readthedocs.io/en/stable/) > [Deep Dive](https://pymongo.readthedocs.io/en/stable/)           |
+| [pydantic]() | Parser                    | [Introduction](https://docs.pydantic.dev/latest/) > [Deep Dive](https://docs.pydantic.dev/latest/)                           |
+| [asyncio]()  | Asyncronous processessing | [Introduction](https://docs.python.org/3/library/asyncio.html) > [Deep Dive](https://docs.python.org/3/library/asyncio.html) |
 
 ### API Server
 The swagger document can be found at [API Host Service](http://0.0.0.0:8000/latest/docs)
 
-| Library                                 | Description            | External Content                                                                                     |
-|-----------------------------------------|------------------------|------------------------------------------------------------------------------------------------------|
-| [fastAPI](https://fastapi.tiangolo.com) | Design & document APIs | [Introduction](https://blog.devgenius.io/brief-introduction-to-fastapi-d6f25793b11a) > [Deep Dive]() |
-| [uvicorn](https://www.uvicorn.org/)     | Web Server             | [Introduction]() > [Deep Dive]()                                                                     |
+| Library                                 | Description            | External Content                                                                                                                                                         |
+|-----------------------------------------|------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [fastAPI](https://fastapi.tiangolo.com) | Design & document APIs | [Introduction](https://blog.devgenius.io/brief-introduction-to-fastapi-d6f25793b11a) > [Deep Dive](https://blog.devgenius.io/brief-introduction-to-fastapi-d6f25793b11a) |
+| [uvicorn](https://www.uvicorn.org/)     | Web Server             | [Introduction](https://www.uvicorn.org/) > [Deep Dive](https://www.uvicorn.org/)                                                                                         |
 
 ### Testing
 | Library                                                              | Description                 | External Content                                                                                                                                     |
@@ -68,10 +68,11 @@ The swagger document can be found at [API Host Service](http://0.0.0.0:8000/late
 | [pytest](https://docs.pytest.org/en/7.1.x/index.html)                | Testing framework           | [Introduction](https://docs.pytest.org/en/7.1.x/getting-started.html) > [Deep Dive](https://docs.pytest.org/en/7.1.x/reference/reference.html)       |
 | [hypothesis](https://hypothesis.readthedocs.io/en/latest/index.html) | UnitTest creation framework | [Introduction](https://hypothesis.readthedocs.io/en/latest/quickstart.html) > [Deep Dive](https://hypothesis.readthedocs.io/en/latest/settings.html) |
 
-### Database Migrations
-| Library     | Description         | External Content                 |
-|-------------|---------------------|----------------------------------|
-| [alembic]() | Database Migrations | [Introduction]() > [Deep Dive]() |
+### Database
+
+| Library     | Description | External Content                                                                 |
+|-------------|-------------|----------------------------------------------------------------------------------|
+| [mongodb]() | Database    | [Introduction](https://www.mongodb.com/) > [Deep Dive](https://www.mongodb.com/) |
 
 ## Features
 
