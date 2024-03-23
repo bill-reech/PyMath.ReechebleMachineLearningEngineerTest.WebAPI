@@ -125,6 +125,11 @@ export class AppMenuComponent implements OnInit {
                         routerLink: ['/pages/loan-management']
                     },
                     {
+                        label: 'Loan Accounts',
+                        icon: 'pi pi-fw pi-id-card',
+                        routerLink: ['/pages/loan-accounts']
+                    },
+                    {
                         label: 'Timeline',
                         icon: 'pi pi-fw pi-calendar',
                         routerLink: ['/pages/timeline']
