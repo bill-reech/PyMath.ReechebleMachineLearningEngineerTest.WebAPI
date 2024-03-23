@@ -1,5 +1,4 @@
-import {OnInit} from '@angular/core';
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {LayoutService} from './service/app.layout.service';
 
 @Component({
@@ -119,6 +118,11 @@ export class AppMenuComponent implements OnInit {
                         label: 'Feature Management',
                         icon: 'pi pi-fw pi-pencil',
                         routerLink: ['/pages/feature-management']
+                    },
+                    {
+                        label: 'Loan Management',
+                        icon: 'pi pi-fw pi-money-bill',
+                        routerLink: ['/pages/loan-management']
                     },
                     {
                         label: 'Timeline',
