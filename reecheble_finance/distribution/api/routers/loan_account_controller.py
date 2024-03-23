@@ -7,7 +7,7 @@ from reecheble_finance.application.sdk.dtos.add_loan_account.add_loan_account_re
     AddLoanAccountResponseDTO)
 from reecheble_finance.application.services.loan_service.add_loan_account.add_loan_account_command import (
     AddLoanAccountCommand)
-from reecheble_finance.application.services.loan_service.add_loan_account.add_loan_account_handler import (
+from reecheble_finance.application.services.loan_service.add_loan_account.add_loan_account_command_handler import (
     AddLoanAccountCommandHandler)
 from reecheble_finance.distribution.api.dependencies import router_path_dependency
 from reecheble_finance.infrastructure.data_access.database.databases_tools.contexts.context_types import (

@@ -18,7 +18,7 @@ from reecheble_finance.application.sdk.dtos.pay_loan_installment.pay_loan_instal
     PayLoanInstallmentResponseDTO)
 from reecheble_finance.application.services.loan_service.add_loan.add_loan_application_command import (
     AddLoanApplicationCommand)
-from reecheble_finance.application.services.loan_service.add_loan.add_loan_application_handler import (
+from reecheble_finance.application.services.loan_service.add_loan.add_loan_application_command_handler import (
     AddLoanApplicationCommandHandler)
 from reecheble_finance.application.services.loan_service.get_loan_installment_history.get_loan_installment_history_query import (
     GetLoanInstallmentHistoryQuery)
@@ -26,7 +26,7 @@ from reecheble_finance.application.services.loan_service.get_loan_installment_hi
     GetLoanInstallmentHistoryQueryHandler)
 from reecheble_finance.application.services.loan_service.pay_loan_installment.pay_loan_installment_command import (
     PayLoanInstallmentCommand)
-from reecheble_finance.application.services.loan_service.pay_loan_installment.pay_loan_installment_handler import (
+from reecheble_finance.application.services.loan_service.pay_loan_installment.pay_loan_installment_command_handler import (
     PayLoanInstallmentCommandHandler)
 from reecheble_finance.distribution.api.dependencies import router_path_dependency
 from reecheble_finance.infrastructure.data_access.database.databases_tools.contexts.context_types import (
