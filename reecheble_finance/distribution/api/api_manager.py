@@ -4,6 +4,7 @@ Reecheble Finance Swagger Documentation - http://0.0.0.0:8000/docs
 
 import uvicorn
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi_versioning import VersionedFastAPI
 
 from reecheble_finance.distribution.api.routers import loan_controller, loan_account_controller
@@ -37,6 +38,18 @@ class App:
             version_format='{major}',
             prefix_format='/v{major}',
             enable_latest=True
+        )
+
+        # TODO: This should be in some sort of a config for different environments.
+        origins = [
+            "http://localhost:4200"  # Add angular client.
+        ]
+        self.application.add_middleware(
+            CORSMiddleware,
+            allow_origins=origins,
+            allow_credentials=True,
+            allow_methods=["*"],
+            allow_headers=["*"],
         )
 
 
