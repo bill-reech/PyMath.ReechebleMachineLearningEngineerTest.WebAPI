@@ -2,7 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {Product} from 'src/app/demo/api/product';
 import {MessageService} from 'primeng/api';
 import {Table} from 'primeng/table';
-import {ProductService} from 'src/app/demo/service/product.service';
+import {ApiResponse, LoanAccount} from "../../../api/loan-account";
+import {LoanAccountService} from "../../../service/loan-account.service";
 
 @Component({
     templateUrl: './loan-accounts.component.html',
@@ -16,9 +17,10 @@ export class LoanAccountsComponent implements OnInit {
 
     deleteProductsDialog: boolean = false;
 
+    userAccounts: LoanAccount[] = [];
     products: Product[] = [];
 
-    product: Product = {};
+    userAccount: LoanAccount;
 
     selectedProducts: Product[] = [];
 
@@ -28,14 +30,10 @@ export class LoanAccountsComponent implements OnInit {
 
     statuses: any[] = [];
 
-    rowsPerPageOptions = [5, 10, 20];
-
-    constructor(private productService: ProductService, private messageService: MessageService) {
+    constructor(private messageService: MessageService, private loanAccountService: LoanAccountService) {
     }
 
     ngOnInit() {
-        this.productService.getProducts().then(data => this.products = data);
-
         this.cols = [
             {field: 'product', header: 'Product'},
             {field: 'price', header: 'Price'},
@@ -43,16 +41,10 @@ export class LoanAccountsComponent implements OnInit {
             {field: 'rating', header: 'Reviews'},
             {field: 'inventoryStatus', header: 'Status'}
         ];
-
-        this.statuses = [
-            {label: 'INSTOCK', value: 'instock'},
-            {label: 'LOWSTOCK', value: 'lowstock'},
-            {label: 'OUTOFSTOCK', value: 'outofstock'}
-        ];
     }
 
     openNew() {
-        this.product = {};
+        this.userAccount = new LoanAccount();
         this.submitted = false;
         this.productDialog = true;
     }
@@ -61,28 +53,28 @@ export class LoanAccountsComponent implements OnInit {
         this.deleteProductsDialog = true;
     }
 
-    editProduct(product: Product) {
-        this.product = {...product};
+    editProduct(product: LoanAccount) {
+        this.userAccount = product.clone();
         this.productDialog = true;
     }
 
-    deleteProduct(product: Product) {
+    deleteProduct(product: LoanAccount) {
         this.deleteProductDialog = true;
-        this.product = {...product};
+        this.userAccount = product.clone();
     }
 
     confirmDeleteSelected() {
         this.deleteProductsDialog = false;
-        this.products = this.products.filter(val => !this.selectedProducts.includes(val));
+        this.userAccounts = this.userAccounts.filter(val => !this.selectedProducts.includes(val));
         this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000});
         this.selectedProducts = [];
     }
 
     confirmDelete() {
         this.deleteProductDialog = false;
-        this.products = this.products.filter(val => val.id !== this.product.id);
+        this.userAccounts = this.userAccounts.filter(val => val.id !== this.userAccount.id);
         this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000});
-        this.product = {};
+        this.userAccount = new LoanAccount();
     }
 
     hideDialog() {
@@ -90,60 +82,26 @@ export class LoanAccountsComponent implements OnInit {
         this.submitted = false;
     }
 
-    saveProduct() {
+    addLoanAccount(): void {
         this.submitted = true;
 
-        if (this.product.name?.trim()) {
-            if (this.product.id) {
-                // @ts-ignore
-                this.product.inventoryStatus = this.product.inventoryStatus.value ? this.product.inventoryStatus.value : this.product.inventoryStatus;
-                this.products[this.findIndexById(this.product.id)] = this.product;
-                this.messageService.add({
-                    severity: 'success',
-                    summary: 'Successful',
-                    detail: 'Product Updated',
-                    life: 3000
-                });
-            } else {
-                this.product.id = this.createId();
-                this.product.code = this.createId();
-                this.product.image = 'product-placeholder.svg';
-                // @ts-ignore
-                this.product.inventoryStatus = this.product.inventoryStatus ? this.product.inventoryStatus.value : 'INSTOCK';
-                this.products.push(this.product);
-                this.messageService.add({
-                    severity: 'success',
-                    summary: 'Successful',
-                    detail: 'Product Created',
-                    life: 3000
-                });
-            }
+        this.loanAccountService.addLoanAccount(this.userAccount)
+            .subscribe({
+                next: (response: ApiResponse) => {
+                    this.messageService.add({
+                        severity: 'success',
+                        summary: 'Successful',
+                        detail: 'Loan Account Created',
+                        life: 3000
+                    });
+                    this.productDialog = false;
+                },
+                error: error => {
+                    console.error('There was an error!', error);
+                }
+            });
 
-            this.products = [...this.products];
-            this.productDialog = false;
-            this.product = {};
-        }
-    }
-
-    findIndexById(id: string): number {
-        let index = -1;
-        for (let i = 0; i < this.products.length; i++) {
-            if (this.products[i].id === id) {
-                index = i;
-                break;
-            }
-        }
-
-        return index;
-    }
-
-    createId(): string {
-        let id = '';
-        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        for (let i = 0; i < 5; i++) {
-            id += chars.charAt(Math.floor(Math.random() * chars.length));
-        }
-        return id;
+        this.productDialog = false;
     }
 
     onGlobalFilter(table: Table, event: Event) {

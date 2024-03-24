@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {PathLocationStrategy, LocationStrategy} from '@angular/common';
+import {LocationStrategy, PathLocationStrategy} from '@angular/common';
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 import {AppLayoutModule} from './layout/app.layout.module';
@@ -11,6 +11,7 @@ import {EventService} from './demo/service/event.service';
 import {IconService} from './demo/service/icon.service';
 import {NodeService} from './demo/service/node.service';
 import {PhotoService} from './demo/service/photo.service';
+import {LoanAccountService} from "./demo/service/loan-account.service";
 
 @NgModule({
     declarations: [AppComponent, NotfoundComponent],
@@ -24,6 +25,7 @@ import {PhotoService} from './demo/service/photo.service';
         NodeService,
         PhotoService,
         ProductService,
+        LoanAccountService
     ],
     bootstrap: [AppComponent],
 })
