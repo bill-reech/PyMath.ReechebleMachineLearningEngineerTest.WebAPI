@@ -12,7 +12,7 @@ import {first} from "rxjs";
 })
 export class LoanAccountsComponent implements OnInit {
 
-    productDialog: boolean = false;
+    loanAccountDialog: boolean = false;
 
     deleteProductDialog: boolean = false;
 
@@ -46,6 +46,7 @@ export class LoanAccountsComponent implements OnInit {
                     console.error(error);
                 }
             );
+
         this.loanAccountFields = [
             {field: 'accountNumber', header: 'Account Number'},
             {field: 'firstName', header: 'First Name'},
@@ -57,7 +58,7 @@ export class LoanAccountsComponent implements OnInit {
     openNew() {
         this.loanAccount = new LoanAccountModel();
         this.submitted = false;
-        this.productDialog = true;
+        this.loanAccountDialog = true;
     }
 
     deleteSelectedProducts() {
@@ -66,7 +67,7 @@ export class LoanAccountsComponent implements OnInit {
 
     editProduct(product: LoanAccountModel) {
         this.loanAccount = product.clone();
-        this.productDialog = true;
+        this.loanAccountDialog = true;
     }
 
     deleteProduct(product: LoanAccountModel) {
@@ -89,7 +90,7 @@ export class LoanAccountsComponent implements OnInit {
     }
 
     hideDialog() {
-        this.productDialog = false;
+        this.loanAccountDialog = false;
         this.submitted = false;
     }
 
@@ -99,20 +100,23 @@ export class LoanAccountsComponent implements OnInit {
         this.loanAccountService.addLoanAccount(this.loanAccount)
             .subscribe({
                 next: (response: LoanAccountApiResponseModel) => {
+                    this.loanAccounts.push(response.data);
                     this.messageService.add({
                         severity: 'success',
                         summary: 'Successful',
                         detail: 'Loan Account Created',
                         life: 3000
                     });
-                    this.productDialog = false;
+                    this.loanAccountDialog = false;
                 },
                 error: error => {
                     console.error('There was an error!', error);
                 }
             });
 
-        this.productDialog = false;
+        this.loanAccounts = [...this.loanAccounts]
+        this.loanAccountDialog = false;
+        this.loanAccount = new LoanAccountModel();
     }
 
     onGlobalFilter(table: Table, event: Event) {
