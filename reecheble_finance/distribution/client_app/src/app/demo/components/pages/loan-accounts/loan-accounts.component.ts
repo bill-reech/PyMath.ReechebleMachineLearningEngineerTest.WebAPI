@@ -20,7 +20,9 @@ export class LoanAccountsComponent implements OnInit {
     submitted: boolean = false;
     loanAccountFields: { field: string, header: string }[];
 
-    constructor(private messageService: MessageService, private loanAccountService: LoanAccountService) {
+    constructor(
+        private messageService: MessageService,
+        private loanAccountService: LoanAccountService) {
     }
 
     ngOnInit() {
