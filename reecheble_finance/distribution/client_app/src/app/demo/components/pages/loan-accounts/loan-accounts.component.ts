@@ -2,8 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {Product} from 'src/app/demo/api/product';
 import {MessageService} from 'primeng/api';
 import {Table} from 'primeng/table';
-import {ApiResponse, LoanAccount} from "../../../api/loan-account";
+import {LoanAccountApiResponseModel, LoanAccountModel} from "../../../api/loan-account-model";
 import {LoanAccountService} from "../../../service/loan-account.service";
+import {first} from "rxjs";
 
 @Component({
     templateUrl: './loan-accounts.component.html',
@@ -17,16 +18,16 @@ export class LoanAccountsComponent implements OnInit {
 
     deleteProductsDialog: boolean = false;
 
-    userAccounts: LoanAccount[] = [];
+    loanAccounts: LoanAccountModel[];
     products: Product[] = [];
 
-    userAccount: LoanAccount;
+    loanAccount: LoanAccountModel;
 
     selectedProducts: Product[] = [];
 
     submitted: boolean = false;
 
-    cols: any[] = [];
+    loanAccountFields: any[] = [];
 
     statuses: any[] = [];
 
@@ -34,17 +35,27 @@ export class LoanAccountsComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.cols = [
-            {field: 'product', header: 'Product'},
-            {field: 'price', header: 'Price'},
-            {field: 'category', header: 'Category'},
-            {field: 'rating', header: 'Reviews'},
-            {field: 'inventoryStatus', header: 'Status'}
+
+        this.loanAccountService.getLoanAccounts()
+            .pipe(first())
+            .subscribe(
+                (accounts: LoanAccountModel[]) => {
+                    this.loanAccounts = accounts;
+                },
+                (error: any) => {
+                    console.error(error);
+                }
+            );
+        this.loanAccountFields = [
+            {field: 'accountNumber', header: 'Account Number'},
+            {field: 'firstName', header: 'First Name'},
+            {field: 'lastName', header: 'Last Name'},
+            {field: 'emailAddress', header: 'Email Address'}
         ];
     }
 
     openNew() {
-        this.userAccount = new LoanAccount();
+        this.loanAccount = new LoanAccountModel();
         this.submitted = false;
         this.productDialog = true;
     }
@@ -53,28 +64,28 @@ export class LoanAccountsComponent implements OnInit {
         this.deleteProductsDialog = true;
     }
 
-    editProduct(product: LoanAccount) {
-        this.userAccount = product.clone();
+    editProduct(product: LoanAccountModel) {
+        this.loanAccount = product.clone();
         this.productDialog = true;
     }
 
-    deleteProduct(product: LoanAccount) {
+    deleteProduct(product: LoanAccountModel) {
         this.deleteProductDialog = true;
-        this.userAccount = product.clone();
+        this.loanAccount = product.clone();
     }
 
     confirmDeleteSelected() {
         this.deleteProductsDialog = false;
-        this.userAccounts = this.userAccounts.filter(val => !this.selectedProducts.includes(val));
+        this.loanAccounts = this.loanAccounts.filter(val => !this.selectedProducts.includes(val));
         this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000});
         this.selectedProducts = [];
     }
 
     confirmDelete() {
         this.deleteProductDialog = false;
-        this.userAccounts = this.userAccounts.filter(val => val.id !== this.userAccount.id);
+        this.loanAccounts = this.loanAccounts.filter(val => val.id !== this.loanAccount.id);
         this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000});
-        this.userAccount = new LoanAccount();
+        this.loanAccount = new LoanAccountModel();
     }
 
     hideDialog() {
@@ -85,9 +96,9 @@ export class LoanAccountsComponent implements OnInit {
     addLoanAccount(): void {
         this.submitted = true;
 
-        this.loanAccountService.addLoanAccount(this.userAccount)
+        this.loanAccountService.addLoanAccount(this.loanAccount)
             .subscribe({
-                next: (response: ApiResponse) => {
+                next: (response: LoanAccountApiResponseModel) => {
                     this.messageService.add({
                         severity: 'success',
                         summary: 'Successful',

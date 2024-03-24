@@ -21,14 +21,14 @@
                 </ng-template>
             </p-toolbar>
 
-            <p-table #dt [value]="userAccounts" [columns]="cols" responsiveLayout="scroll" [rows]="10"
-                     [globalFilterFields]="['name','country.name','representative.name','status']" [paginator]="true"
+            <p-table #dt [value]="loanAccounts" [columns]="loanAccountFields" responsiveLayout="scroll" [rows]="10"
+                     [globalFilterFields]="['firstName','lastName','emailAddress','accountNumber']" [paginator]="true"
                      [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true"
                      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
                      [(selection)]="selectedProducts" selectionMode="multiple" [rowHover]="true" dataKey="id">
                 <ng-template pTemplate="caption">
                     <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-                        <h5 class="m-0">Manage Feature Flags</h5>
+                        <h5 class="m-0">Manage Loan Accounts</h5>
                         <span class="block mt-2 md:mt-0 p-input-icon-left">
                             <i class="pi pi-search"></i>
                             <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..."
@@ -41,66 +41,48 @@
                         <th style="width: 3rem">
                             <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                         </th>
-                        <th pSortableColumn="code">Name
-                            <p-sortIcon field="code"></p-sortIcon>
+                        <th pSortableColumn="accountNumber">Account Number
+                            <p-sortIcon field="accountNumber"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="name">Application
-                            <p-sortIcon field="name"></p-sortIcon>
+                        <th pSortableColumn="firstName">First Name
+                            <p-sortIcon field="firstName"></p-sortIcon>
                         </th>
-                        <th>Image</th>
-                        <th pSortableColumn="price">Type
-                            <p-sortIcon field="price"></p-sortIcon>
+                        <th pSortableColumn="lastName">Last Name
+                            <p-sortIcon field="lastName"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="category">Category
-                            <p-sortIcon field="category"></p-sortIcon>
-                        </th>
-                        <th pSortableColumn="rating">Reviews
-                            <p-sortIcon field="rating"></p-sortIcon>
-                        </th>
-                        <th pSortableColumn="inventoryStatus">Status
-                            <p-sortIcon field="inventoryStatus"></p-sortIcon>
+                        <th pSortableColumn="emailAddress">Email Address
+                            <p-sortIcon field="emailAddress"></p-sortIcon>
                         </th>
                         <th></th>
                     </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-product>
+                <ng-template pTemplate="body" let-loanAccount>
                     <tr>
                         <td>
-                            <p-tableCheckbox [value]="product"></p-tableCheckbox>
+                            <p-tableCheckbox [value]="loanAccount"></p-tableCheckbox>
                         </td>
-                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Code</span>
-                            {{ product.code || product.id }}
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Account Number</span>
+                            {{ loanAccount.accountNumber || loanAccount.id }}
                         </td>
                         <td style="width:14%; min-width:10rem;">
-                            <span class="p-column-title">Name</span>
-                            {{ product.name }}
-                        </td>
-                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Image</span>
-                            <img [src]="'assets/demo/images/product/' + product.image" [alt]="product.name" width="100"
-                                 class="shadow-4"/>
+                            <span class="p-column-title">First Name</span>
+                            {{ loanAccount.firstName }}
                         </td>
                         <td style="width:14%; min-width:8rem;">
-                            <span class="p-column-title">Price</span>
-                            {{ product.price | currency:'USD' }}
+                            <span class="p-column-title">Last Name</span>
+                            {{ loanAccount.lastName }}
                         </td>
                         <td style="width:14%; min-width:10rem;">
-                            <span class="p-column-title">Category</span>
-                            {{ product.category }}
+                            <span class="p-column-title">Email Address</span>
+                            {{ loanAccount.emailAddress }}
                         </td>
-                        <td style="width:14%; min-width: 10rem;"><span class="p-column-title">Reviews</span>
-                            <p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false"></p-rating>
-                        </td>
-                        <td style="width:14%; min-width: 10rem;"><span class="p-column-title">Status</span>
-                            <span
-                                [class]="'product-badge status-' + (product.inventoryStatus ? product.inventoryStatus.toLowerCase() : '')">{{ product.inventoryStatus }}</span>
-                        </td>
-                        <td>
+                        <td style="display: flex; justify-content: flex-end;">
                             <div class="flex">
                                 <button pButton pRipple icon="pi pi-pencil"
                                         class="p-button-rounded p-button-success mr-2"
-                                        (click)="editProduct(product)"></button>
+                                        (click)="editProduct(loanAccount)"></button>
                                 <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
-                                        (click)="deleteProduct(product)"></button>
+                                        (click)="deleteProduct(loanAccount)"></button>
                             </div>
                         </td>
                     </tr>
@@ -112,28 +94,28 @@
         <p-dialog [(visible)]="productDialog" [style]="{width: '450px'}" header="Loan Account" [modal]="true"
                   class="p-fluid">
             <ng-template pTemplate="content">
-                <img [src]="'assets/demo/images/product/' + userAccount.image" [alt]="userAccount.image" width="150"
-                     class="mt-0 mx-auto mb-5 block shadow-2" *ngIf="userAccount.image">
+                <img [src]="'assets/demo/images/product/' + loanAccount.image" [alt]="loanAccount.image" width="150"
+                     class="mt-0 mx-auto mb-5 block shadow-2" *ngIf="loanAccount.image">
                 <div class="field">
                     <label for="firstName">First Name</label>
-                    <input type="text" pInputText id="firstName" [(ngModel)]="userAccount.firstName" required autofocus
-                           [ngClass]="{'ng-invalid ng-dirty' : submitted && !userAccount.firstName}"/>
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !userAccount.firstName">First name is
+                    <input type="text" pInputText id="firstName" [(ngModel)]="loanAccount.firstName" required autofocus
+                           [ngClass]="{'ng-invalid ng-dirty' : submitted && !loanAccount.firstName}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !loanAccount.firstName">First name is
                         required.</small>
                 </div>
                 <div class="field">
                     <label for="lastName">Last Name</label>
-                    <input type="text" pInputText id="lastName" [(ngModel)]="userAccount.lastName" required autofocus
-                           [ngClass]="{'ng-invalid ng-dirty' : submitted && !userAccount.lastName}"/>
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !userAccount.lastName">Last name is
+                    <input type="text" pInputText id="lastName" [(ngModel)]="loanAccount.lastName" required autofocus
+                           [ngClass]="{'ng-invalid ng-dirty' : submitted && !loanAccount.lastName}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !loanAccount.lastName">Last name is
                         required.</small>
                 </div>
                 <div class="field">
                     <label for="emailAddress">Email Address</label>
-                    <input type="text" pInputText id="emailAddress" [(ngModel)]="userAccount.emailAddress" required
+                    <input type="text" pInputText id="emailAddress" [(ngModel)]="loanAccount.emailAddress" required
                            autofocus
-                           [ngClass]="{'ng-invalid ng-dirty' : submitted && !userAccount.emailAddress}"/>
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !userAccount.emailAddress">Email address is
+                           [ngClass]="{'ng-invalid ng-dirty' : submitted && !loanAccount.emailAddress}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !loanAccount.emailAddress">Email address is
                         required.</small>
                 </div>
             </ng-template>
@@ -150,7 +132,7 @@
         <p-dialog [(visible)]="deleteProductDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
             <div class="flex align-items-center justify-content-center">
                 <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-                <span *ngIf="userAccount">Are you sure you want to delete <b>{{ userAccount.name }}</b>?</span>
+                <span *ngIf="loanAccount">Are you sure you want to delete <b>{{ loanAccount.name }}</b>?</span>
             </div>
             <ng-template pTemplate="footer">
                 <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No"

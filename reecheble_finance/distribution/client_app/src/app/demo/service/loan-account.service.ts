@@ -1,6 +1,6 @@
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {ApiResponse, LoanAccount} from "../api/loan-account";
+import {LoanAccountApiResponseModel, LoanAccountModel, LoanAccountsApiResponseModel} from "../api/loan-account-model";
 import {catchError, Observable, throwError} from "rxjs";
 import {map} from "rxjs/operators";
 
@@ -12,17 +12,27 @@ export class LoanAccountService {
     constructor(private http: HttpClient) {
     }
 
-    getLoanAccounts() {
+    getLoanAccounts(): Observable<LoanAccountModel[]> {
+        let url = `${this.apiEndpoint}/account/all_accounts`;
 
-    }
-
-    addLoanAccount(userAccount: LoanAccount): Observable<ApiResponse> {
-        let url = `${this.apiEndpoint}/account/add_account`;
-
-        return this.http.post<ApiResponse>(url, userAccount.transformToLoanAccountApiModel())
+        return this.http.get<LoanAccountsApiResponseModel>(url)
             .pipe(
                 map(response => {
-                    response.data = LoanAccount.transformToLoanAccount(response.data);
+                    const loanAccounts: LoanAccountModel[] = response.data.map(data =>
+                        LoanAccountModel.transformToLoanAccount(data));
+                    return loanAccounts;
+                }),
+                catchError(this.handleError)
+            );
+    }
+
+    addLoanAccount(userAccount: LoanAccountModel): Observable<LoanAccountApiResponseModel> {
+        let url = `${this.apiEndpoint}/account/add_account`;
+
+        return this.http.post<LoanAccountApiResponseModel>(url, userAccount.transformToLoanAccountApiModel())
+            .pipe(
+                map(response => {
+                    response.data = LoanAccountModel.transformToLoanAccount(response.data);
                     return response;
                 }),
                 catchError(this.handleError)
