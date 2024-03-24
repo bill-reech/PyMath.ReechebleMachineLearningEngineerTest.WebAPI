@@ -1,4 +1,5 @@
 import json
+from typing import List
 
 from pymongo import MongoClient
 
@@ -14,11 +15,11 @@ class LoanAccountRepository(AbstractLoanAccountRepository):
         self.database = context['ReechebleFinance']
         self.collection = self.database['ReechebleLoanAccount']
 
-    def list(self):
-        pass
+    def list(self) -> List[LoanAccount]:
+        return [LoanAccount(**account) for account in self.collection.find()]
 
     def get(self, **filters) -> LoanAccount:
-        loan_account = self.collection.find_one({"id": str(filters.get("id"))})
+        loan_account = self.collection.find_one({"account_number": str(filters.get("account_number"))})
         return LoanAccount(**loan_account)
 
     def get_many(self, **filters):
@@ -26,8 +27,10 @@ class LoanAccountRepository(AbstractLoanAccountRepository):
 
     def update(self, **kwargs) -> LoanAccount:
         update_loan_account: LoanAccount = kwargs.get("loan_account")
-        self.collection.replace_one({"id": str(update_loan_account.id)}, json.loads(update_loan_account.json()),
-                                    upsert=True)
+        self.collection.replace_one({
+            "account_number": str(update_loan_account.account_number)},
+            json.loads(update_loan_account.json()),
+            upsert=True)
         return LoanAccount(**update_loan_account.dict())
 
     def delete(self, id_):
@@ -38,4 +41,4 @@ class LoanAccountRepository(AbstractLoanAccountRepository):
 
     def add(self, *, request: LoanAccount) -> LoanAccount:
         self.collection.insert_one(json.loads(request.json()))
-        return self.get(id=request.id)
+        return self.get(account_number=request.account_number)

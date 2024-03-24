@@ -34,6 +34,7 @@ class AddLoanAccountCommandHandler(AbstractApplicationService):
 
         try:
             loan_account = LoanAccount(id=uuid.uuid4(),
+                                       account_number=LoanAccount.create_loan_account_number(),
                                        outstanding_balance=0.00,
                                        first_name=command.data.first_name,
                                        last_name=command.data.last_name,

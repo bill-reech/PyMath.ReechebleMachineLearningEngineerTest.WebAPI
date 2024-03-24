@@ -39,10 +39,10 @@ class AddLoanApplicationCommandHandler(AbstractApplicationService):
         """
 
         try:
-            loan_account: LoanAccount = self.loan_account_repository.get(id=command.data.account_id)
+            loan_account: LoanAccount = self.loan_account_repository.get(account_number=command.data.account_number)
 
             if loan_account is None:
-                print(f"Loan account with id: {command.data.account_id} not found", file=sys.stderr)
+                print(f"Loan account with id: {command.data.account_number} not found", file=sys.stderr)
                 return FailureResult(data=None,
                                      message="That was definitely not expected",
                                      status=ResponseStatusEnum.fail)
