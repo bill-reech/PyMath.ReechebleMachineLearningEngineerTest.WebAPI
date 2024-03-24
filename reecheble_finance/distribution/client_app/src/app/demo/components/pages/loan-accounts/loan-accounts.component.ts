@@ -1,10 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {Product} from 'src/app/demo/api/product';
 import {MessageService} from 'primeng/api';
 import {Table} from 'primeng/table';
 import {LoanAccountApiResponseModel, LoanAccountModel} from "../../../api/loan-account-model";
 import {LoanAccountService} from "../../../service/loan-account.service";
-import {first} from "rxjs";
+import {catchError, first, tap} from "rxjs";
 
 @Component({
     templateUrl: './loan-accounts.component.html',
@@ -13,39 +12,28 @@ import {first} from "rxjs";
 export class LoanAccountsComponent implements OnInit {
 
     loanAccountDialog: boolean = false;
-
-    deleteProductDialog: boolean = false;
-
-    deleteProductsDialog: boolean = false;
-
+    deleteLoanAccountDialog: boolean = false;
+    deleteLoanAccountsDialog: boolean = false;
     loanAccounts: LoanAccountModel[];
-    products: Product[] = [];
-
     loanAccount: LoanAccountModel;
-
-    selectedProducts: Product[] = [];
-
+    selectedLoanAccounts: LoanAccountModel[];
     submitted: boolean = false;
-
-    loanAccountFields: any[] = [];
-
-    statuses: any[] = [];
+    loanAccountFields: { field: string, header: string }[];
 
     constructor(private messageService: MessageService, private loanAccountService: LoanAccountService) {
     }
 
     ngOnInit() {
-
-        this.loanAccountService.getLoanAccounts()
-            .pipe(first())
-            .subscribe(
-                (accounts: LoanAccountModel[]) => {
-                    this.loanAccounts = accounts;
-                },
-                (error: any) => {
-                    console.error(error);
-                }
-            );
+        this.loanAccountService.getLoanAccounts().pipe(
+            first(),
+            tap((accounts: LoanAccountModel[]) => {
+                this.loanAccounts = accounts;
+            }),
+            catchError((error: any) => {
+                console.error(error);
+                return [];
+            })
+        ).subscribe();
 
         this.loanAccountFields = [
             {field: 'accountNumber', header: 'Account Number'},
@@ -62,7 +50,7 @@ export class LoanAccountsComponent implements OnInit {
     }
 
     deleteSelectedProducts() {
-        this.deleteProductsDialog = true;
+        this.deleteLoanAccountsDialog = true;
     }
 
     editProduct(product: LoanAccountModel) {
@@ -71,19 +59,19 @@ export class LoanAccountsComponent implements OnInit {
     }
 
     deleteProduct(product: LoanAccountModel) {
-        this.deleteProductDialog = true;
+        this.deleteLoanAccountDialog = true;
         this.loanAccount = product.clone();
     }
 
     confirmDeleteSelected() {
-        this.deleteProductsDialog = false;
-        this.loanAccounts = this.loanAccounts.filter(val => !this.selectedProducts.includes(val));
+        this.deleteLoanAccountsDialog = false;
+        this.loanAccounts = this.loanAccounts.filter(val => !this.selectedLoanAccounts.includes(val));
         this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000});
-        this.selectedProducts = [];
+        this.selectedLoanAccounts = [];
     }
 
     confirmDelete() {
-        this.deleteProductDialog = false;
+        this.deleteLoanAccountDialog = false;
         this.loanAccounts = this.loanAccounts.filter(val => val.id !== this.loanAccount.id);
         this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000});
         this.loanAccount = new LoanAccountModel();
