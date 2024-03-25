@@ -110,15 +110,11 @@
                                     [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
                         </td>
                         <td style="min-width: 12rem;">{{ product.name }}</td>
-                        <td style="min-width: 8rem;">{{ product.price | currency:'USD' }}</td>
-                        <td style="min-width: 10rem;">{{ product.category }}</td>
-                        <td style="min-width: 10rem;">
-                            <p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false"></p-rating>
-                        </td>
-                        <td style="min-width: 10rem;">
-                            <p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false"></p-rating>
-                        </td>
-                        <td style="min-width: 8rem;">{{ product.price | currency:'USD' }}</td>
+                        <td style="min-width: 8rem;">{{ product.amount | currency:'ZAR' }}</td>
+                        <td style="min-width: 10rem;">{{ product.duration }}</td>
+                        <td style="min-width: 10rem;"><p>{{ product.originationDate | date: 'mediumDate' }}</p></td>
+                        <td style="min-width: 10rem;"><p>{{ product.dueDate | date: 'mediumDate' }}</p></td>
+                        <td style="min-width: 8rem;">{{ product.equatedMonthlyInstallment | currency:'ZAR' }}</td>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="rowexpansion" let-product>

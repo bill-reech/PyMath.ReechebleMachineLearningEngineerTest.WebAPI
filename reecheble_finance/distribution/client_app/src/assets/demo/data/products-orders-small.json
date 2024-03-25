@@ -1,339 +1,122 @@
 {
     "data": [
         {
-            "id": "1000",
-            "code": "f230fh0g3",
             "name": "Bamboo Watch",
             "description": "Product Description",
-            "image": "bamboo-watch.jpg",
-            "price": 65,
-            "category": "Accessories",
-            "quantity": 24,
-            "inventoryStatus": "INSTOCK",
-            "rating": 5,
+            "amount": 300000,
+            "originationDate": "Apr 15, 2021",
+            "dueDate": "Jun 15, 2022",
+            "duration": "14",
+            "equatedMonthlyInstallment": 4500,
             "orders": [
                 {
                     "id": "1000",
                     "productCode": "f230fh0g3",
                     "date": "2020-09-13",
-                    "amount": 65,
+                    "amount": 300000,
                     "quantity": 1,
                     "customer": "David James",
                     "status": "PENDING"
-                },
-                {
-                    "id": "1001",
-                    "productCode": "f230fh0g3",
-                    "date": "2020-05-14",
-                    "amount": 130,
-                    "quantity": 2,
-                    "customer": "Leon Rodrigues",
-                    "status": "DELIVERED"
-                },
-                {
-                    "id": "1002",
-                    "productCode": "f230fh0g3",
-                    "date": "2019-01-04",
-                    "amount": 65,
-                    "quantity": 1,
-                    "customer": "Juan Alejandro",
-                    "status": "RETURNED"
-                },
-                {
-                    "id": "1003",
-                    "productCode": "f230fh0g3",
-                    "date": "2020-09-13",
-                    "amount": 195,
-                    "quantity": 3,
-                    "customer": "Claire Morrow",
-                    "status": "CANCELLED"
                 }
             ]
         },
         {
-            "id": "1001",
-            "code": "nvklal433",
             "name": "Black Watch",
             "description": "Product Description",
-            "image": "black-watch.jpg",
-            "price": 72,
-            "category": "Accessories",
-            "quantity": 61,
-            "inventoryStatus": "INSTOCK",
-            "rating": 4,
+            "amount": 350000,
+            "originationDate": "Jun 23, 2022",
+            "dueDate": "Dec 23, 2023",
+            "duration": "6",
+            "equatedMonthlyInstallment": 5500,
             "orders": [
                 {
                     "id": "2000",
                     "productCode": "nvklal433",
                     "date": "2020-05-14",
-                    "amount": 72,
+                    "amount": 350000,
                     "quantity": 1,
                     "customer": "Maisha Jefferson",
                     "status": "DELIVERED"
-                },
-                {
-                    "id": "2001",
-                    "productCode": "nvklal433",
-                    "date": "2020-02-28",
-                    "amount": 144,
-                    "quantity": 2,
-                    "customer": "Octavia Murillo",
-                    "status": "PENDING"
                 }
             ]
         },
         {
-            "id": "1002",
-            "code": "zz21cz3c1",
-            "name": "Blue Band",
+            "name": "Blue Watch",
             "description": "Product Description",
-            "image": "blue-band.jpg",
-            "price": 79,
-            "category": "Fitness",
-            "quantity": 2,
-            "inventoryStatus": "LOWSTOCK",
-            "rating": 3,
+            "amount": 400000,
+            "originationDate": "Mar 10, 2021",
+            "dueDate": "Mar 10, 2022",
+            "duration": "12",
+            "equatedMonthlyInstallment": 6000,
             "orders": [
                 {
                     "id": "3000",
-                    "productCode": "zz21cz3c1",
-                    "date": "2020-07-05",
-                    "amount": 79,
+                    "productCode": "k2drf456",
+                    "date": "2020-04-15",
+                    "amount": 400000,
                     "quantity": 1,
-                    "customer": "Stacey Leja",
-                    "status": "DELIVERED"
-                },
-                {
-                    "id": "3001",
-                    "productCode": "zz21cz3c1",
-                    "date": "2020-02-06",
-                    "amount": 79,
-                    "quantity": 1,
-                    "customer": "Ashley Wickens",
+                    "customer": "Megan Smith",
                     "status": "DELIVERED"
                 }
             ]
         },
         {
-            "id": "1003",
-            "code": "244wgerg2",
-            "name": "Blue T-Shirt",
+            "name": "Red Watch",
             "description": "Product Description",
-            "image": "blue-t-shirt.jpg",
-            "price": 29,
-            "category": "Clothing",
-            "quantity": 25,
-            "inventoryStatus": "INSTOCK",
-            "rating": 5,
-            "orders": []
+            "amount": 450000,
+            "originationDate": "Feb 1, 2022",
+            "dueDate": "Feb 1, 2023",
+            "duration": "12",
+            "equatedMonthlyInstallment": 7000,
+            "orders": [
+                {
+                    "id": "4000",
+                    "productCode": "p8aqw932",
+                    "date": "2022-01-20",
+                    "amount": 450000,
+                    "quantity": 1,
+                    "customer": "Sam Wilson",
+                    "status": "PENDING"
+                }
+            ]
         },
         {
-            "id": "1004",
-            "code": "h456wer53",
-            "name": "Bracelet",
+            "name": "Green Watch",
             "description": "Product Description",
-            "image": "bracelet.jpg",
-            "price": 15,
-            "category": "Accessories",
-            "quantity": 73,
-            "inventoryStatus": "INSTOCK",
-            "rating": 4,
+            "amount": 500000,
+            "originationDate": "Jan 15, 2022",
+            "dueDate": "Jan 15, 2023",
+            "duration": "12",
+            "equatedMonthlyInstallment": 8000,
             "orders": [
                 {
                     "id": "5000",
-                    "productCode": "h456wer53",
-                    "date": "2020-09-05",
-                    "amount": 60,
-                    "quantity": 4,
-                    "customer": "Mayumi Misaki",
-                    "status": "PENDING"
-                },
-                {
-                    "id": "5001",
-                    "productCode": "h456wer53",
-                    "date": "2019-04-16",
-                    "amount": 2,
-                    "quantity": 30,
-                    "customer": "Francesco Salvatore",
+                    "productCode": "l9zui173",
+                    "date": "2022-02-01",
+                    "amount": 500000,
+                    "quantity": 1,
+                    "customer": "Henry Cooper",
                     "status": "DELIVERED"
                 }
             ]
         },
         {
-            "id": "1005",
-            "code": "av2231fwg",
-            "name": "Brown Purse",
+            "name": "Yellow Watch",
             "description": "Product Description",
-            "image": "brown-purse.jpg",
-            "price": 120,
-            "category": "Accessories",
-            "quantity": 0,
-            "inventoryStatus": "OUTOFSTOCK",
-            "rating": 4,
+            "amount": 550000,
+            "originationDate": "Dec 1, 2021",
+            "dueDate": "Dec 1, 2022",
+            "duration": "12",
+            "equatedMonthlyInstallment": 9000,
             "orders": [
                 {
                     "id": "6000",
-                    "productCode": "av2231fwg",
-                    "date": "2020-01-25",
-                    "amount": 120,
+                    "productCode": "n7jkl218",
+                    "date": "2022-01-02",
+                    "amount": 550000,
                     "quantity": 1,
-                    "customer": "Isabel Sinclair",
-                    "status": "RETURNED"
-                },
-                {
-                    "id": "6001",
-                    "productCode": "av2231fwg",
-                    "date": "2019-03-12",
-                    "amount": 240,
-                    "quantity": 2,
-                    "customer": "Lionel Clifford",
-                    "status": "DELIVERED"
-                },
-                {
-                    "id": "6002",
-                    "productCode": "av2231fwg",
-                    "date": "2019-05-05",
-                    "amount": 120,
-                    "quantity": 1,
-                    "customer": "Cody Chavez",
-                    "status": "DELIVERED"
-                }
-            ]
-        },
-        {
-            "id": "1006",
-            "code": "bib36pfvm",
-            "name": "Chakra Bracelet",
-            "description": "Product Description",
-            "image": "chakra-bracelet.jpg",
-            "price": 32,
-            "category": "Accessories",
-            "quantity": 5,
-            "inventoryStatus": "LOWSTOCK",
-            "rating": 3,
-            "orders": [
-                {
-                    "id": "7000",
-                    "productCode": "bib36pfvm",
-                    "date": "2020-02-24",
-                    "amount": 32,
-                    "quantity": 1,
-                    "customer": "Arvin Darci",
-                    "status": "DELIVERED"
-                },
-                {
-                    "id": "7001",
-                    "productCode": "bib36pfvm",
-                    "date": "2020-01-14",
-                    "amount": 64,
-                    "quantity": 2,
-                    "customer": "Izzy Jones",
+                    "customer": "Erica Campbell",
                     "status": "PENDING"
-                }
-            ]
-        },
-        {
-            "id": "1007",
-            "code": "mbvjkgip5",
-            "name": "Galaxy Earrings",
-            "description": "Product Description",
-            "image": "galaxy-earrings.jpg",
-            "price": 34,
-            "category": "Accessories",
-            "quantity": 23,
-            "inventoryStatus": "INSTOCK",
-            "rating": 5,
-            "orders": [
-                {
-                    "id": "8000",
-                    "productCode": "mbvjkgip5",
-                    "date": "2020-06-19",
-                    "amount": 34,
-                    "quantity": 1,
-                    "customer": "Jennifer Smith",
-                    "status": "DELIVERED"
-                }
-            ]
-        },
-        {
-            "id": "1008",
-            "code": "vbb124btr",
-            "name": "Game Controller",
-            "description": "Product Description",
-            "image": "game-controller.jpg",
-            "price": 99,
-            "category": "Electronics",
-            "quantity": 2,
-            "inventoryStatus": "LOWSTOCK",
-            "rating": 4,
-            "orders": [
-                {
-                    "id": "9000",
-                    "productCode": "vbb124btr",
-                    "date": "2020-01-05",
-                    "amount": 99,
-                    "quantity": 1,
-                    "customer": "Jeanfrancois David",
-                    "status": "DELIVERED"
-                },
-                {
-                    "id": "9001",
-                    "productCode": "vbb124btr",
-                    "date": "2020-01-19",
-                    "amount": 198,
-                    "quantity": 2,
-                    "customer": "Ivar Greenwood",
-                    "status": "RETURNED"
-                }
-            ]
-        },
-        {
-            "id": "1009",
-            "code": "cm230f032",
-            "name": "Gaming Set",
-            "description": "Product Description",
-            "image": "gaming-set.jpg",
-            "price": 299,
-            "category": "Electronics",
-            "quantity": 63,
-            "inventoryStatus": "INSTOCK",
-            "rating": 3,
-            "orders": [
-                {
-                    "id": "10000",
-                    "productCode": "cm230f032",
-                    "date": "2020-06-24",
-                    "amount": 299,
-                    "quantity": 1,
-                    "customer": "Kadeem Mujtaba",
-                    "status": "PENDING"
-                },
-                {
-                    "id": "10001",
-                    "productCode": "cm230f032",
-                    "date": "2020-05-11",
-                    "amount": 299,
-                    "quantity": 1,
-                    "customer": "Ashley Wickens",
-                    "status": "DELIVERED"
-                },
-                {
-                    "id": "10002",
-                    "productCode": "cm230f032",
-                    "date": "2019-02-07",
-                    "amount": 299,
-                    "quantity": 1,
-                    "customer": "Julie Johnson",
-                    "status": "DELIVERED"
-                },
-                {
-                    "id": "10003",
-                    "productCode": "cm230f032",
-                    "date": "2020-04-26",
-                    "amount": 299,
-                    "quantity": 1,
-                    "customer": "Tony Costa",
-                    "status": "CANCELLED"
                 }
             ]
         }
