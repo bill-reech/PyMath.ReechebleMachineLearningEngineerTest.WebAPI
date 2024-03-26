@@ -11,7 +11,7 @@
                     <i class="pi pi-book text-blue-500 text-xl"></i>
                 </div>
             </div>
-            <span class="text-green-500 font-medium"> 10.0 % </span>
+            <span class="text-green-500 font-medium"> 10.0% </span>
             <span class="text-500">average interest rate</span>
         </div>
     </div>
@@ -59,8 +59,14 @@
                     <i class="pi pi-calculator text-purple-500 text-xl"></i>
                 </div>
             </div>
-            <span class="text-green-500 font-medium">3 </span>
+            <span class="text-red-500 font-medium">3 </span>
             <span class="text-500">missed</span>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <div style="display: flex; justify-content: flex-end;">
+            <button pButton class="p-button-outlined" icon='pi pi-fw pi-book' label="Reecheble Loans"></button>
         </div>
     </div>
 
@@ -82,13 +88,16 @@
                 <ng-template pTemplate="header">
                     <tr>
                         <th style="width: 3rem"></th>
-                        <th pSortableColumn="name">Name
-                            <p-sortIcon field="name"></p-sortIcon>
+                        <th pSortableColumn="reference">Reference
+                            <p-sortIcon field="reference"></p-sortIcon>
                         </th>
                         <th pSortableColumn="price">Amount
                             <p-sortIcon field="price"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="category">Duration
+                        <th pSortableColumn="category">Interest Rate
+                            <p-sortIcon field="category"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="category">Duration (Months)
                             <p-sortIcon field="category"></p-sortIcon>
                         </th>
                         <th pSortableColumn="rating">Origination Date
@@ -109,8 +118,9 @@
                                     class="p-button-text p-button-rounded p-button-plain"
                                     [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
                         </td>
-                        <td style="min-width: 12rem;">{{ product.name }}</td>
+                        <td style="min-width: 12rem;">{{ product.reference }}</td>
                         <td style="min-width: 8rem;">{{ product.amount | currency:'ZAR' }}</td>
+                        <td style="min-width: 10rem;">{{ product.interest_rate * 0.01 | percent:'1.2-2' }}</td>
                         <td style="min-width: 10rem;">{{ product.duration }}</td>
                         <td style="min-width: 10rem;"><p>{{ product.originationDate | date: 'mediumDate' }}</p></td>
                         <td style="min-width: 10rem;"><p>{{ product.dueDate | date: 'mediumDate' }}</p></td>

@@ -1,9 +1,10 @@
 {
     "data": [
         {
-            "name": "Bamboo Watch",
+            "reference": "LR28A7F6C3",
             "description": "Product Description",
             "amount": 300000,
+            "interest_rate": 10.0,
             "originationDate": "Apr 15, 2021",
             "dueDate": "Jun 15, 2022",
             "duration": "14",
@@ -21,9 +22,10 @@
             ]
         },
         {
-            "name": "Black Watch",
+            "reference": "LR9B5H2J76",
             "description": "Product Description",
             "amount": 350000,
+            "interest_rate": 12.0,
             "originationDate": "Jun 23, 2022",
             "dueDate": "Dec 23, 2023",
             "duration": "6",
@@ -41,9 +43,10 @@
             ]
         },
         {
-            "name": "Blue Watch",
+            "reference": "LRD3E7G1K5",
             "description": "Product Description",
             "amount": 400000,
+            "interest_rate": 10.0,
             "originationDate": "Mar 10, 2021",
             "dueDate": "Mar 10, 2022",
             "duration": "12",
@@ -61,9 +64,10 @@
             ]
         },
         {
-            "name": "Red Watch",
+            "reference": "LR41P8S6Q3",
             "description": "Product Description",
             "amount": 450000,
+            "interest_rate": 9.0,
             "originationDate": "Feb 1, 2022",
             "dueDate": "Feb 1, 2023",
             "duration": "12",
@@ -81,9 +85,10 @@
             ]
         },
         {
-            "name": "Green Watch",
+            "reference": "LRY2U5V7W0",
             "description": "Product Description",
             "amount": 500000,
+            "interest_rate": 7.85,
             "originationDate": "Jan 15, 2022",
             "dueDate": "Jan 15, 2023",
             "duration": "12",
@@ -101,9 +106,10 @@
             ]
         },
         {
-            "name": "Yellow Watch",
+            "reference": "LRE9G6H4I1",
             "description": "Product Description",
             "amount": 550000,
+            "interest_rate": 8.50,
             "originationDate": "Dec 1, 2021",
             "dueDate": "Dec 1, 2022",
             "duration": "12",
