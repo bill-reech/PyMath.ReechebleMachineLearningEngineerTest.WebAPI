@@ -55,7 +55,7 @@
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-loanAccount>
-                    <tr>
+                    <tr (click)="goToDetail(loanAccount.accountNumber)">
                         <td>
                             <p-tableCheckbox [value]="loanAccount"></p-tableCheckbox>
                         </td>

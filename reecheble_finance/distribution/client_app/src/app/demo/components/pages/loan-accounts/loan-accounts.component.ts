@@ -4,6 +4,7 @@ import {Table} from 'primeng/table';
 import {LoanAccountApiResponseModel, LoanAccountModel} from "../../../api/loan-account-model";
 import {LoanAccountService} from "../../../service/loan-account.service";
 import {catchError, first, tap} from "rxjs";
+import {Router} from "@angular/router";
 
 @Component({
     templateUrl: './loan-accounts.component.html',
@@ -22,7 +23,8 @@ export class LoanAccountsComponent implements OnInit {
 
     constructor(
         private messageService: MessageService,
-        private loanAccountService: LoanAccountService) {
+        private loanAccountService: LoanAccountService,
+        private router: Router) {
     }
 
     ngOnInit() {
@@ -111,5 +113,9 @@ export class LoanAccountsComponent implements OnInit {
 
     onGlobalFilter(table: Table, event: Event) {
         table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+    }
+
+    goToDetail(accountNumber: string) {
+        this.router.navigateByUrl('/uikit/loan/' + accountNumber);
     }
 }
