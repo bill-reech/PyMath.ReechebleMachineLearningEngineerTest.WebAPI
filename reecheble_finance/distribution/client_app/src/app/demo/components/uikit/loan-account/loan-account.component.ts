@@ -1,8 +1,8 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {Product} from 'src/app/demo/api/product';
 import {ProductService} from 'src/app/demo/service/product.service';
 import {Table} from 'primeng/table';
 import {ConfirmationService, MessageService} from 'primeng/api';
+import {Loan} from "../../../api/loan";
 
 interface expandedRows {
     [key: string]: boolean;
@@ -16,7 +16,7 @@ export class LoanAccountComponent implements OnInit {
 
     statuses: any[] = [];
 
-    products: Product[] = [];
+    loans: Loan[] = [];
 
     expandedRows: expandedRows = {};
 
@@ -30,12 +30,12 @@ export class LoanAccountComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.productService.getProductsWithOrdersSmall().then(data => this.products = data);
+        this.productService.getProductsWithOrdersSmall().then(data => this.loans = data);
     }
 
     expandAll() {
         if (!this.isExpanded) {
-            this.products.forEach(product => product && product.name ? this.expandedRows[product.name] = true : '');
+            this.loans.forEach(loan => loan && loan.reference ? this.expandedRows[loan.reference] = true : '');
 
         } else {
             this.expandedRows = {};

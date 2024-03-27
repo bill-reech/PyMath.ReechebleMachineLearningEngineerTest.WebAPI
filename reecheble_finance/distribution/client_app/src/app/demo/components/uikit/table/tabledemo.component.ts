@@ -1,10 +1,10 @@
-import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Customer, Representative} from 'src/app/demo/api/customer';
 import {CustomerService} from 'src/app/demo/service/customer.service';
 import {Product} from 'src/app/demo/api/product';
 import {ProductService} from 'src/app/demo/service/product.service';
 import {Table} from 'primeng/table';
-import {MessageService, ConfirmationService} from 'primeng/api';
+import {ConfirmationService, MessageService} from 'primeng/api';
 
 interface expandedRows {
     [key: string]: boolean;
@@ -59,7 +59,7 @@ export class TableDemoComponent implements OnInit {
         });
         this.customerService.getCustomersMedium().then(customers => this.customers2 = customers);
         this.customerService.getCustomersLarge().then(customers => this.customers3 = customers);
-        this.productService.getProductsWithOrdersSmall().then(data => this.products = data);
+        this.productService.getProductsSmall().then(data => this.products = data);
 
         this.representatives = [
             {name: 'Amy Elsner', image: 'amyelsner.png'},
