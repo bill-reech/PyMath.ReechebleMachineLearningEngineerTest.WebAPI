@@ -1,14 +1,14 @@
 export interface RepaymentHistory {
     id?: string,
-    productCode?: string,
-    date?: string,
-    amount?: number,
-    quantity?: number,
-    customer?: string,
-    status?: string
+    month?: number,
+    equatedMonthlyInstallment?: number,
+    principalPaid?: number,
+    interestPaid?: number,
+    loanBalance?: number
 }
 
 export interface Loan {
+    id?: string,
     reference?: string;
     amount?: number;
     interest_rate?: number;
@@ -16,5 +16,5 @@ export interface Loan {
     dueDate?: string;
     duration?: string;
     equatedMonthlyInstallment?: string;
-    orders?: RepaymentHistory[];
+    repaymentHistory?: RepaymentHistory[];
 }

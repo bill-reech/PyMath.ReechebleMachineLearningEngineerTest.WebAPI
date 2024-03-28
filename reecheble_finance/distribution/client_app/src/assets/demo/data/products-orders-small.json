@@ -9,15 +9,13 @@
             "dueDate": "Jun 15, 2022",
             "duration": "14",
             "equatedMonthlyInstallment": 4500,
-            "orders": [
+            "repaymentHistory": [
                 {
-                    "id": "1000",
-                    "productCode": "f230fh0g3",
-                    "date": "2020-09-13",
-                    "amount": 300000,
-                    "quantity": 1,
-                    "customer": "David James",
-                    "status": "PENDING"
+                    "month": 0,
+                    "equatedMonthlyInstalment": 6850,
+                    "principalPaid": 320,
+                    "interestPaid": 10,
+                    "loanBalance": 300000
                 }
             ]
         },
@@ -30,15 +28,13 @@
             "dueDate": "Dec 23, 2023",
             "duration": "6",
             "equatedMonthlyInstallment": 5500,
-            "orders": [
+            "repaymentHistory": [
                 {
-                    "id": "2000",
-                    "productCode": "nvklal433",
-                    "date": "2020-05-14",
-                    "amount": 350000,
-                    "quantity": 1,
-                    "customer": "Maisha Jefferson",
-                    "status": "DELIVERED"
+                    "month": 0,
+                    "equatedMonthlyInstallment": 6850,
+                    "principalPaid": 320,
+                    "interestPaid": 10,
+                    "loanBalance": 300000
                 }
             ]
         },
@@ -51,15 +47,13 @@
             "dueDate": "Mar 10, 2022",
             "duration": "12",
             "equatedMonthlyInstallment": 6000,
-            "orders": [
+            "repaymentHistory": [
                 {
-                    "id": "3000",
-                    "productCode": "k2drf456",
-                    "date": "2020-04-15",
-                    "amount": 400000,
-                    "quantity": 1,
-                    "customer": "Megan Smith",
-                    "status": "DELIVERED"
+                    "month": 0,
+                    "equatedMonthlyInstallment": 6850,
+                    "principalPaid": 320,
+                    "interestPaid": 10,
+                    "loanBalance": 300000
                 }
             ]
         },
@@ -72,15 +66,13 @@
             "dueDate": "Feb 1, 2023",
             "duration": "12",
             "equatedMonthlyInstallment": 7000,
-            "orders": [
+            "repaymentHistory": [
                 {
-                    "id": "4000",
-                    "productCode": "p8aqw932",
-                    "date": "2022-01-20",
-                    "amount": 450000,
-                    "quantity": 1,
-                    "customer": "Sam Wilson",
-                    "status": "PENDING"
+                    "month": 0,
+                    "equatedMonthlyInstallment": 6850,
+                    "principalPaid": 320,
+                    "interestPaid": 10,
+                    "loanBalance": 300000
                 }
             ]
         },
@@ -93,15 +85,13 @@
             "dueDate": "Jan 15, 2023",
             "duration": "12",
             "equatedMonthlyInstallment": 8000,
-            "orders": [
+            "repaymentHistory": [
                 {
-                    "id": "5000",
-                    "productCode": "l9zui173",
-                    "date": "2022-02-01",
-                    "amount": 500000,
-                    "quantity": 1,
-                    "customer": "Henry Cooper",
-                    "status": "DELIVERED"
+                    "month": 0,
+                    "equatedMonthlyInstallment": 6850,
+                    "principalPaid": 320,
+                    "interestPaid": 10,
+                    "loanBalance": 300000
                 }
             ]
         },
@@ -114,15 +104,13 @@
             "dueDate": "Dec 1, 2022",
             "duration": "12",
             "equatedMonthlyInstallment": 9000,
-            "orders": [
+            "repaymentHistory": [
                 {
-                    "id": "6000",
-                    "productCode": "n7jkl218",
-                    "date": "2022-01-02",
-                    "amount": 550000,
-                    "quantity": 1,
-                    "customer": "Erica Campbell",
-                    "status": "PENDING"
+                    "month": 0,
+                    "equatedMonthlyInstallment": 6850,
+                    "principalPaid": 320,
+                    "interestPaid": 10,
+                    "loanBalance": 300000
                 }
             ]
         }
