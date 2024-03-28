@@ -1,4 +1,4 @@
-export interface Order {
+export interface RepaymentHistory {
     id?: string,
     productCode?: string,
     date?: string,
@@ -16,5 +16,5 @@ export interface Loan {
     dueDate?: string;
     duration?: string;
     equatedMonthlyInstallment?: string;
-    orders?: Order[];
+    orders?: RepaymentHistory[];
 }
