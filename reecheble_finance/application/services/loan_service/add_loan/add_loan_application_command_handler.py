@@ -50,6 +50,7 @@ class AddLoanApplicationCommandHandler(AbstractApplicationService):
             loan_request = LoanRequest(
                 id=uuid.uuid4(),
                 account=loan_account,
+                reference=LoanRequest.create_loan_reference(),
                 interest_rate=command.data.interest_rate,
                 payment_period_in_months=command.data.payment_period_in_months,
                 request_amount=command.data.request_amount
@@ -61,6 +62,7 @@ class AddLoanApplicationCommandHandler(AbstractApplicationService):
             return SuccessResult(
                 data=AddLoanApplicationResponseDTO(
                     id=loan.id,
+                    reference=loan.reference,
                     loan_amount=loan.request_amount,
                     loan_granted=True,
                     equated_monthly_installment=loan.equated_monthly_installment,

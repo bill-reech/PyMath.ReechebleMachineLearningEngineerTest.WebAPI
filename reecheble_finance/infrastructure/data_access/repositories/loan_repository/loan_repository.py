@@ -19,7 +19,7 @@ class LoanRepository(AbstractLoanRepository):
         pass
 
     def get(self, **filters) -> LoanRequest:
-        loan_request = self.collection.find_one({"id": str(filters.get("id"))})
+        loan_request = self.collection.find_one({"reference": str(filters.get("reference"))})
         return LoanRequest(**loan_request)
 
     def get_many(self, **filters):
@@ -27,7 +27,8 @@ class LoanRepository(AbstractLoanRepository):
 
     def update(self, **kwargs) -> LoanRequest:
         update_loan_request: LoanRequest = kwargs.get("loan_request")
-        self.collection.replace_one({"id": str(update_loan_request.id)}, json.loads(update_loan_request.json()),
+        self.collection.replace_one({"reference": str(update_loan_request.reference)},
+                                    json.loads(update_loan_request.json()),
                                     upsert=True)
         return LoanRequest(**update_loan_request.dict())
 
@@ -39,4 +40,4 @@ class LoanRepository(AbstractLoanRepository):
 
     def add(self, *, request: LoanRequest) -> LoanRequest:
         self.collection.insert_one(json.loads(request.json()))
-        return self.get(id=request.id)
+        return self.get(reference=request.reference)

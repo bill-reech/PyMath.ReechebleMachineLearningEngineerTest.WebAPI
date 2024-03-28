@@ -1,6 +1,4 @@
-from uuid import UUID
-
-from pydantic import confloat
+from pydantic import confloat, constr
 
 from reecheble_finance.domain.abstract_domain.abstract_domain_parser_mixin import BaseDomainParserMixin
 
@@ -10,5 +8,5 @@ __all__ = [
 
 
 class PayLoanInstallmentRequestDTO(BaseDomainParserMixin):
-    loan_id: UUID
+    reference: constr(min_length=16, max_length=16)
     installment_amount: confloat(ge=0)

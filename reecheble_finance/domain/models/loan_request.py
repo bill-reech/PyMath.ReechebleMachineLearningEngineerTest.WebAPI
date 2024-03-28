@@ -5,7 +5,7 @@ from typing import List
 from uuid import UUID
 
 from dateutil.relativedelta import relativedelta
-from pydantic import PositiveInt, confloat
+from pydantic import PositiveInt, confloat, constr
 
 from reecheble_finance.domain.abstract_domain.abstract_domain_parser_mixin import BaseDomainParserMixin
 from reecheble_finance.domain.exceptions.domain_exceptions import LoanRequestDomainException
@@ -19,6 +19,7 @@ __all__ = [
 
 class LoanRequest(BaseDomainParserMixin):
     id: UUID
+    reference: constr(min_length=16, max_length=16)
     account: LoanAccount
     request_amount: confloat(ge=0)
     interest_rate: confloat(ge=0, le=100)
@@ -135,3 +136,7 @@ class LoanRequest(BaseDomainParserMixin):
     @staticmethod
     def set_loan_origination_date():
         return date.today()
+
+    @staticmethod
+    def create_loan_reference():
+        return "LR{0}-{1}".format(LoanAccount.create_sized_reference(9), LoanAccount.create_sized_reference(4))

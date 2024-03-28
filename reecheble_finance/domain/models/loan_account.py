@@ -24,6 +24,12 @@ class LoanAccount(BaseDomainParserMixin):
         hash_object = hashlib.sha256(salt.encode() + str(time.time()).encode())
         hex_dig = hash_object.hexdigest()
         random.seed(hex_dig)
-        return "RF" + ''.join(
-            random.choice(string.ascii_uppercase + string.digits)
-            for _ in range(10))
+        return "RF{0}".format(LoanAccount.create_sized_reference(10))
+
+    @staticmethod
+    def create_sized_reference(reference_length: int) -> str:
+        salt = uuid.uuid4().hex
+        hash_object = hashlib.sha256(salt.encode() + str(time.time()).encode())
+        hex_dig = hash_object.hexdigest()
+        random.seed(hex_dig)
+        return ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(reference_length))
