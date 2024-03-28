@@ -1,4 +1,5 @@
 <div class="grid">
+
     <div class="col-12 lg:col-6 xl:col-3">
         <div class="card mb-0">
             <div class="flex justify-content-between mb-3">
@@ -74,7 +75,7 @@
         <div class="card">
             <h5>Reecheble Account : <span class="pi text-primary text-xl">{{ this.accountId }}</span></h5>
             <p-toast></p-toast>
-            <p-table [value]="loans" dataKey="name" [expandedRowKeys]="expandedRows" responsiveLayout="scroll">
+            <p-table [value]="loans" dataKey="reference" [expandedRowKeys]="expandedRows" responsiveLayout="scroll">
                 <ng-template pTemplate="caption">
                     <div style="display: flex; justify-content: space-between;">
                         <button pButton icon="pi pi-fw {{isExpanded ? 'pi-minus' : 'pi-plus'}}"
@@ -127,11 +128,11 @@
                         <td style="min-width: 8rem;">{{ product.equatedMonthlyInstallment | currency:'ZAR' }}</td>
                     </tr>
                 </ng-template>
-                <ng-template pTemplate="rowexpansion" let-loans>
+                <ng-template pTemplate="rowexpansion" let-loan>
                     <tr>
                         <td colspan="7">
                             <div class="p-3">
-                                <p-table [value]="loans.repaymentHistory" dataKey="id" responsiveLayout="scroll">
+                                <p-table [value]="loan.repaymentHistory" dataKey="month" responsiveLayout="scroll">
                                     <ng-template pTemplate="header">
                                         <tr>
                                             <th pSortableColumn="month">Month
