@@ -72,7 +72,7 @@
 
     <div class="col-12">
         <div class="card">
-            <h5>Reecheble Loan Account : <span class="pi text-primary text-xl">{{ this.accountId }}</span></h5>
+            <h5>Reecheble Account : <span class="pi text-primary text-xl">{{ this.accountId }}</span></h5>
             <p-toast></p-toast>
             <p-table [value]="loans" dataKey="name" [expandedRowKeys]="expandedRows" responsiveLayout="scroll">
                 <ng-template pTemplate="caption">
@@ -91,23 +91,23 @@
                         <th pSortableColumn="reference">Reference
                             <p-sortIcon field="reference"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="price">Amount
-                            <p-sortIcon field="price"></p-sortIcon>
+                        <th pSortableColumn="amount">Amount
+                            <p-sortIcon field="amount"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="category">Interest Rate
-                            <p-sortIcon field="category"></p-sortIcon>
+                        <th pSortableColumn="interestRate">Interest Rate
+                            <p-sortIcon field="interestRate"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="category">Duration (Months)
-                            <p-sortIcon field="category"></p-sortIcon>
+                        <th pSortableColumn="duration">Duration (Months)
+                            <p-sortIcon field="duration"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="rating">Origination Date
-                            <p-sortIcon field="rating"></p-sortIcon>
+                        <th pSortableColumn="originationDate">Origination Date
+                            <p-sortIcon field="originationDate"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="rating">Due Date
-                            <p-sortIcon field="rating"></p-sortIcon>
+                        <th pSortableColumn="dueDate">Due Date
+                            <p-sortIcon field="dueDate"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="price">EMI
-                            <p-sortIcon field="price"></p-sortIcon>
+                        <th pSortableColumn="equatedMonthlyInstallment">EMI
+                            <p-sortIcon field="equatedMonthlyInstallment"></p-sortIcon>
                         </th>
                     </tr>
                 </ng-template>
@@ -120,7 +120,7 @@
                         </td>
                         <td style="min-width: 12rem;">{{ product.reference }}</td>
                         <td style="min-width: 8rem;">{{ product.amount | currency:'ZAR' }}</td>
-                        <td style="min-width: 10rem;">{{ product.interest_rate * 0.01 | percent:'1.2-2' }}</td>
+                        <td style="min-width: 10rem;">{{ product.interestRate * 0.01 | percent:'1.2-2' }}</td>
                         <td style="min-width: 10rem;">{{ product.duration }}</td>
                         <td style="min-width: 10rem;"><p>{{ product.originationDate | date: 'mediumDate' }}</p></td>
                         <td style="min-width: 10rem;"><p>{{ product.dueDate | date: 'mediumDate' }}</p></td>
