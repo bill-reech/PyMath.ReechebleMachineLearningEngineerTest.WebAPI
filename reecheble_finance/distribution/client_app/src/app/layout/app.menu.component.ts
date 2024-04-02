@@ -56,70 +56,20 @@ export class AppMenuComponent implements OnInit {
                 ]
             },
             {
-                label: 'Pages',
+                label: 'Finance',
                 icon: 'pi pi-fw pi-briefcase',
                 items: [
                     {
-                        label: 'Landing',
-                        icon: 'pi pi-fw pi-globe',
-                        routerLink: ['/landing']
-                    },
-                    {
-                        label: 'Auth',
+                        label: 'Loans',
                         icon: 'pi pi-fw pi-user',
                         items: [
                             {
-                                label: 'Login',
-                                icon: 'pi pi-fw pi-sign-in',
-                                routerLink: ['/auth/login']
-                            },
-                            {
-                                label: 'Error',
-                                icon: 'pi pi-fw pi-times-circle',
-                                routerLink: ['/auth/error']
-                            },
-                            {
-                                label: 'Access Denied',
-                                icon: 'pi pi-fw pi-lock',
-                                routerLink: ['/auth/access']
+                                label: 'Accounts',
+                                icon: 'pi pi-fw pi-id-card',
+                                routerLink: ['/pages/loan-accounts']
                             }
                         ]
-                    },
-                    {
-                        label: 'Crud',
-                        icon: 'pi pi-fw pi-pencil',
-                        routerLink: ['/pages/crud']
-                    },
-                    {
-                        label: 'Feature Management',
-                        icon: 'pi pi-fw pi-pencil',
-                        routerLink: ['/pages/feature-management']
-                    },
-                    {
-                        label: 'Loan Management',
-                        icon: 'pi pi-fw pi-money-bill',
-                        routerLink: ['/pages/loan-account-management']
-                    },
-                    {
-                        label: 'Loan Accounts',
-                        icon: 'pi pi-fw pi-id-card',
-                        routerLink: ['/pages/loan-accounts']
-                    },
-                    {
-                        label: 'Timeline',
-                        icon: 'pi pi-fw pi-calendar',
-                        routerLink: ['/pages/timeline']
-                    },
-                    {
-                        label: 'Not Found',
-                        icon: 'pi pi-fw pi-exclamation-circle',
-                        routerLink: ['/notfound']
-                    },
-                    {
-                        label: 'Empty',
-                        icon: 'pi pi-fw pi-circle-off',
-                        routerLink: ['/pages/empty']
-                    },
+                    }
                 ]
             }
         ];

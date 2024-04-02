@@ -32,6 +32,10 @@ import {AppLayoutComponent} from "./layout/app.layout.component";
                     {
                         path: 'pages',
                         loadChildren: () => import('./demo/components/pages/pages.module').then(m => m.PagesModule)
+                    },
+                    {
+                        path: 'reecheble-finance',
+                        loadChildren: () => import('./components/reecheble-finance/reecheble-finance.module').then(m => m.ReechebleFinanceModule)
                     }
                 ]
             },

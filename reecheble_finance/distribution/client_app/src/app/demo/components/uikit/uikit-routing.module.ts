@@ -76,7 +76,7 @@ import {RouterModule} from '@angular/router';
         {
             path: 'loan-account/:account_number',
             data: {breadcrumb: 'Loan'},
-            loadChildren: () => import('./loan-account/loan-account.module').then(m => m.LoanAccountModule)
+            loadChildren: () => import('../../../components/reecheble-finance/loan-account/loan-account.module').then(m => m.LoanAccountModule)
         },
         {
             path: 'tree',

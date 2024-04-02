@@ -1,6 +1,10 @@
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {LoanAccountApiResponseModel, LoanAccountModel, LoanAccountsApiResponseModel} from "../api/loan-account-model";
+import {
+    LoanAccountApiResponseModel,
+    LoanAccountModel,
+    LoanAccountsApiResponseModel
+} from "../models/loan-account-model";
 import {catchError, Observable, throwError} from "rxjs";
 import {map} from "rxjs/operators";
 

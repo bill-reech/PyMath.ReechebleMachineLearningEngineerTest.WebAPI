@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {MessageService} from 'primeng/api';
 import {Table} from 'primeng/table';
-import {LoanAccountApiResponseModel, LoanAccountModel} from "../../../api/loan-account-model";
-import {LoanAccountService} from "../../../service/loan-account.service";
+import {LoanAccountApiResponseModel, LoanAccountModel} from "../../../../models/loan-account-model";
+import {LoanAccountService} from "../../../../services/loan-account.service";
 import {catchError, first, tap} from "rxjs";
 import {Router} from "@angular/router";
 
@@ -116,6 +116,6 @@ export class LoanAccountsComponent implements OnInit {
     }
 
     goToDetail(accountNumber: string) {
-        this.router.navigateByUrl('/uikit/loan-account/' + accountNumber);
+        this.router.navigateByUrl('/reecheble-finance/loan-account/' + accountNumber);
     }
 }

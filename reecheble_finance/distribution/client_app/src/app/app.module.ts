@@ -11,7 +11,7 @@ import {EventService} from './demo/service/event.service';
 import {IconService} from './demo/service/icon.service';
 import {NodeService} from './demo/service/node.service';
 import {PhotoService} from './demo/service/photo.service';
-import {LoanAccountService} from "./demo/service/loan-account.service";
+import {LoanAccountService} from "./services/loan-account.service";
 
 @NgModule({
     declarations: [AppComponent, NotfoundComponent],
