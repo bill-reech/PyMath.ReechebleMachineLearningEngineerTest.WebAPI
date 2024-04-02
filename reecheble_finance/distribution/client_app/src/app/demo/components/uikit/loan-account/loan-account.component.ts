@@ -3,6 +3,7 @@ import {ProductService} from 'src/app/demo/service/product.service';
 import {Table} from 'primeng/table';
 import {ConfirmationService, MessageService} from 'primeng/api';
 import {Loan} from "../../../api/loan";
+import {ActivatedRoute} from "@angular/router";
 
 interface expandedRows {
     [key: string]: boolean;
@@ -24,13 +25,18 @@ export class LoanAccountComponent implements OnInit {
 
     loading: boolean = true;
 
+    accountId: string;
+
     @ViewChild('filter') filter!: ElementRef;
 
-    constructor(private productService: ProductService) {
+    constructor(private productService: ProductService, private route: ActivatedRoute) {
     }
 
     ngOnInit() {
         this.productService.getProductsWithOrdersSmall().then(data => this.loans = data);
+        this.route.params.subscribe(params => {
+            this.accountId = params['account_number']
+        });
     }
 
     expandAll() {

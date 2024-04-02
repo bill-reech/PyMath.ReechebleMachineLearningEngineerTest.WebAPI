@@ -116,6 +116,6 @@ export class LoanAccountsComponent implements OnInit {
     }
 
     goToDetail(accountNumber: string) {
-        this.router.navigateByUrl('/uikit/loan/' + accountNumber);
+        this.router.navigateByUrl('/uikit/loan-account/' + accountNumber);
     }
 }

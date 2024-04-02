@@ -9,7 +9,7 @@ import {RouterModule} from '@angular/router';
             loadChildren: () => import('./feature-management/feature-management.module').then(m => m.FeatureManagementModule)
         },
         {
-            path: 'loan-management',
+            path: 'loan-account-management',
             loadChildren: () => import('./loan-management/loan-management.module').then(m => m.LoanManagementModule)
         },
         {
