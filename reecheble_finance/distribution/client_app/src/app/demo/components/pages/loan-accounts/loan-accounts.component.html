@@ -57,7 +57,7 @@
                 <ng-template pTemplate="body" let-loanAccount>
                     <tr (click)="goToDetail(loanAccount.accountNumber)">
                         <td>
-                            <p-tableCheckbox [value]="loanAccount"></p-tableCheckbox>
+                            <p-tableCheckbox [value]="loanAccount" (click)="$event.stopPropagation()"></p-tableCheckbox>
                         </td>
                         <td style="width:14%; min-width:10rem;"><span class="p-column-title">Account Number</span>
                             {{ loanAccount.accountNumber }}
@@ -78,9 +78,9 @@
                             <div class="flex">
                                 <button pButton pRipple icon="pi pi-pencil"
                                         class="p-button-rounded p-button-success mr-2"
-                                        (click)="editProduct(loanAccount)"></button>
+                                        (click)="editProduct(loanAccount); $event.stopPropagation()"></button>
                                 <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
-                                        (click)="deleteProduct(loanAccount)"></button>
+                                        (click)="deleteProduct(loanAccount); $event.stopPropagation()"></button>
                             </div>
                         </td>
                     </tr>

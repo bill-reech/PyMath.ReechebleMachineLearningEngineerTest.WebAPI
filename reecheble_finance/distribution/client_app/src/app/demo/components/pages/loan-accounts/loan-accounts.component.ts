@@ -8,6 +8,7 @@ import {Router} from "@angular/router";
 
 @Component({
     templateUrl: './loan-accounts.component.html',
+    styleUrls: ['./loan-accounts.component.css'],
     providers: [MessageService]
 })
 export class LoanAccountsComponent implements OnInit {
