@@ -2,7 +2,6 @@
     "data": [
         {
             "reference": "LRW1E2T3Y4-5Z6X",
-            "description": "Product Description",
             "amount": 300000,
             "interestRate": 10.0,
             "originationDate": "Apr 15, 2021",
@@ -21,7 +20,6 @@
         },
         {
             "reference": "LR7U8I9O0P-1A2S",
-            "description": "Product Description",
             "amount": 350000,
             "interestRate": 12.0,
             "originationDate": "Jun 23, 2022",
@@ -40,7 +38,6 @@
         },
         {
             "reference": "LRD3F4G5H6-7J8K",
-            "description": "Product Description",
             "amount": 400000,
             "interestRate": 10.0,
             "originationDate": "Mar 10, 2021",
@@ -59,7 +56,6 @@
         },
         {
             "reference": "LRL9M1N2B3-4V5C",
-            "description": "Product Description",
             "amount": 450000,
             "interestRate": 9.0,
             "originationDate": "Feb 1, 2022",
@@ -78,7 +74,6 @@
         },
         {
             "reference": "LRX6Z7L8K9-0J1H",
-            "description": "Product Description",
             "amount": 500000,
             "interestRate": 7.85,
             "originationDate": "Jan 15, 2022",
@@ -97,7 +92,6 @@
         },
         {
             "reference": "LRX1C2V3B4-5N6M",
-            "description": "Product Description",
             "amount": 550000,
             "interestRate": 8.50,
             "originationDate": "Dec 1, 2021",

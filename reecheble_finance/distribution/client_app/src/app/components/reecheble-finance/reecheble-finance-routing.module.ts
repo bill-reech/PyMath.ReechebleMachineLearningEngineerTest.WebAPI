@@ -8,6 +8,10 @@ import {RouterModule} from '@angular/router';
             data: {breadcrumb: 'Loan'},
             loadChildren: () => import('./loan-account/loan-account.module').then(m => m.LoanAccountModule)
         },
+        {
+            path: 'loan-accounts',
+            loadChildren: () => import('./loan-accounts/loan-accounts.module').then(m => m.LoanAccountsModule)
+        },
         {path: '**', redirectTo: '/notfound'}
     ])],
     exports: [RouterModule]

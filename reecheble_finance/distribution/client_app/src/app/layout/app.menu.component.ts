@@ -66,7 +66,7 @@ export class AppMenuComponent implements OnInit {
                             {
                                 label: 'Accounts',
                                 icon: 'pi pi-fw pi-id-card',
-                                routerLink: ['/pages/loan-accounts']
+                                routerLink: ['/reecheble-finance/loan-accounts']
                             }
                         ]
                     }
