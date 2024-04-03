@@ -118,20 +118,20 @@
                         </th>
                     </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-product let-expanded="expanded">
+                <ng-template pTemplate="body" let-loan let-expanded="expanded">
                     <tr>
                         <td>
-                            <button type="button" pButton pRipple [pRowToggler]="product"
+                            <button type="button" pButton pRipple [pRowToggler]="loan"
                                     class="p-button-text p-button-rounded p-button-plain"
                                     [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
                         </td>
-                        <td style="min-width: 12rem;">{{ product.reference }}</td>
-                        <td style="min-width: 8rem;">{{ product.amount | currency:'ZAR' }}</td>
-                        <td style="min-width: 10rem;">{{ product.interestRate * 0.01 | percent:'1.2-2' }}</td>
-                        <td style="min-width: 10rem;">{{ product.duration }}</td>
-                        <td style="min-width: 10rem;"><p>{{ product.originationDate | date: 'mediumDate' }}</p></td>
-                        <td style="min-width: 10rem;"><p>{{ product.dueDate | date: 'mediumDate' }}</p></td>
-                        <td style="min-width: 8rem;">{{ product.equatedMonthlyInstallment | currency:'ZAR' }}</td>
+                        <td style="min-width: 12rem;">{{ loan.reference }}</td>
+                        <td style="min-width: 8rem;">{{ loan.amount | currency:'ZAR' }}</td>
+                        <td style="min-width: 10rem;">{{ loan.interestRate * 0.01 | percent:'1.2-2' }}</td>
+                        <td style="min-width: 10rem;">{{ loan.duration }}</td>
+                        <td style="min-width: 10rem;"><p>{{ loan.originationDate | date: 'mediumDate' }}</p></td>
+                        <td style="min-width: 10rem;"><p>{{ loan.dueDate | date: 'mediumDate' }}</p></td>
+                        <td style="min-width: 8rem;">{{ loan.equatedMonthlyInstallment | currency:'ZAR' }}</td>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="rowexpansion" let-loan>
