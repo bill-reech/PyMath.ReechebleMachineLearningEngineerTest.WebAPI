@@ -1,7 +1,7 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Product} from '../api/product';
-import {Loan} from "../../models/loan";
+import {LoanModel} from "../../models/loan-model";
 
 @Injectable()
 export class ProductService {
@@ -33,7 +33,7 @@ export class ProductService {
     getProductsWithOrdersSmall() {
         return this.http.get<any>('assets/demo/data/products-orders-small.json')
             .toPromise()
-            .then(res => res.data as Loan[])
+            .then(res => res.data as LoanModel[])
             .then(data => data);
     }
 }

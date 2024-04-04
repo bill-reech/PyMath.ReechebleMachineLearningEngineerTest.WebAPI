@@ -26,7 +26,7 @@
                      [(selection)]="selectedLoanAccounts" selectionMode="multiple" [rowHover]="true" dataKey="id">
                 <ng-template pTemplate="caption">
                     <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-                        <h5 class="m-0">Manage Loan Accounts</h5>
+                        <h5 class="m-0">Manage LoanModel Accounts</h5>
                         <span class="block mt-2 md:mt-0 p-input-icon-left">
                             <i class="pi pi-search"></i>
                             <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..."
@@ -92,7 +92,7 @@
         <p-dialog
             [(visible)]="loanAccountDialog"
             [style]="{width: '450px'}"
-            header="Loan Account"
+            header="LoanModel Account"
             [modal]="true"
             class="p-fluid">
 

@@ -2,7 +2,7 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ProductService} from 'src/app/demo/service/product.service';
 import {Table} from 'primeng/table';
 import {ConfirmationService, MessageService} from 'primeng/api';
-import {Loan} from "../../../models/loan";
+import {LoanModel} from "../../../models/loan-model";
 import {ActivatedRoute} from "@angular/router";
 
 interface expandedRows {
@@ -15,7 +15,7 @@ interface expandedRows {
 })
 export class LoanAccountComponent implements OnInit {
 
-    loans: Loan[];
+    loans: LoanModel[];
 
     expandedRows: expandedRows = {};
 

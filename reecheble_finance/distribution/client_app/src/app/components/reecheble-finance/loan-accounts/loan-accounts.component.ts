@@ -97,7 +97,7 @@ export class LoanAccountsComponent implements OnInit {
                     this.messageService.add({
                         severity: 'success',
                         summary: 'Successful',
-                        detail: 'Loan Account Created',
+                        detail: 'LoanModel Account Created',
                         life: 3000
                     });
                     this.loanAccountDialog = false;

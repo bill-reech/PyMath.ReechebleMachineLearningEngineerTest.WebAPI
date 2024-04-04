@@ -7,7 +7,7 @@ export class RepaymentHistory {
     loanBalance?: number
 }
 
-export class Loan {
+export class LoanModel {
     id?: string;
     reference?: string;
     amount?: number;
