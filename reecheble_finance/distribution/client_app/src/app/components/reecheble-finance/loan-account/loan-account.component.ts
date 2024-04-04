@@ -160,7 +160,7 @@ export class LoanAccountComponent implements OnInit {
                         this.messageService.add({
                             severity: 'error',
                             summary: 'Error',
-                            detail: response.message,
+                            detail: "Ooopsie, it seems there was a glitch in the matrix.",
                             life: 3000
                         });
                     } else {
@@ -170,6 +170,7 @@ export class LoanAccountComponent implements OnInit {
                             detail: 'LoanModel Account Created',
                             life: 3000
                         });
+
                         this.loanRequestDialog = false;
                     }
                 },
