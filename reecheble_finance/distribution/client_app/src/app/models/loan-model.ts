@@ -77,7 +77,16 @@ export class LoanModel {
     equatedMonthlyInstallment?: string;
     repaymentHistory?: RepaymentHistory[];
 
-    constructor(id?: string, reference?: string, amount?: number, interestRate?: number, originationDate?: string, dueDate?: string, duration?: number, equatedMonthlyInstallment?: string, repaymentHistory?: RepaymentHistory[]) {
+    constructor(
+        id?: string,
+        reference?: string,
+        amount?: number,
+        interestRate?: number,
+        originationDate?: string,
+        dueDate?: string,
+        duration?: number,
+        equatedMonthlyInstallment?: string,
+        repaymentHistory?: RepaymentHistory[]) {
         this.id = id;
         this.reference = reference;
         this.amount = amount;
@@ -127,6 +136,15 @@ export class LoanModel {
         const repaymentHistoryCloned = this.repaymentHistory?.map((repaymentHistory) =>
             repaymentHistory.clone());
 
-        return new LoanModel(this.id, this.reference, this.amount, this.interestRate, this.originationDate, this.dueDate, this.duration, this.equatedMonthlyInstallment, repaymentHistoryCloned);
+        return new LoanModel(
+            this.id,
+            this.reference,
+            this.amount,
+            this.interestRate,
+            this.originationDate,
+            this.dueDate,
+            this.duration,
+            this.equatedMonthlyInstallment,
+            repaymentHistoryCloned);
     }
 }
