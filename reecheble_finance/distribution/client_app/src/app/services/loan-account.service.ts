@@ -47,8 +47,4 @@ export class LoanAccountService {
         // Handle the error as before
         return throwError(() => new Error('Something bad happened; please try again later.'));
     }
-
-    getLoanAccountById(id: string) {
-
-    }
 }

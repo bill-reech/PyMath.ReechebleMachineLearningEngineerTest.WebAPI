@@ -1,9 +1,10 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {ProductService} from 'src/app/demo/service/product.service';
 import {Table} from 'primeng/table';
 import {ConfirmationService, MessageService} from 'primeng/api';
 import {LoanModel} from "../../../models/loan-model";
 import {ActivatedRoute} from "@angular/router";
+import {LoanService} from "../../../services/loan.service";
+import {catchError, first, tap} from "rxjs";
 
 interface expandedRows {
     [key: string]: boolean;
@@ -23,18 +24,35 @@ export class LoanAccountComponent implements OnInit {
 
     loading: boolean = true;
 
-    accountId: string;
+    accountNumber: string;
 
     @ViewChild('filter') filter!: ElementRef;
 
-    constructor(private productService: ProductService, private route: ActivatedRoute) {
+    constructor(private loanService: LoanService, private route: ActivatedRoute) {
     }
 
     ngOnInit() {
-        this.productService.getProductsWithOrdersSmall().then(data => this.loans = data);
+        this.setAccountNumber();
+        this.getAllAccountLoans(this.accountNumber);
+    }
+
+    setAccountNumber() {
         this.route.params.subscribe(params => {
-            this.accountId = params['account_number']
+            this.accountNumber = params['account_number']
         });
+    }
+
+    getAllAccountLoans(accountNumber: string) {
+        this.loanService.getAccountLoans(accountNumber).pipe(
+            first(),
+            tap((loans: LoanModel[]) => {
+                this.loans = loans;
+            }),
+            catchError((error: any) => {
+                console.error(error);
+                return [];
+            })
+        ).subscribe();
     }
 
     expandAll() {
