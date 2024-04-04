@@ -1,4 +1,5 @@
 import json
+from typing import List
 
 from pymongo import MongoClient
 
@@ -22,8 +23,11 @@ class LoanRepository(AbstractLoanRepository):
         loan_request = self.collection.find_one({"reference": str(filters.get("reference"))})
         return LoanRequest(**loan_request)
 
-    def get_many(self, **filters):
-        pass
+    def get_many(self, **filters) -> List[LoanRequest]:
+        return [
+            LoanRequest(**request)
+            for request in self.collection.find({"account.account_number": str(filters.get("account_number"))})
+        ]
 
     def update(self, **kwargs) -> LoanRequest:
         update_loan_request: LoanRequest = kwargs.get("loan_request")

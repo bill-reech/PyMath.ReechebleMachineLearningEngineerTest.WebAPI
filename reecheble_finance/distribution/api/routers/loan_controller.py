@@ -8,6 +8,10 @@ from reecheble_finance.application.sdk.dtos.add_loan_application.add_loan_applic
     AddLoanApplicationRequestDTO)
 from reecheble_finance.application.sdk.dtos.add_loan_application.add_loan_application_response_dto import (
     AddLoanApplicationResponseDTO)
+from reecheble_finance.application.sdk.dtos.get_account_loan.get_account_loan_request_dto import (
+    GetAccountLoanRequestDTO)
+from reecheble_finance.application.sdk.dtos.get_account_loan.get_account_loan_response_dto import (
+    GetAccountLoanResponseDTO)
 from reecheble_finance.application.sdk.dtos.get_loan_history_snapshot.get_loan_installment_history_snapshot_request import (
     GetLoanInstallmentHistorySnapshotRequestDTO)
 from reecheble_finance.application.sdk.dtos.get_loan_history_snapshot.get_loan_installment_history_snapshot_response import (
@@ -16,6 +20,7 @@ from reecheble_finance.application.sdk.dtos.pay_loan_installment.pay_loan_instal
     PayLoanInstallmentRequestDTO)
 from reecheble_finance.application.sdk.dtos.pay_loan_installment.pay_loan_installment_response_dto import (
     PayLoanInstallmentResponseDTO)
+from reecheble_finance.application.services import GetAccountLoanQueryHandler, GetAccountLoanQuery
 from reecheble_finance.application.services.loan_service.add_loan.add_loan_application_command import (
     AddLoanApplicationCommand)
 from reecheble_finance.application.services.loan_service.add_loan.add_loan_application_command_handler import (
@@ -84,9 +89,26 @@ async def pay_loan_installment(
 @version(0, 1)
 async def get_loan_installment_history(
         loan_id: UUID,
-        path_dependency: PyMongoDbContext = Depends(router_path_dependency)) -> Result[List[
-    GetLoanInstallmentHistorySnapshotResponseDTO]]:
+        path_dependency: PyMongoDbContext = Depends(router_path_dependency)) -> (
+        Result)[List[GetLoanInstallmentHistorySnapshotResponseDTO]]:
     with path_dependency.context().get_context() as context:
         get_loan_installment_history_handler = GetLoanInstallmentHistoryQueryHandler(context=context)
         return await get_loan_installment_history_handler.handle(
             query=GetLoanInstallmentHistoryQuery(data=GetLoanInstallmentHistorySnapshotRequestDTO(id=loan_id)))
+
+
+@router.get(
+    "/get_loans/{account_number}",
+    name="Get loans associated with an account at Reecheble",
+    status_code=200,
+    response_model=Result[List[GetAccountLoanResponseDTO]],
+    description="Get all the loans associated with an account number at Reecheble.",
+)
+@version(0, 1)
+async def get_account_loans(
+        account_number: str,
+        path_dependency: PyMongoDbContext = Depends(router_path_dependency)) -> Result[List[GetAccountLoanResponseDTO]]:
+    with path_dependency.context().get_context() as context:
+        get_account_loans_handler = GetAccountLoanQueryHandler(context=context)
+        return await get_account_loans_handler.handle(
+            query=GetAccountLoanQuery(data=GetAccountLoanRequestDTO(account_number=account_number)))
