@@ -54,7 +54,7 @@ export class LoanAccountsComponent implements OnInit {
         this.loanAccountDialog = true;
     }
 
-    deleteSelectedProducts() {
+    deleteSelectedLoanAccounts() {
         this.deleteLoanAccountsDialog = true;
     }
 
