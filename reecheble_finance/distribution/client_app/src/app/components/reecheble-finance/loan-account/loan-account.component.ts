@@ -169,9 +169,7 @@ export class LoanAccountComponent implements OnInit {
                 }
             });
 
-        // this.loanAccounts = [...this.loanAccounts]
         this.loanRequestDialog = false;
-        // this.loanAccount = new LoanAccountModel();
     }
 
     clear(table: Table) {
