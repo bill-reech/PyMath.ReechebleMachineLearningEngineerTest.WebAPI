@@ -50,7 +50,13 @@ export class RepaymentHistory {
     }
 
     clone(): RepaymentHistory {
-        return new RepaymentHistory(this.id, this.month, this.equatedMonthlyInstallment, this.principalPaid, this.interestPaid, this.loanBalance);
+        return new RepaymentHistory(
+            this.id,
+            this.month,
+            this.equatedMonthlyInstallment,
+            this.principalPaid,
+            this.interestPaid,
+            this.loanBalance);
     }
 }
 
