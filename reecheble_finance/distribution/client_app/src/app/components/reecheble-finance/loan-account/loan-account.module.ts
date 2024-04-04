@@ -15,6 +15,7 @@ import {ToastModule} from 'primeng/toast';
 import {SliderModule} from 'primeng/slider';
 import {RatingModule} from 'primeng/rating';
 import {CalendarModule} from "primeng/calendar";
+import {DialogModule} from "primeng/dialog";
 
 @NgModule({
     imports: [
@@ -32,7 +33,8 @@ import {CalendarModule} from "primeng/calendar";
         DropdownModule,
         ProgressBarModule,
         ToastModule,
-        CalendarModule
+        CalendarModule,
+        DialogModule
     ],
     declarations: [LoanAccountComponent]
 })

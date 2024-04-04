@@ -86,7 +86,12 @@
                 icon='pi pi-fw pi-book'
                 label="Reecheble Loans">
             </button>
-            <button pButton icon='pi pi-fw pi-money-bill' label="Add Loan"></button>
+            <button
+                pButton
+                icon='pi pi-fw pi-money-bill'
+                label="Add Loan"
+                (click)="openNew()">
+            </button>
         </div>
     </div>
 
@@ -202,4 +207,56 @@
             </p-table>
         </div>
     </div>
+
+    <p-dialog
+        [(visible)]="loanRequestDialog"
+        [style]="{width: '450px'}"
+        header="Loan Request"
+        [modal]="true"
+        class="p-fluid">
+
+        <ng-template pTemplate="content">
+            <div class="field">
+                <label for="accountNumber">Account Number</label>
+                <input type="text" pInputText id="accountNumber" [(ngModel)]="loanRequest.accountNumber" required
+                       autofocus
+                       [ngClass]="{'ng-invalid ng-dirty' : submitted && !loanRequest.accountNumber}"/>
+                <small class="ng-dirty ng-invalid" *ngIf="submitted && !loanRequest.accountNumber">Account number is
+                    required.</small>
+            </div>
+            <div class="field">
+                <label for="requestAmount">Request Amount</label>
+                <input type="number" pInputText id="requestAmount" [(ngModel)]="loanRequest.requestAmount" required
+                       autofocus
+                       [ngClass]="{'ng-invalid ng-dirty' : submitted && !loanRequest.requestAmount}"/>
+                <small class="ng-dirty ng-invalid" *ngIf="submitted && !loanRequest.requestAmount">Request amount is
+                    required.</small>
+            </div>
+            <div class="field">
+                <label for="interestRate">Interest Rate</label>
+                <input type="number" pInputText id="interestRate" [(ngModel)]="loanRequest.interestRate" required
+                       autofocus
+                       [ngClass]="{'ng-invalid ng-dirty' : submitted && !loanRequest.interestRate}"/>
+                <small class="ng-dirty ng-invalid" *ngIf="submitted && !loanRequest.interestRate">Interest rate is
+                    required.</small>
+            </div>
+            <div class="field">
+                <label for="paymentPeriodInMonths">Payment Period</label>
+                <input type="number" pInputText id="paymentPeriodInMonths"
+                       [(ngModel)]="loanRequest.paymentPeriodInMonths" required
+                       autofocus
+                       [ngClass]="{'ng-invalid ng-dirty' : submitted && !loanRequest.paymentPeriodInMonths}"/>
+                <small class="ng-dirty ng-invalid" *ngIf="submitted && !loanRequest.paymentPeriodInMonths">Payment
+                    period is
+                    required.</small>
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="footer">
+            <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text"
+                    (click)="hideDialog()"></button>
+            <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"
+                    (click)="addLoanRequest()"></button>
+        </ng-template>
+    </p-dialog>
 </div>

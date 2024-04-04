@@ -6,6 +6,7 @@ import {ActivatedRoute} from "@angular/router";
 import {LoanService} from "../../../services/loan.service";
 import {catchError, first, tap} from "rxjs";
 import {expandedRowsModel} from "../../../models/common/expanded-rows-model";
+import {LoanRequestModel, LoanResponseModel} from "../../../models/loan-installment-model";
 
 @Component({
     templateUrl: './loan-account.component.html',
@@ -23,9 +24,19 @@ export class LoanAccountComponent implements OnInit {
 
     accountNumber: string;
 
+    submitted: boolean = false;
+
+    loanRequestDialog: boolean = false;
+
+    loanRequest: LoanRequestModel;
+
+
     @ViewChild('filter') filter!: ElementRef;
 
-    constructor(private loanService: LoanService, private route: ActivatedRoute) {
+    constructor(
+        private loanService: LoanService,
+        private route: ActivatedRoute,
+        private messageService: MessageService) {
     }
 
     ngOnInit() {
@@ -139,9 +150,43 @@ export class LoanAccountComponent implements OnInit {
         this.isExpanded = !this.isExpanded;
     }
 
+    addLoanRequest() {
+        this.submitted = true;
+
+        this.loanService.addLoanInstallment(this.loanRequest)
+            .subscribe({
+                next: (response: LoanResponseModel) => {
+                    this.messageService.add({
+                        severity: 'success',
+                        summary: 'Successful',
+                        detail: 'LoanModel Account Created',
+                        life: 3000
+                    });
+                    this.loanRequestDialog = false;
+                },
+                error: error => {
+                    console.error('There was an error!', error);
+                }
+            });
+
+        // this.loanAccounts = [...this.loanAccounts]
+        this.loanRequestDialog = false;
+        // this.loanAccount = new LoanAccountModel();
+    }
+
     clear(table: Table) {
         table.clear();
         this.filter.nativeElement.value = '';
     }
 
+    hideDialog() {
+        this.loanRequestDialog = false;
+        this.submitted = false;
+    }
+
+    openNew() {
+        this.loanRequest = new LoanRequestModel();
+        this.submitted = false;
+        this.loanRequestDialog = true;
+    }
 }

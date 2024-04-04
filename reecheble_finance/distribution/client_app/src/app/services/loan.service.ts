@@ -1,9 +1,9 @@
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {LoanAccountApiResponseModel, LoanAccountModel} from "../models/loan-account-model";
 import {catchError, Observable, throwError} from "rxjs";
 import {map} from "rxjs/operators";
 import {LoanModel, LoanModelsApiResponseModel} from "../models/loan-model";
+import {LoanRequestModel, LoanResponseModel} from "../models/loan-installment-model";
 
 @Injectable()
 export class LoanService {
@@ -27,13 +27,13 @@ export class LoanService {
             );
     }
 
-    addLoanAccount(userAccount: LoanAccountModel): Observable<LoanAccountApiResponseModel> {
-        let url = `${this.apiEndpoint}/account/add_account`;
+    addLoanInstallment(loanRequestModel: LoanRequestModel): Observable<LoanResponseModel> {
+        let url = `${this.apiEndpoint}/loan/add_loan`;
 
-        return this.http.post<LoanAccountApiResponseModel>(url, userAccount.transformToLoanAccountApiModel())
+        return this.http.post<LoanResponseModel>(url, loanRequestModel.transformToLoanRequestApiModel())
             .pipe(
                 map(response => {
-                    response.data = LoanAccountModel.transformToLoanAccount(response.data);
+                    response = LoanRequestModel.transformApiResponseToLoanResponseModel(response);
                     return response;
                 }),
                 catchError(this.handleError)
