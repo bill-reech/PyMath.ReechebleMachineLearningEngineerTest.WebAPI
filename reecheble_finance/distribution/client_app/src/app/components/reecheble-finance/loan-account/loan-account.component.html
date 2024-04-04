@@ -13,7 +13,9 @@
                 </div>
             </div>
             <span
-                class="text-green-500 font-medium"> {{ calculateAverageInterestRate() * 0.01 | percent:'1.2-2' }} </span>
+                class="text-green-500 font-medium">
+                {{ calculateAverageInterestRate() * 0.01 | percent:'1.2-2' }}
+            </span>
             <span class="text-500">average interest rate</span>
         </div>
     </div>
@@ -23,8 +25,8 @@
                 <div>
                     <span class="block text-500 font-medium mb-3">Principals</span>
                     <div
-                        class="text-900 font-medium text-xl">{{ this.getLatestLoanAmount() * 0.001 | currency:'ZAR': 'symbol':'1.0-1' }}
-                        k
+                        class="text-900 font-medium text-xl">
+                        {{ this.getLatestLoanAmount() * 0.001 | currency:'ZAR': 'symbol':'1.0-1' }}k
                     </div>
                 </div>
                 <div class="flex align-items-center justify-content-center bg-orange-100 border-round"
@@ -33,8 +35,9 @@
                 </div>
             </div>
             <span
-                class="text-green-500 font-medium">{{ this.calculateAverageRequestAmount() * 0.001 | currency:'ZAR': 'symbol':'1.0-1' }}
-                k </span>
+                class="text-green-500 font-medium">
+                {{ this.calculateAverageRequestAmount() * 0.001 | currency:'ZAR': 'symbol':'1.0-1' }}k
+            </span>
             <span class="text-500">average</span>
         </div>
     </div>
