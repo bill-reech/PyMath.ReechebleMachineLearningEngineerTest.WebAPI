@@ -14,7 +14,7 @@ import {LoanRequestModel, LoanResponseModel} from "../../../models/loan-installm
 })
 export class LoanAccountComponent implements OnInit {
 
-    loans: LoanModel[];
+    loans: LoanModel[] = [];
 
     expandedRows: expandedRowsModel = {};
 
@@ -156,13 +156,22 @@ export class LoanAccountComponent implements OnInit {
         this.loanService.addLoanInstallment(this.loanRequest)
             .subscribe({
                 next: (response: LoanResponseModel) => {
-                    this.messageService.add({
-                        severity: 'success',
-                        summary: 'Successful',
-                        detail: 'LoanModel Account Created',
-                        life: 3000
-                    });
-                    this.loanRequestDialog = false;
+                    if (response.data == null) {
+                        this.messageService.add({
+                            severity: 'error',
+                            summary: 'Error',
+                            detail: response.message,
+                            life: 3000
+                        });
+                    } else {
+                        this.messageService.add({
+                            severity: 'success',
+                            summary: 'Successful',
+                            detail: 'LoanModel Account Created',
+                            life: 3000
+                        });
+                        this.loanRequestDialog = false;
+                    }
                 },
                 error: error => {
                     console.error('There was an error!', error);

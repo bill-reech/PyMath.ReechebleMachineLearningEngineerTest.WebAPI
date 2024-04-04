@@ -52,6 +52,14 @@ export class LoanRequestModel {
     }
 
     static transformApiResponseToLoanResponseModel(response: any): LoanResponseModel {
+        if (response.data == null) {
+            return {
+                data: null,
+                message: response.message,
+                status: response.status
+            };
+        }
+
         const loanDetails: LoanDetails = {
             id: response.data.id,
             reference: response.data.reference,
