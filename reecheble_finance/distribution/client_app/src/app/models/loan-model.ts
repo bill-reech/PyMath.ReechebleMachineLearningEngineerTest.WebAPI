@@ -18,7 +18,13 @@ export class RepaymentHistory {
     interestPaid?: number;
     loanBalance?: number;
 
-    constructor(id?: string, month?: number, equatedMonthlyInstallment?: number, principalPaid?: number, interestPaid?: number, loanBalance?: number) {
+    constructor(
+        id?: string,
+        month?: number,
+        equatedMonthlyInstallment?: number,
+        principalPaid?: number,
+        interestPaid?: number,
+        loanBalance?: number) {
         this.id = id;
         this.month = month;
         this.equatedMonthlyInstallment = equatedMonthlyInstallment;
