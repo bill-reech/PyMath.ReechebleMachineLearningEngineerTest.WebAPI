@@ -66,9 +66,7 @@ export class LoanAccountComponent implements OnInit {
     getLatestLoanAmount(): number {
         if (!this.loans.length) return 0; // Array is empty
 
-        const sortedLoans = this.loans.sort(
-            (a, b) => new Date(b.originationDate || 0).getTime() - new Date(a.originationDate || 0).getTime()
-        );
+        const sortedLoans = this.sortAccountLoansByOriginationDate();
 
         const latestLoanAmount = sortedLoans[0].amount;
 
@@ -78,13 +76,17 @@ export class LoanAccountComponent implements OnInit {
     getLatestLoanTerms(): number {
         if (!this.loans.length) return 0; // Array is empty
 
-        const sortedLoans = this.loans.sort(
-            (a, b) => new Date(b.originationDate || 0).getTime() - new Date(a.originationDate || 0).getTime()
-        );
+        const sortedLoans = this.sortAccountLoansByOriginationDate();
 
         const latestLoanTerms = sortedLoans[0].duration;
 
         return latestLoanTerms || 0;
+    }
+
+    sortAccountLoansByOriginationDate(): LoanModel[] {
+        return this.loans.sort(
+            (a, b) => new Date(b.originationDate || 0).getTime() - new Date(a.originationDate || 0).getTime()
+        );
     }
 
     getNumberOfLoans(): number {
