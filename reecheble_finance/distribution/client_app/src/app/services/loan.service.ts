@@ -2,7 +2,7 @@ import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {catchError, Observable, throwError} from "rxjs";
 import {map} from "rxjs/operators";
-import {LoanModel, LoanModelsApiResponseModel} from "../models/loan-model";
+import {LoanModel, LoanModelApiResponseModel, LoanModelsApiResponseModel} from "../models/loan-model";
 import {LoanRequestModel, LoanResponseModel} from "../models/loan-installment-model";
 
 @Injectable()
@@ -35,6 +35,18 @@ export class LoanService {
                 map(response => {
                     response = LoanRequestModel.transformApiResponseToLoanResponseModel(response);
                     return response;
+                }),
+                catchError(this.handleError)
+            );
+    }
+
+    getAccountLoanById(id: string): Observable<LoanModel> {
+        let url = `${this.apiEndpoint}/loan/get_loan/${id}`;
+
+        return this.http.get<LoanModelApiResponseModel>(url)
+            .pipe(
+                map(response => {
+                    return LoanModel.transformToLoan(response.data);
                 }),
                 catchError(this.handleError)
             );
