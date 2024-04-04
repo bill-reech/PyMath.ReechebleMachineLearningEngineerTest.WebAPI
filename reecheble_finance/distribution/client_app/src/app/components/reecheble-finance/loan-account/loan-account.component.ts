@@ -115,8 +115,11 @@ export class LoanAccountComponent implements OnInit {
         if (!this.loans.length) return 0; // Array is empty
 
         return this.loans
-            .map(loanModel => loanModel.repaymentHistory.length)
-            .reduce((partialSum, numPayments) => partialSum + numPayments, 0);
+            .map(loanModel => {
+                if (loanModel.repaymentHistory.length == 0) return 0;
+                return Math.max(...loanModel.repaymentHistory.map(repayment => Number(repayment.month)));
+            })
+            .reduce((sum, maxMonth) => sum + maxMonth, 0)
     }
 
     shouldDisplayInstallmentButton(loanModel: LoanModel): boolean {
