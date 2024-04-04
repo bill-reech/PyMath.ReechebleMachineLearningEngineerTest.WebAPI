@@ -5,10 +5,7 @@ import {LoanModel} from "../../../models/loan-model";
 import {ActivatedRoute} from "@angular/router";
 import {LoanService} from "../../../services/loan.service";
 import {catchError, first, tap} from "rxjs";
-
-interface expandedRows {
-    [key: string]: boolean;
-}
+import {expandedRowsModel} from "../../../models/common/expanded-rows-model";
 
 @Component({
     templateUrl: './loan-account.component.html',
@@ -18,7 +15,7 @@ export class LoanAccountComponent implements OnInit {
 
     loans: LoanModel[];
 
-    expandedRows: expandedRows = {};
+    expandedRows: expandedRowsModel = {};
 
     isExpanded: boolean = false;
 
