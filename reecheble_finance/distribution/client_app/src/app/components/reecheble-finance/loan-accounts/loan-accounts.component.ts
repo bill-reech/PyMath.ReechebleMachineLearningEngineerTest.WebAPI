@@ -58,14 +58,14 @@ export class LoanAccountsComponent implements OnInit {
         this.deleteLoanAccountsDialog = true;
     }
 
-    editProduct(product: LoanAccountModel) {
-        this.loanAccount = product.clone();
+    editLoanAccount(loanAccountModel: LoanAccountModel) {
+        this.loanAccount = loanAccountModel.clone();
         this.loanAccountDialog = true;
     }
 
-    deleteProduct(product: LoanAccountModel) {
+    deleteLoanAccount(loanAccountModel: LoanAccountModel) {
         this.deleteLoanAccountDialog = true;
-        this.loanAccount = product.clone();
+        this.loanAccount = loanAccountModel.clone();
     }
 
     confirmDeleteSelected() {
