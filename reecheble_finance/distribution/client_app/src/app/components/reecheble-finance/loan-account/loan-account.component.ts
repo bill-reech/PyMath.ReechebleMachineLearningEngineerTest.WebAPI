@@ -119,6 +119,14 @@ export class LoanAccountComponent implements OnInit {
             .reduce((partialSum, numPayments) => partialSum + numPayments, 0);
     }
 
+    shouldDisplayInstallmentButton(loanModel: LoanModel): boolean {
+        if (!loanModel.repaymentHistory.length) return true; // RepaymentHistory is empty
+
+        let runningBalance = loanModel.repaymentHistory[loanModel.repaymentHistory.length - 1].loanBalance
+        return runningBalance > 0;
+
+    }
+
     expandAll() {
         if (!this.isExpanded) {
             this.loans.forEach(loan => loan && loan.reference ? this.expandedRows[loan.reference] = true : '');
