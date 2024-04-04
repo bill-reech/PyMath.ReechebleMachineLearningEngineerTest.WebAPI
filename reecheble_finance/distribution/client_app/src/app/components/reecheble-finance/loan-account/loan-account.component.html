@@ -5,14 +5,15 @@
             <div class="flex justify-content-between mb-3">
                 <div>
                     <span class="block text-500 font-medium mb-3">Loans</span>
-                    <div class="text-900 font-medium text-xl">152</div>
+                    <div class="text-900 font-medium text-xl">{{ getNumberOfLoans() }}</div>
                 </div>
                 <div class="flex align-items-center justify-content-center bg-blue-100 border-round"
                      [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
                     <i class="pi pi-book text-blue-500 text-xl"></i>
                 </div>
             </div>
-            <span class="text-green-500 font-medium"> 10.0% </span>
+            <span
+                class="text-green-500 font-medium"> {{ calculateAverageInterestRate() * 0.01 | percent:'1.2-2' }} </span>
             <span class="text-500">average interest rate</span>
         </div>
     </div>
@@ -21,14 +22,14 @@
             <div class="flex justify-content-between mb-3">
                 <div>
                     <span class="block text-500 font-medium mb-3">Principals</span>
-                    <div class="text-900 font-medium text-xl">ZAR 750k</div>
+                    <div class="text-900 font-medium text-xl">{{ this.getLatestLoanAmount() | currency:'ZAR' }}</div>
                 </div>
                 <div class="flex align-items-center justify-content-center bg-orange-100 border-round"
                      [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
                     <i class="pi pi-money-bill text-orange-500 text-xl"></i>
                 </div>
             </div>
-            <span class="text-green-500 font-medium">ZAR 500k </span>
+            <span class="text-green-500 font-medium">{{ this.calculateAverageRequestAmount() | currency:'ZAR' }} </span>
             <span class="text-500">average</span>
         </div>
     </div>
@@ -37,14 +38,14 @@
             <div class="flex justify-content-between mb-3">
                 <div>
                     <span class="block text-500 font-medium mb-3">Terms</span>
-                    <div class="text-900 font-medium text-xl">12 Months</div>
+                    <div class="text-900 font-medium text-xl">{{ getLatestLoanTerms() }} Months</div>
                 </div>
                 <div class="flex align-items-center justify-content-center bg-cyan-100 border-round"
                      [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
                     <i class="pi pi-calendar-plus text-cyan-500 text-xl"></i>
                 </div>
             </div>
-            <span class="text-green-500 font-medium">6 months </span>
+            <span class="text-green-500 font-medium">{{ calculateAverageDuration() | number: '1.0-0' }} months </span>
             <span class="text-500">average</span>
         </div>
     </div>
@@ -53,14 +54,14 @@
             <div class="flex justify-content-between mb-3">
                 <div>
                     <span class="block text-500 font-medium mb-3">Payments</span>
-                    <div class="text-900 font-medium text-xl">35 Total</div>
+                    <div class="text-900 font-medium text-xl">{{ calculateTotalPayments() }} Total</div>
                 </div>
                 <div class="flex align-items-center justify-content-center bg-purple-100 border-round"
                      [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
                     <i class="pi pi-calculator text-purple-500 text-xl"></i>
                 </div>
             </div>
-            <span class="text-red-500 font-medium">3 </span>
+            <span class="text-red-500 font-medium">0 </span>
             <span class="text-500">missed</span>
         </div>
     </div>

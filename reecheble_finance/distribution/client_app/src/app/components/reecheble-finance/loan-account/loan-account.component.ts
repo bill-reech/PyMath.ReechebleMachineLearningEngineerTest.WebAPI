@@ -55,6 +55,70 @@ export class LoanAccountComponent implements OnInit {
         ).subscribe();
     }
 
+    calculateAverageRequestAmount(): number {
+        const totalAmount = this.loans
+            .map(loanModel => loanModel.amount || 0)
+            .reduce((partialSum, amount) => partialSum + amount, 0);
+
+        return totalAmount / this.loans.length;
+    }
+
+    getLatestLoanAmount(): number {
+        if (!this.loans.length) return 0; // Array is empty
+
+        const sortedLoans = this.loans.sort(
+            (a, b) => new Date(b.originationDate || 0).getTime() - new Date(a.originationDate || 0).getTime()
+        );
+
+        const latestLoanAmount = sortedLoans[0].amount;
+
+        return latestLoanAmount || 0;
+    }
+
+    getLatestLoanTerms(): number {
+        if (!this.loans.length) return 0; // Array is empty
+
+        const sortedLoans = this.loans.sort(
+            (a, b) => new Date(b.originationDate || 0).getTime() - new Date(a.originationDate || 0).getTime()
+        );
+
+        const latestLoanTerms = sortedLoans[0].duration;
+
+        return latestLoanTerms || 0;
+    }
+
+    getNumberOfLoans(): number {
+        return this.loans.length;
+    }
+
+    calculateAverageInterestRate(): number {
+        if (!this.loans.length) return 0; // Array is empty
+
+        const totalInterestRate = this.loans
+            .map(loanModel => loanModel.interestRate || 0)
+            .reduce((partialSum, interestRate) => partialSum + interestRate, 0);
+
+        return totalInterestRate / this.loans.length;
+    }
+
+    calculateAverageDuration(): number {
+        if (!this.loans.length) return 0; // Array is empty
+
+        const totalDuration = this.loans
+            .map(loanModel => Number(loanModel.duration) || 0)
+            .reduce((partialSum, duration) => partialSum + duration, 0);
+
+        return totalDuration / this.loans.length;
+    }
+
+    calculateTotalPayments(): number {
+        if (!this.loans.length) return 0; // Array is empty
+
+        return this.loans
+            .map(loanModel => loanModel.repaymentHistory.length)
+            .reduce((partialSum, numPayments) => partialSum + numPayments, 0);
+    }
+
     expandAll() {
         if (!this.isExpanded) {
             this.loans.forEach(loan => loan && loan.reference ? this.expandedRows[loan.reference] = true : '');

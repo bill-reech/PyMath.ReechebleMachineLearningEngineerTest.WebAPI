@@ -73,11 +73,11 @@ export class LoanModel {
     interestRate?: number;
     originationDate?: string;
     dueDate?: string;
-    duration?: string;
+    duration?: number;
     equatedMonthlyInstallment?: string;
     repaymentHistory?: RepaymentHistory[];
 
-    constructor(id?: string, reference?: string, amount?: number, interestRate?: number, originationDate?: string, dueDate?: string, duration?: string, equatedMonthlyInstallment?: string, repaymentHistory?: RepaymentHistory[]) {
+    constructor(id?: string, reference?: string, amount?: number, interestRate?: number, originationDate?: string, dueDate?: string, duration?: number, equatedMonthlyInstallment?: string, repaymentHistory?: RepaymentHistory[]) {
         this.id = id;
         this.reference = reference;
         this.amount = amount;
