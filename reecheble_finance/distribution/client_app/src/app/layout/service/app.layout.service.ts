@@ -1,4 +1,4 @@
-import {Injectable, effect, signal} from '@angular/core';
+import {effect, Injectable, signal} from '@angular/core';
 import {Subject} from 'rxjs';
 
 export interface AppConfig {
@@ -24,7 +24,7 @@ interface LayoutState {
 })
 export class LayoutService {
     _config: AppConfig = {
-        ripple: false,
+        ripple: true,
         inputStyle: 'outlined',
         menuMode: 'static',
         colorScheme: 'light',

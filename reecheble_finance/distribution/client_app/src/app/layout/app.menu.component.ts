@@ -26,7 +26,7 @@ export class AppMenuComponent implements OnInit {
                 items: [
                     {
                         label: 'Loans',
-                        icon: 'pi pi-fw pi-user',
+                        icon: 'pi pi-fw pi-book',
                         items: [
                             {
                                 label: 'Accounts',
