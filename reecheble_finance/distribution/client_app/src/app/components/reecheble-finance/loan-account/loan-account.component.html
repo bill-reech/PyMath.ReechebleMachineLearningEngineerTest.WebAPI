@@ -90,7 +90,7 @@
                 pButton
                 icon='pi pi-fw pi-money-bill'
                 label="Add Loan"
-                (click)="openNew()">
+                (click)="openNew(this.accountNumber)">
             </button>
         </div>
     </div>
@@ -157,7 +157,7 @@
                                 type="button"
                                 icon='pi pi-fw pi-credit-card'
                                 label="Pay"
-                                (click)="openNewInstallmentDialog()">
+                                (click)="openNewInstallmentDialog(loan.reference)">
                             </p-button>
                         </td>
                     </tr>
@@ -221,7 +221,7 @@
                 <label for="accountNumber">Account Number</label>
                 <input type="text" pInputText id="accountNumber" [(ngModel)]="loanRequest.accountNumber" required
                        autofocus
-                       [ngClass]="{'ng-invalid ng-dirty' : submitted && !loanRequest.accountNumber}"/>
+                       [ngClass]="{'ng-invalid ng-dirty' : submitted && !loanRequest.accountNumber}" disabled/>
                 <small class="ng-dirty ng-invalid" *ngIf="submitted && !loanRequest.accountNumber">Account number is
                     required.</small>
             </div>
@@ -273,7 +273,7 @@
                 <label for="reference">Loan Reference</label>
                 <input type="text" pInputText id="reference" [(ngModel)]="loanInstallmentRequest.reference" required
                        autofocus
-                       [ngClass]="{'ng-invalid ng-dirty' : submitted && !loanInstallmentRequest.reference}"/>
+                       [ngClass]="{'ng-invalid ng-dirty' : submitted && !loanInstallmentRequest.reference}" disabled/>
                 <small class="ng-dirty ng-invalid" *ngIf="submitted && !loanInstallmentRequest.reference">Loan reference
                     number is
                     required.</small>

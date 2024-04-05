@@ -60,7 +60,7 @@ export class LoanService {
         return this.http.post<LoanAccountsApiResponseModel>(url, loanInstallmentRequestModel.transformToLoanInstallmentRequestApiModel())
             .pipe(
                 map(response => {
-                    return LoanInstallmentRequestModel.transformApiResponseToLoanInstallmentResponseModel(response.data);
+                    return LoanInstallmentRequestModel.transformApiResponseToLoanInstallmentResponseModel(response);
                 }),
                 catchError(this.handleError)
             );
