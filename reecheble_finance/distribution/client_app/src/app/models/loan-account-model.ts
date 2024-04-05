@@ -1,17 +1,17 @@
 export class LoanAccountApiResponseModel {
-    data: LoanAccountModel;
+    data: LoanAccountApiResponseModelData;
     message: string;
     status: [number, string];
 }
 
 export class LoanAccountsApiResponseModel {
-    data: LoanAccountModel[];
+    data: LoanAccountApiResponseModelData[];
     message: string;
     status: [number, string];
 }
 
 
-export class LoanAccountModel {
+export class LoanAccountApiResponseModelData {
     id?: string;
     accountNumber?: string
     firstName?: string;
@@ -26,8 +26,8 @@ export class LoanAccountModel {
         this.emailAddress = emailAddress;
     }
 
-    static transformToLoanAccount(loanAccountApiModel: any): any {
-        return new LoanAccountModel(
+    static transformToLoanAccountApiResponseModel(loanAccountApiModel: any): any {
+        return new LoanAccountApiResponseModelData(
             loanAccountApiModel.id,
             loanAccountApiModel.account_number,
             loanAccountApiModel.first_name,
@@ -36,7 +36,7 @@ export class LoanAccountModel {
         );
     }
 
-    transformToLoanAccountApiModel(): any {
+    transformToLoanAccountApiRequestModel(): any {
         return {
             id: this.id,
             account_number: this.accountNumber,
@@ -46,7 +46,7 @@ export class LoanAccountModel {
         };
     }
 
-    clone(): LoanAccountModel {
-        return new LoanAccountModel(this.id, this.accountNumber, this.firstName, this.lastName, this.emailAddress);
+    clone(): LoanAccountApiResponseModelData {
+        return new LoanAccountApiResponseModelData(this.id, this.accountNumber, this.firstName, this.lastName, this.emailAddress);
     }
 }

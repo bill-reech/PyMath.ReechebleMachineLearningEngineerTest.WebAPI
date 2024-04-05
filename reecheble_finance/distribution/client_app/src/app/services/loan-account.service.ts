@@ -2,7 +2,7 @@ import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {
     LoanAccountApiResponseModel,
-    LoanAccountModel,
+    LoanAccountApiResponseModelData,
     LoanAccountsApiResponseModel
 } from "../models/loan-account-model";
 import {catchError, Observable, throwError} from "rxjs";
@@ -16,27 +16,27 @@ export class LoanAccountService {
     constructor(private http: HttpClient) {
     }
 
-    getLoanAccounts(): Observable<LoanAccountModel[]> {
+    getLoanAccounts(): Observable<LoanAccountApiResponseModelData[]> {
         let url = `${this.apiEndpoint}/account/all_accounts`;
 
         return this.http.get<LoanAccountsApiResponseModel>(url)
             .pipe(
                 map(response => {
-                    const loanAccounts: LoanAccountModel[] = response.data.map(data =>
-                        LoanAccountModel.transformToLoanAccount(data));
+                    const loanAccounts: LoanAccountApiResponseModelData[] = response.data.map(data =>
+                        LoanAccountApiResponseModelData.transformToLoanAccountApiResponseModel(data));
                     return loanAccounts;
                 }),
                 catchError(this.handleError)
             );
     }
 
-    addLoanAccount(userAccount: LoanAccountModel): Observable<LoanAccountApiResponseModel> {
+    addLoanAccount(userAccount: LoanAccountApiResponseModelData): Observable<LoanAccountApiResponseModel> {
         let url = `${this.apiEndpoint}/account/add_account`;
 
-        return this.http.post<LoanAccountApiResponseModel>(url, userAccount.transformToLoanAccountApiModel())
+        return this.http.post<LoanAccountApiResponseModel>(url, userAccount.transformToLoanAccountApiRequestModel())
             .pipe(
                 map(response => {
-                    response.data = LoanAccountModel.transformToLoanAccount(response.data);
+                    response.data = LoanAccountApiResponseModelData.transformToLoanAccountApiResponseModel(response.data);
                     return response;
                 }),
                 catchError(this.handleError)

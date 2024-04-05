@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MessageService} from 'primeng/api';
 import {Table} from 'primeng/table';
-import {LoanAccountApiResponseModel, LoanAccountModel} from "../../../models/loan-account-model";
+import {LoanAccountApiResponseModel, LoanAccountApiResponseModelData} from "../../../models/loan-account-model";
 import {LoanAccountService} from "../../../services/loan-account.service";
 import {catchError, first, tap} from "rxjs";
 import {Router} from "@angular/router";
@@ -16,9 +16,9 @@ export class LoanAccountsComponent implements OnInit {
     loanAccountDialog: boolean = false;
     deleteLoanAccountDialog: boolean = false;
     deleteLoanAccountsDialog: boolean = false;
-    loanAccounts: LoanAccountModel[];
-    loanAccount: LoanAccountModel;
-    selectedLoanAccounts: LoanAccountModel[];
+    loanAccounts: LoanAccountApiResponseModelData[];
+    loanAccount: LoanAccountApiResponseModelData;
+    selectedLoanAccounts: LoanAccountApiResponseModelData[];
     submitted: boolean = false;
     loanAccountFields: { field: string, header: string }[];
 
@@ -31,7 +31,7 @@ export class LoanAccountsComponent implements OnInit {
     ngOnInit() {
         this.loanAccountService.getLoanAccounts().pipe(
             first(),
-            tap((accounts: LoanAccountModel[]) => {
+            tap((accounts: LoanAccountApiResponseModelData[]) => {
                 this.loanAccounts = accounts;
             }),
             catchError((error: any) => {
@@ -49,7 +49,7 @@ export class LoanAccountsComponent implements OnInit {
     }
 
     openNew() {
-        this.loanAccount = new LoanAccountModel();
+        this.loanAccount = new LoanAccountApiResponseModelData();
         this.submitted = false;
         this.loanAccountDialog = true;
     }
@@ -58,12 +58,12 @@ export class LoanAccountsComponent implements OnInit {
         this.deleteLoanAccountsDialog = true;
     }
 
-    editLoanAccount(loanAccountModel: LoanAccountModel) {
+    editLoanAccount(loanAccountModel: LoanAccountApiResponseModelData) {
         this.loanAccount = loanAccountModel.clone();
         this.loanAccountDialog = true;
     }
 
-    deleteLoanAccount(loanAccountModel: LoanAccountModel) {
+    deleteLoanAccount(loanAccountModel: LoanAccountApiResponseModelData) {
         this.deleteLoanAccountDialog = true;
         this.loanAccount = loanAccountModel.clone();
     }
@@ -79,7 +79,7 @@ export class LoanAccountsComponent implements OnInit {
         this.deleteLoanAccountDialog = false;
         this.loanAccounts = this.loanAccounts.filter(val => val.id !== this.loanAccount.id);
         this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000});
-        this.loanAccount = new LoanAccountModel();
+        this.loanAccount = new LoanAccountApiResponseModelData();
     }
 
     hideDialog() {
@@ -109,7 +109,7 @@ export class LoanAccountsComponent implements OnInit {
 
         this.loanAccounts = [...this.loanAccounts]
         this.loanAccountDialog = false;
-        this.loanAccount = new LoanAccountModel();
+        this.loanAccount = new LoanAccountApiResponseModelData();
     }
 
     onGlobalFilter(table: Table, event: Event) {
