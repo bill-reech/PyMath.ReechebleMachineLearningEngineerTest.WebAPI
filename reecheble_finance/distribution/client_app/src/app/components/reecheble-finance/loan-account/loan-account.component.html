@@ -157,7 +157,7 @@
                                 type="button"
                                 icon='pi pi-fw pi-credit-card'
                                 label="Pay"
-                                (click)="openNewInstallmentDialog(loan.reference)">
+                                (click)="openNewInstallmentDialog(loan.reference, loan.equatedMonthlyInstallment)">
                             </p-button>
                         </td>
                     </tr>
@@ -283,7 +283,8 @@
                 <input type="number" pInputText id="installmentAmount"
                        [(ngModel)]="loanInstallmentRequest.installmentAmount" required
                        autofocus
-                       [ngClass]="{'ng-invalid ng-dirty' : submitted && !loanInstallmentRequest.installmentAmount}"/>
+                       [ngClass]="{'ng-invalid ng-dirty' : submitted && !loanInstallmentRequest.installmentAmount}"
+                       disabled/>
                 <small class="ng-dirty ng-invalid" *ngIf="submitted && !loanInstallmentRequest.installmentAmount">Installment
                     amount is
                     required.</small>
