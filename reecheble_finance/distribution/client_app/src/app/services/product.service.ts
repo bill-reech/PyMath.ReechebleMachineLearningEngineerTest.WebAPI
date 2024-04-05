@@ -1,7 +1,7 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {Product} from '../api/product';
-import {LoanModel} from "../../models/loan-model";
+import {Product} from '../models/product';
+import {LoanModel} from "../models/loan-model";
 
 @Injectable()
 export class ProductService {
