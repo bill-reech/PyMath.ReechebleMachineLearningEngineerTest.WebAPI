@@ -177,7 +177,6 @@ export class LoanAccountComponent implements OnInit {
                             detail: 'LoanModel Account Created',
                             life: 3000
                         });
-
                         this.loanRequestDialog = false;
                     }
                 },
