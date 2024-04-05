@@ -6,7 +6,8 @@ import {ActivatedRoute} from "@angular/router";
 import {LoanService} from "../../../services/loan.service";
 import {catchError, first, tap} from "rxjs";
 import {expandedRowsModel} from "../../../models/common/expanded-rows-model";
-import {LoanRequestModel, LoanResponseModel} from "../../../models/loan-installment-model";
+import {LoanRequestModel, LoanResponseModel} from "../../../models/loan-request-model";
+import {LoanInstallmentApiResponseModel, LoanInstallmentRequestModel} from "../../../models/loan-installment-model";
 
 @Component({
     templateUrl: './loan-account.component.html',
@@ -26,9 +27,15 @@ export class LoanAccountComponent implements OnInit {
 
     submitted: boolean = false;
 
+    loanInstallmentSubmitted: boolean = false;
+
     loanRequestDialog: boolean = false;
 
+    loanInstallmentRequestDialog: boolean = false;
+
     loanRequest: LoanRequestModel;
+
+    loanInstallmentRequest: LoanInstallmentRequestModel;
 
 
     @ViewChild('filter') filter!: ElementRef;
@@ -153,7 +160,7 @@ export class LoanAccountComponent implements OnInit {
     addLoanRequest() {
         this.submitted = true;
 
-        this.loanService.addLoanInstallment(this.loanRequest)
+        this.loanService.addLoanRequest(this.loanRequest)
             .subscribe({
                 next: (response: LoanResponseModel) => {
                     if (response.data == null) {
@@ -182,6 +189,38 @@ export class LoanAccountComponent implements OnInit {
         this.loanRequestDialog = false;
     }
 
+    addLoanInstallmentRequest() {
+        this.loanInstallmentSubmitted = true;
+
+        this.loanService.addLoanInstallmentRequest(this.loanInstallmentRequest)
+            .subscribe({
+                next: (response: LoanInstallmentApiResponseModel) => {
+                    if (response.data == null) {
+                        this.messageService.add({
+                            severity: 'error',
+                            summary: 'Error',
+                            detail: "Ooopsie, it seems there was a glitch in the matrix.",
+                            life: 3000
+                        });
+                    } else {
+                        this.messageService.add({
+                            severity: 'success',
+                            summary: 'Successful',
+                            detail: 'LoanModel Account Created',
+                            life: 3000
+                        });
+
+                        this.loanInstallmentRequestDialog = false;
+                    }
+                },
+                error: error => {
+                    console.error('There was an error!', error);
+                }
+            });
+
+        this.loanInstallmentRequestDialog = false;
+    }
+
     clear(table: Table) {
         table.clear();
         this.filter.nativeElement.value = '';
@@ -196,5 +235,11 @@ export class LoanAccountComponent implements OnInit {
         this.loanRequest = new LoanRequestModel();
         this.submitted = false;
         this.loanRequestDialog = true;
+    }
+
+    openNewInstallmentDialog() {
+        this.loanInstallmentRequest = new LoanInstallmentRequestModel();
+        this.loanInstallmentSubmitted = false;
+        this.loanInstallmentRequestDialog = true;
     }
 }

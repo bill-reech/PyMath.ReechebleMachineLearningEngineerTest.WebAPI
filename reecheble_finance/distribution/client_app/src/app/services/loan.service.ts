@@ -3,7 +3,9 @@ import {Injectable} from '@angular/core';
 import {catchError, Observable, throwError} from "rxjs";
 import {map} from "rxjs/operators";
 import {LoanModel, LoanModelApiResponseModel, LoanModelsApiResponseModel} from "../models/loan-model";
-import {LoanRequestModel, LoanResponseModel} from "../models/loan-installment-model";
+import {LoanRequestModel, LoanResponseModel} from "../models/loan-request-model";
+import {LoanInstallmentApiResponseModel, LoanInstallmentRequestModel} from "../models/loan-installment-model";
+import {LoanAccountsApiResponseModel} from "../models/loan-account-model";
 
 @Injectable()
 export class LoanService {
@@ -27,7 +29,7 @@ export class LoanService {
             );
     }
 
-    addLoanInstallment(loanRequestModel: LoanRequestModel): Observable<LoanResponseModel> {
+    addLoanRequest(loanRequestModel: LoanRequestModel): Observable<LoanResponseModel> {
         let url = `${this.apiEndpoint}/loan/add_loan`;
 
         return this.http.post<LoanResponseModel>(url, loanRequestModel.transformToLoanRequestApiModel())
@@ -47,6 +49,18 @@ export class LoanService {
             .pipe(
                 map(response => {
                     return LoanModel.transformToLoan(response.data);
+                }),
+                catchError(this.handleError)
+            );
+    }
+
+    addLoanInstallmentRequest(loanInstallmentRequestModel: LoanInstallmentRequestModel): Observable<LoanInstallmentApiResponseModel> {
+        let url = `${this.apiEndpoint}/loan/pay_loan`;
+
+        return this.http.post<LoanAccountsApiResponseModel>(url, loanInstallmentRequestModel.transformToLoanInstallmentRequestApiModel())
+            .pipe(
+                map(response => {
+                    return LoanInstallmentRequestModel.transformApiResponseToLoanInstallmentResponseModel(response.data);
                 }),
                 catchError(this.handleError)
             );

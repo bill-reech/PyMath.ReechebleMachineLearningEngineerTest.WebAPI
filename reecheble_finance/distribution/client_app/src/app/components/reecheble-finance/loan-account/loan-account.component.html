@@ -156,7 +156,8 @@
                                 *ngIf="this.shouldDisplayInstallmentButton(loan)"
                                 type="button"
                                 icon='pi pi-fw pi-credit-card'
-                                label="Pay">
+                                label="Pay"
+                                (click)="openNewInstallmentDialog()">
                             </p-button>
                         </td>
                     </tr>
@@ -257,6 +258,43 @@
                     (click)="hideDialog()"></button>
             <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"
                     (click)="addLoanRequest()"></button>
+        </ng-template>
+    </p-dialog>
+
+    <p-dialog
+        [(visible)]="loanInstallmentRequestDialog"
+        [style]="{width: '450px'}"
+        header="Loan Installment"
+        [modal]="true"
+        class="p-fluid">
+
+        <ng-template pTemplate="content">
+            <div class="field">
+                <label for="reference">Loan Reference</label>
+                <input type="text" pInputText id="reference" [(ngModel)]="loanInstallmentRequest.reference" required
+                       autofocus
+                       [ngClass]="{'ng-invalid ng-dirty' : submitted && !loanInstallmentRequest.reference}"/>
+                <small class="ng-dirty ng-invalid" *ngIf="submitted && !loanInstallmentRequest.reference">Loan reference
+                    number is
+                    required.</small>
+            </div>
+            <div class="field">
+                <label for="installmentAmount">Request Amount</label>
+                <input type="number" pInputText id="installmentAmount"
+                       [(ngModel)]="loanInstallmentRequest.installmentAmount" required
+                       autofocus
+                       [ngClass]="{'ng-invalid ng-dirty' : submitted && !loanInstallmentRequest.installmentAmount}"/>
+                <small class="ng-dirty ng-invalid" *ngIf="submitted && !loanInstallmentRequest.installmentAmount">Installment
+                    amount is
+                    required.</small>
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="footer">
+            <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text"
+                    (click)="hideDialog()"></button>
+            <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"
+                    (click)="addLoanInstallmentRequest()"></button>
         </ng-template>
     </p-dialog>
 </div>
