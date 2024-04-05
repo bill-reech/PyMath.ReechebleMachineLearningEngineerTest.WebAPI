@@ -90,7 +90,7 @@
                 pButton
                 icon='pi pi-fw pi-money-bill'
                 label="Add Loan"
-                (click)="openNew(this.accountNumber)">
+                (click)="openLoanApplicationRequestDialog(this.accountNumber)">
             </button>
         </div>
     </div>
@@ -157,7 +157,7 @@
                                 type="button"
                                 icon='pi pi-fw pi-credit-card'
                                 label="Pay"
-                                (click)="openNewInstallmentDialog(loan.reference, loan.equatedMonthlyInstallment)">
+                                (click)="openLoanInstallmentPaymentDialog(loan.reference, loan.equatedMonthlyInstallment)">
                             </p-button>
                         </td>
                     </tr>

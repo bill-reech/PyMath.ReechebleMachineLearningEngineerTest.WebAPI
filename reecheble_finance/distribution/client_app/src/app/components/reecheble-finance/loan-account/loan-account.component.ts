@@ -231,13 +231,13 @@ export class LoanAccountComponent implements OnInit {
         this.submitted = false;
     }
 
-    openNew(accountNumber: string) {
+    openLoanApplicationRequestDialog(accountNumber: string) {
         this.loanRequest = new LoanRequestModel(accountNumber);
         this.submitted = false;
         this.loanRequestDialog = true;
     }
 
-    openNewInstallmentDialog(reference: string, equatedMonthlyInstallment: number) {
+    openLoanInstallmentPaymentDialog(reference: string, equatedMonthlyInstallment: number) {
         this.loanInstallmentRequest = new LoanInstallmentRequestModel(reference, equatedMonthlyInstallment);
         this.loanInstallmentSubmitted = false;
         this.loanInstallmentRequestDialog = true;
