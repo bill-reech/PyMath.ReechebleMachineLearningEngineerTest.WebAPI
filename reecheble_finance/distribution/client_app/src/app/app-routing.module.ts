@@ -1,6 +1,6 @@
 import {RouterModule} from '@angular/router';
 import {NgModule} from '@angular/core';
-import {NotfoundComponent} from './demo/components/notfound/notfound.component';
+import {NotfoundComponent} from './components/notfound/notfound.component';
 import {AppLayoutComponent} from "./layout/app.layout.component";
 
 @NgModule({
@@ -19,10 +19,10 @@ import {AppLayoutComponent} from "./layout/app.layout.component";
                     }
                 ]
             },
-            {path: 'auth', loadChildren: () => import('./demo/components/auth/auth.module').then(m => m.AuthModule)},
+            {path: 'auth', loadChildren: () => import('./components/auth/auth.module').then(m => m.AuthModule)},
             {
                 path: 'landing',
-                loadChildren: () => import('./demo/components/landing/landing.module').then(m => m.LandingModule)
+                loadChildren: () => import('./components/landing/landing.module').then(m => m.LandingModule)
             },
             {path: 'notfound', component: NotfoundComponent},
             {path: '**', redirectTo: '/notfound'},
