@@ -7,6 +7,7 @@ import {LoanService} from "../../../services/loan.service";
 import {expandedRowsModel} from "../../../models/common/expanded-rows-model";
 import {LoanRequestModel, LoanResponseModel} from "../../../models/loan-request-model";
 import {LoanInstallmentApiResponseModel, LoanInstallmentRequestModel} from "../../../models/loan-installment-model";
+import {AccountLoansResolverModel} from "../../../models/account-loans-resolver-model";
 
 @Component({
     templateUrl: './loan-account.component.html',
@@ -47,7 +48,7 @@ export class LoanAccountComponent implements OnInit {
 
     ngOnInit() {
         this.route.data.subscribe((data: {
-            accountLoansResolverModel: { accountLoans: LoanModel[], accountNumber: string }
+            accountLoansResolverModel: AccountLoansResolverModel
         }) => {
             this.loans = data.accountLoansResolverModel.accountLoans;
             this.accountNumber = data.accountLoansResolverModel.accountNumber;

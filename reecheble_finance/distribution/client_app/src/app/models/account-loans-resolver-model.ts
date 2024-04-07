@@ -5,5 +5,7 @@ export class AccountLoansResolverModel {
     accountNumber: string
 
     constructor(accountLoans?: LoanModel[], accountNumber?: string) {
+        this.accountLoans = accountLoans;
+        this.accountNumber = accountNumber;
     }
 }
