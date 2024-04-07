@@ -10,10 +10,6 @@ import {AppLayoutComponent} from "./layout/app.layout.component";
                 path: '', component: AppLayoutComponent,
                 children: [
                     {
-                        path: '',
-                        loadChildren: () => import('./components/dashboard/dashboard.module').then(m => m.DashboardModule)
-                    },
-                    {
                         path: 'reecheble-finance',
                         loadChildren: () => import('./components/reecheble-finance/reecheble-finance.module').then(m => m.ReechebleFinanceModule)
                     }
