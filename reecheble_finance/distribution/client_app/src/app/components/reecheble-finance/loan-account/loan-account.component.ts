@@ -47,10 +47,10 @@ export class LoanAccountComponent implements OnInit {
 
     ngOnInit() {
         this.route.data.subscribe((data: {
-            accountLoansInfo: { accountLoans: LoanModel[], accountNumber: string }
+            accountLoansResolverModel: { accountLoans: LoanModel[], accountNumber: string }
         }) => {
-            this.loans = data.accountLoansInfo.accountLoans;
-            this.accountNumber = data.accountLoansInfo.accountNumber;
+            this.loans = data.accountLoansResolverModel.accountLoans;
+            this.accountNumber = data.accountLoansResolverModel.accountNumber;
         });
     }
 

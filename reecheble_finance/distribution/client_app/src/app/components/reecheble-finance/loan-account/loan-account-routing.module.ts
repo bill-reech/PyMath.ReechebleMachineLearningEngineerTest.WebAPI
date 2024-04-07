@@ -5,7 +5,7 @@ import {LoanAccountResolver} from "./loan-account.resolver";
 
 @NgModule({
     imports: [RouterModule.forChild([
-        {path: '', resolve: {accountLoansInfo: LoanAccountResolver}, component: LoanAccountComponent}
+        {path: '', resolve: {accountLoansResolverModel: LoanAccountResolver}, component: LoanAccountComponent}
     ])],
     exports: [RouterModule]
 })
