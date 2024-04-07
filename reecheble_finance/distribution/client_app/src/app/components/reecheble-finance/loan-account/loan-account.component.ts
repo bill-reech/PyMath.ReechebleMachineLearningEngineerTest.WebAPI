@@ -4,7 +4,6 @@ import {ConfirmationService, MessageService} from 'primeng/api';
 import {LoanModel} from "../../../models/loan-model";
 import {ActivatedRoute} from "@angular/router";
 import {LoanService} from "../../../services/loan.service";
-import {catchError, first, tap} from "rxjs";
 import {expandedRowsModel} from "../../../models/common/expanded-rows-model";
 import {LoanRequestModel, LoanResponseModel} from "../../../models/loan-request-model";
 import {LoanInstallmentApiResponseModel, LoanInstallmentRequestModel} from "../../../models/loan-installment-model";
@@ -47,27 +46,12 @@ export class LoanAccountComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.setAccountNumber();
-        this.getAllAccountLoans(this.accountNumber);
-    }
-
-    setAccountNumber() {
-        this.route.params.subscribe(params => {
-            this.accountNumber = params['account_number']
+        this.route.data.subscribe((data: {
+            accountLoansInfo: { accountLoans: LoanModel[], accountNumber: string }
+        }) => {
+            this.loans = data.accountLoansInfo.accountLoans;
+            this.accountNumber = data.accountLoansInfo.accountNumber;
         });
-    }
-
-    getAllAccountLoans(accountNumber: string) {
-        this.loanService.getAccountLoans(accountNumber).pipe(
-            first(),
-            tap((loans: LoanModel[]) => {
-                this.loans = loans;
-            }),
-            catchError((error: any) => {
-                console.error(error);
-                return [];
-            })
-        ).subscribe();
     }
 
     calculateAverageRequestAmount(): number {

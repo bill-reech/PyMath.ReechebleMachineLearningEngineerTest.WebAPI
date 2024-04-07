@@ -1,10 +1,11 @@
 import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {LoanAccountComponent} from './loan-account.component';
+import {LoanAccountResolver} from "./loan-account.resolver";
 
 @NgModule({
     imports: [RouterModule.forChild([
-        {path: '', component: LoanAccountComponent}
+        {path: '', resolve: {accountLoansInfo: LoanAccountResolver}, component: LoanAccountComponent}
     ])],
     exports: [RouterModule]
 })
